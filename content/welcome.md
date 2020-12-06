@@ -39,10 +39,10 @@ Please navigate to the appropriate section as such:
       How to best get in touch with me 
       
 - **[blog]**  <i><span style="color:#FFFFFF5A">(professional)</span></i> <br>
-      A blog I'm hoping to create that focuses on things in statistics, data science or general computer science that I think are interesting  
+      A blog I'm hoping to create that focuses on things related to statistics, data science or general computer science that I think are interesting  
       
 - **[rat_game]** <br>
-      A repository of all things `rat_game` (working title), a video game I've been putting hundreds of hours into creating from scratch. A dev diary is also available {{< external href="https://rat-game.tumblr.com/ " text="here" />}}
+      A repository of all things `rat_game` (working title), a video game I've been putting hundreds of hours into creating from scratch in order to learn proper C++. A dev diary is also available {{< external href="https://rat-game.tumblr.com/ " text="here" />}}
       
 - **[art]**  <i><span style="color:#FFFFFF5A">(personal)</span></i> <br>
       I'll try to repost my art here, I do watercolor and felt figurines sometimes on commission. You can also find it on {{< external href="https://twitter.com/not_birb" text="Twitter" />}}
