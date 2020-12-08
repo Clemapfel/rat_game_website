@@ -18,13 +18,13 @@ draft = true
 </head>
 
 <div id="link_bar">
-    <a href="http://localhost:1313/welcome">[welcome]</a> 
+    <a href="http://localhost:1313/welcome"><selected>[welcome]</selected></a> 
     <xspacer> <a href="http://localhost:1313/about">[about]</a></xspacer>
-    <xspacer> <a href="http://localhost:1313/professional/landing"><selected>[data science]</selected></a> </xspacer>
+    <xspacer> <a href="http://localhost:1313/professional/landing">[<strike>blog</strike>] </a> </xspacer>
     <xspacer> <a href="http://localhost:1313/rat_game/landing">[rat_game]</a> </xspacer>
     <xspacer> <a href="http://localhost:1313/art/landing">[art]</a> </xspacer>
     <xspacer> <a href="http://localhost:1313/contact">[contact]</a> </xspacer>
 </div>
-<hr style="border:1px solid #F33C72"> </hr>
+<hr style="border:1px solid #e92d7d"> </hr>
 
-## [this section is still under construction, please return](http://localhost:1313/welcome)
+## [this section is still under construction, please turn back](http://localhost:1313/welcome)
