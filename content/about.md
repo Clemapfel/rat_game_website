@@ -63,13 +63,6 @@ draft = true
         padding:12px;
     }
     
-    .center {
-      margin: auto;
-      width: 50%;
-      border: 3px solid green;
-      padding: 10px;
-    }
-    
 </style>
 
 <head>
