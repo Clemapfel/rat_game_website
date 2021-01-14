@@ -1,8 +1,8 @@
 +++
-#title = "Welcome"
+title = "About"
 #date = 2020-12-03T18:50:46+01:00
-#description = "This text was generated using the After Dark post archetype."
-draft = true
+description = "On this page I will talk about myself, what I do / did and what my professional qualifications are."
+draft = false
 #footer = true
 #toc = true
 #categories = 
@@ -15,26 +15,6 @@ draft = true
 +++
 
 <style>
-    xspacer { padding-left: 1em; }
-    #link_bar a {
-        padding-left:2px;
-        padding-right:2px;
-        padding-top:1em;
-        padding-bottom:1em;
-        font-weight:bold;
-        font-size:20px;
-        border: 0px transparent; /* removes default underline */
-        text-align:center;
-    }
-    #link_bar a:link { color:#27FF92;}
-    #link_bar a:visited { color:#27FF92;}
-    #link_bar a:hover { color:#ffffff; background-color:transparent; }
-    #link_bar a:active { color:#ffffff; background-color:#27FF92; }
-
-    selected {color:#ffffff;}
-
-
-
     xp_title 
     {
         float:left;
@@ -61,21 +41,24 @@ draft = true
         border-style:solid;
         border-color:grey;
         padding:12px;
-    }
+    }+++
     
 </style>
 
 <head>
-    <link rel="stylesheet" href="../../config/style.css">
+    <link rel="stylesheet" href="/config/new_style.css">
 </head>
 
-<div id="link_bar">
-    <a href="http://localhost:1313/welcome">[welcome]</a> 
-    <xspacer> <a href="http://localhost:1313/about"><selected>[about]</selected></a></xspacer>
-    <xspacer> <a href="http://localhost:1313/professional/landing">[<strike>blog</strike>] </a> </xspacer>
-    <xspacer> <a href="http://localhost:1313/rat_game/landing">[rat_game]</a> </xspacer>
-    <xspacer> <a href="http://localhost:1313/art/landing">[art]</a> </xspacer>
-    <xspacer> <a href="http://localhost:1313/contact">[contact]</a> </xspacer>
+<div>
+    <div id="link_bar">
+        <a href="http://localhost:1313/welcome"><selected>[welcome]</selected></a> 
+        <a href="http://localhost:1313/about">[about]</a>
+        <a href="http://localhost:1313/professional/landing">[<strike>blog</strike>] </a>
+        <a href="http://localhost:1313/contact">[contact]</a>
+        <span style="float:right;">
+            <a href="http://localhost:1313/rat_game/landing">[rat_game]</a>
+        </span>
+    </div>  
 </div>
 <hr style="border:1px solid #e92d7d"> </hr>
 

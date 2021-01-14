@@ -13,10 +13,6 @@ draft = true
   license = "cc-by-nc-sa-4.0"
 +++
 
-<head>
-    <link rel="stylesheet" href="../../config/style.css">
-</head>
-
 <div id="link_bar">
     <a href="http://localhost:1313/welcome">[welcome]</a> 
     <xspacer> <a href="http://localhost:1313/about">[about]</a></xspacer>

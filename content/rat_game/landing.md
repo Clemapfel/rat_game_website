@@ -1,8 +1,12 @@
 +++
+title = "rat_game landing"
+#date = 2020-12-03T18:50:46+01:00
+description = ""
+draft = false
 +++
 
 <head>
-    <link rel="stylesheet" href="/config/style.css">
+    <link rel="stylesheet" href="/config/new_style.css">
 </head>
 
 <style>
@@ -43,11 +47,10 @@
 
 <div id="link_bar">
     <a href="http://localhost:1313/welcome">[welcome]</a> 
-    <xspacer> <a href="http://localhost:1313/about">[about]</a></xspacer>
-    <xspacer> <a href="http://localhost:1313/professional/landing"><strike>[blog]</strike></a> </xspacer>
-    <xspacer> <a href="http://localhost:1313/rat_game/landing"><selected>[rat_game]</selected></a> </xspacer>
-    <xspacer> <a href="http://localhost:1313/art/landing">[art]</a> </xspacer>
-    <xspacer> <a href="http://localhost:1313/contact">[contact]</a> </xspacer>
+    <a href="http://localhost:1313/about">[about]</a>
+    <a href="http://localhost:1313/professional/landing"><strike>[blog]</strike></a>
+    <a href="http://localhost:1313/contact">[contact]</a>
+    <a href="http://localhost:1313/rat_game/landing"><selected>[rat_game]</selected></a>
 </div>
 <hr style="border:1px solid #e92d7d"> </hr>
 
@@ -167,3 +170,14 @@ for (i = 0; i < coll.length; i++) {
 }
 </script>
 </body>
+
+---
+<footer>
+  <div markdown="1">
+    <center>
+    <p style="font-size:11px">
+    &copy 2020 Clemens Cords | all original images are subject to copyright and may not be shared without attribution <br>
+    </center>
+    </p>
+  </div>
+</footer>
