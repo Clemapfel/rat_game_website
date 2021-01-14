@@ -9,7 +9,7 @@ draft = false
 #tags =
 
 [[copyright]]
-  owner = "Clemens Cords"
+  owner = "Clem Cords"
   date = "2020"
   license = "cc-by-nc-sa-4.0"
 +++
@@ -46,7 +46,7 @@ draft = false
 </style>
 
 <head>
-    <link rel="stylesheet" href="/config/new_style.css">
+    <link rel="stylesheet" href="/config.css">
 </head>
 
 <div>
@@ -319,7 +319,7 @@ Thank you for reading!
   <div markdown="1">
     <center>
     <p style="font-size:11px">
-    &copy 2020 Clemens Cords | all original images are subject to copyright and may not be shared without attribution <br>
+    &copy 2020 Clem Cords | all original images are subject to copyright and may not be shared without attribution <br>
     </center>
     </p>
   </div>

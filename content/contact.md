@@ -6,7 +6,7 @@ draft = false
 +++
 
 <head>
-    <link rel="stylesheet" href="/config/new_style.css">
+    <link rel="stylesheet" href="/config.css">
 </head>
 
 <div>
@@ -39,7 +39,7 @@ draft = false
   <div markdown="1">
     <center>
     <p style="font-size:11px">
-    &copy 2020 Clemens Cords | all original images are subject to copyright and may not be shared without attribution <br>
+    &copy 2020 Clem Cords | all original images are subject to copyright and may not be shared without attribution <br>
     </center>
     </p>
   </div>

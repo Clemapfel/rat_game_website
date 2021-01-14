@@ -1,13 +1,12 @@
 +++
 title = "Welcome"
 #date = 2020-12-03T18:50:46+01:00
-description = "Welcome to Clemens Cords' Homepage. This is a repository for personal information and updates about things I'm working on."
+description = "Welcome to Clem Cords' Homepage. This is a repository for personal information and updates about things I'm working on."
 draft = false
 +++
 
 <head>
-    <link rel="stylesheet" href="/config/new_style.css">
-    <link rel="icon" href="/resources/rat_icon_with_bg.png">
+    <link rel="stylesheet" href="/config.css">
 </head>
 
 <div>
@@ -24,7 +23,7 @@ draft = false
     
 <hr style="border:1px solid #e92d7d"> </hr>
 
-# Welcome to Clemens Cords' Homepage
+# Welcome to Clem Cords' Homepage
 
 This is a repository for personal information and updates about things I'm working on.
 Please navigate to the appropriate section via the header above as such:
@@ -46,7 +45,7 @@ Please navigate to the appropriate section via the header above as such:
   <div markdown="1">
     <center>
     <p style="font-size:11px">
-    &copy 2020 Clemens Cords | all original images are subject to copyright and may not be shared without attribution <br>
+    &copy 2020 Clem Cords | all original images are subject to copyright and may not be shared without attribution <br>
     generated with {{< external href="https://comfusion.github.io/after-dark/" text="After Dark" />}}, hosted by TODO
     </center>
     </p>
