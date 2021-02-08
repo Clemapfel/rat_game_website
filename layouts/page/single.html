@@ -1,0 +1,25 @@
+{{ define "title" -}}
+  {{ .Title }} | {{ .Site.Title }}
+{{- end }}
+
+{{ define "header" }}
+  {{ partial "bg_image.html" }}
+  {{ partial "collapsible.html" }}
+  {{ partial "navigation_bar.html"}}
+{{ end }}
+
+{{ define "main" }}
+  {{ .Content }}
+{{ end }}
+
+{{ define "footer" }}
+<footer>
+  <div>
+    <center>
+    <p style="font-size:11px">
+    &copy 2020 C. Cords | all original images are subject to copyright and may not be shared without attribution <br>
+    </p>
+    </center>
+  </div>
+</footer>
+{{ end }}

@@ -1,0 +1,66 @@
+{{ define "title" -}}
+  {{ .Title }} | {{ .Site.Title }}
+{{- end }}
+
+{{ define "header" }}
+  {{ partial "bg_image.html" }}
+<style>
+header {
+    padding-left: 4em;
+    margin-left: -4em;
+    padding-right: 4em;
+    margin-right: -4em;
+
+    padding-top: 0em;
+    margin-top: -1.5em;
+    padding-bottom: 2em;
+    margin-bottom: -5em;
+
+    min-height: 10vh;
+
+    background-color: #1d1d1d;
+}
+</style>
+
+{{ end }}
+
+
+{{ define "main" }}
+  {{ if ne $.Site.Params.hackcss.disabled true }}
+    {{ with resources.Get "css/conditional/layouts/post/single.css" | minify }}
+      <style>{{ .Content | safeCSS }}</style>
+    {{ end }}
+  {{ end }}
+  <article itemscope itemtype="https://schema.org/BlogPosting">
+    {{ template "_internal/schema.html" . }}
+    <header>
+      <h1 itemprop="headline name" style="color:#27FF92">{{ .Title }}</h1>
+      <hr style="border:1px solid #e92d7d"> </hr>
+      <p class="muted">
+        {{ partial "post/meta.html" . }}
+      </p>
+      <br>
+
+
+      {{ if .Description }}
+        <blockquote itemprop="description">{{ .Description }}</blockquote>
+      {{ end }}
+      {{ partial "image/header.html" . }}
+
+    </header>
+    <div itemprop="articleBody">
+      {{ .Content }}
+    </div>
+    <footer>
+      <br>
+      <hr style="border:1px solid #e92d7d"> </hr>
+      {{ partial "post/byline.html" . }}
+      {{ partial "post/related-content.html" . }}
+    </footer>
+  </article>
+{{ end }}
+{{ define "footer" }}
+  <small class="muted">
+    {{ partial "copyright-notice.html" . }}
+  </small>
+{{ end }}
