@@ -310,16 +310,223 @@ willingless to engage with a game that is not challenging whatsoever and I think
  reach a bigger market. Mario RPG solved a problem that was only this pronounced in earthbound-likes: battles and walking
  around can be fun - even for normal people.
  
-#### The Gimmick
+### LISA: The Painful
 
-"The gimmick" is not a game, in my opinion it is a feature of earthbound-likes. With Mario RPG as a benchmark you 
-can't just have a jRPG. You need to have something on top of that, I will call this "the gimmick" however I am not 
-fully satisfied with the connotations of that so I'd like to expand on what I feel about this. The cynical part of me
-thinks "earthbound-likes don't know how to make combat interesting and complex. They used to get away with that but
-now they need a gimmick on top to not be a terrible game". This is not true, however I do think that a lot of devs 
-create their games as if this were true. 
+(content warning: descriptions of gore, sexual violence and domestic abuse)
 
+LISA is another RPG Maker game whoever I consider it fairly distinct and I think most people who aren't intimiately 
+familiar with the engine or read up on it will not immediately notice that LISA is made in it. For one the perspective
+is shifted from a top down view to 2d side-view similar to the original mario games. Another thing that makes LISA 
+stand out from the crowd of RPG Maker games is it's "combo system". Instead of simply selecting an attack or consumable
+from a static list the player instead has to input a combination of buttons, for example WAA could be a punch and WSS 
+could be a kick and so on. Not every permutation of {W, A, S, D} has a corresponding attack but that is precisely the point
+in my opinion. You could argue that this is pointed, in the end it is functionally equivalent to just selecting an attack
+but I would disagree with this. For one the most obvious advantage of this system is simulating mechanical challenge. 
+It is not actually hard to input certain moves and there's even a list of all combinations however pressing 4 keys 
+each time you attack and having it be accompanied by a flashy combination simulates what the Mario RPG series did so
+execellently: there is now a tactile component to the RPG Maker combat and I think while intellectually it doesn't 
+seem that valuable from a player experience point of view it improves the game. 
+Now you may by no have noticed a trend in my writing, I don't really want to talk about a game in detail or review, I 
+don't really want to talk about a game in detail or review it rather I want to first find out why a game is an 
+earthbound-like and then identify what part of that game became a gene passed down in future generations of earthbound-likes.
+For LISA, this is not the combo system. It's not the 2D view and the light platforming that comes with that rather it is
+it's adult themes. It's still quirky but lisa has explicit gore, violence, rape, body horror, etc.. None of this will 
+be actually disturbing to most people because it is after all a low-res RPG Maker game that looks kinda same-y but the 
+game does a good job of framing these disturbing things in a way were they actually land. For example in one scene the
+protagonist is trying to find out where another character is being held and to do this he captures and then tortures one
+of the enemy combatants. Not only is it an explicit cutscene of just that happening but the player actively takes part 
+in it having to hit a QTE for each punch the main character (henceforth "MC") inflicts on the captive. 
+In a similar scene the MC has a flashback to his childhood of living in a low-income house with a father that is explicitely 
+abusive both emotionally and phsyically (and most likely sexually as can be inferred from subtext in LISAs predecessor).
+This is shown, you actually see your father belittle you and throw a bottle at you and you manually walk the MC to a 
+playground to get beaten up and bullied. I am not comfortable of inferring things of a still-livign artists personal life
+but the framing implies this as very personal and similar to Yumei Nikki this intimitacy acts as an amplifier for how 
+serious the player takes the violence. LISA can be funny, gross and is almost always quirky but what makes it special
+enough to change the course of the genre of earthbound-likes is how it dealt with explicit, highly disturbing subject 
+matter in a way that in no way minimized them and made it feel personally by having the player play through the revelant
+sequences.
 
+TODO: pic of brad getting bottle thrown at him
 
+Also I shouldn't just leave it merely implied, LISA is more graphic than most people would expect, it doesn't go as far
+as to literally show sexual violence but characters get their arms cut off, their face melted, shoot themself in the head
+and slowly bleed out on the floor while their intestent are hanging out of their punctured belly. I don't consider 
+violence for violences sake a feature that improves a work of art but by staying respesctful when it is warranted (like
+with sexual abuse or domestic violence against children) and balancing out the gore and blood with enough absurdity and
+jokes LISA kind of ripped off the band-aid. Since LISA (there are almost certainly games before it that did this of course), nothing it taboo anymore. Earthbound-likes are free to show whatever they want and making a game that is explicitely adult-only is not only commercially viable but is respected by the audience. 
 
+TODO: pic of mcdonalds mask falling off 
 
+### And so came many others
+
+With dev-tools improving and earthbound-likes finding indie success RPG Maker games went from being an underground thing
+for people who "aren't able to make real games" to a valid genre. As such many many other followed, some of them were 
+simple made-by-one-teenager games that don't really have anything good to offer but still had love and effort poured into
+them. RPG Maker games stopped being jRPGs, titles like "To the moon" used the tool to tell a straight forward drama that 
+is more akin to a traditional walking simulator and had writing that is legendary for making most people cry and as such
+will fit right in with "Gone Home" and similar titles. Professional artists came out of the woodworks and used RPG Maker
+not only as an outlet but as a job, creating games like "Omori" landing 6-figure kickstarter campaigns and having
+multi-person teams working on not only the game but ports and merchandise and nowadays in 2021 RPG Maker seized to be
+a trope, a type of game and is now an engine for 2D games, just like Unity or Unreal. I'm glossing over many excellent 
+titles for the sake of brevity but let me just list off a bunch of them as I do actually want to make a point:
+
+i) Oneshot: a "roguelike" game where you can only die once, the game locks up afterwards so you really do only have "one shot"
+ii) Yumei 2kki, an official sequel sanctioned by the original dev
+iii) Jimmy and the Pulsating Mess, a true earthbound-like in that it is very much like earthbound, luckily earthbound is good
+enough for that to be a hook, not a negative
+iv) Mother4 (now renamed to TODO): an actual sequel the the warmly regarded but cast-into-obscurity-by-nintendo to the 
+next game in the Mother series: mother 3. Mother4 was a multi-person project that was put on hold when the chance of
+getting a seize-and-desist by nintendo seem likely enough to warrant filing off the serial numbers in order to transform
+the project into something commercially viable
+v) Ib, a spritiual sequel to yumei nikki that took the afterthough that was melee combat and made it a core-feature of the 
+gameplay, completely substituting turn-based-combat instead
+vi) "The Witches House", "Mad Father", "Angels of Death" three game whos devs are unrelated but that all brought true horror
+into the RPG Maker format. These games are much closer to resident evil than to final fantasy and much like LISA do not 
+hold back in the violence and disturbing subject matter 
+
+All games I've listed in this chapter (and all previous chapters) are great games. I may not love some of them but 
+I consider them important and worth the time and money that was spend to create them. They are the cream that rose to the 
+top out of an arguably endless see of half-abandoned or naively implement RPG Maker games/clones and I cannot stress 
+enough how many there were. Seeing that you can actually sell these games for real money many devs tried to promote their
+hobby-project they just made to learn how to do pixel art into a job. I will never condemn artistic ambition but I think
+I echo many more mainstream-gamers thoughts when I state that earthbound-like went from a type of game to a vast community,
+if you wanted to do you can have your entire life revolve around them, all your friends are into them, you live on the RPG 
+Maker forums, you watch youtubers (TODO: link NitroRad, Jordan Under) that cover them, you found your boyfriend on an 
+RPG Maker discord server and you haven't touched your oil colors and brushes because you only do pixel art now. I'm being
+facetious but there really was a community here, it was still a niche hobby but it was very much not obscure anymore. However...
+
+### Then came Undertale 
+The big one, one of the most influential games of all time in my opinion and *the* supposed rags-to-riches story of a 
+guy in his bedroom playing around with first RPG Maker and then Game Maker that made a game that blew up and sold over 
+a million copies. Now first I would like to explicitely state that the time-line I am implying in this essay is not 
+perfectly chronological. It wasn't that LISA came first and only then came all the adult RPG Maker games and similarly 
+it was just Undertale that started the boom but I still think it's valuable to regard Undertale as a giant TODO-shift. 
+
+Undertale was made by two people, a programmer/designer/writer and an graphical artists and at first it doesn't seem that
+special. Undertales replaced the Mario RPG QTEs in battle with little SHMUP sections. Instead of just attacking you 
+could now befriend enemies too, maybe a mob doesn't need to be slain but rather just needs a hug. Undertales world was
+rich and filled with creativity and memorable characters. However undertale was still a small game, it had very few 
+bells and whistles and doesn't really feel like a product but as something someone really wanted to make'. And it just 
+happened to be made in a way that made lightning strike. Every undertale character has their own community, Sans is 
+in super smash brothers, the fact that tumblr and deviant art almost spilled over with the amount of undertale fanart is
+so well-known that people will use phrases like "night in the woods is the new undertale". "golf story is the new undertale".
+I will admit I'm creating a strawman by reproducing these quotes without attribution but for the sake of argument I would 
+like to examine what that means. "X is the new undertale" does not only imply that x is most likely an earthbound-like 
+adjacent game, a personal story made by a small indie team with quirky characters and emotional, relatable
+themes, amazing music and graphics but also that it is derivative. By the point undertale broke into the mainstream 
+the earthbound-like became formulaic. People will often point to undertale as an intentional subversion of many tropes,
+killing monsters actually has a detremental effect in canon, you get to talk instead of attack, the game is very meta 
+with characters leaving files on your computer or intentionally crashing the game however if you were exposed to earthbound-likes
+that came before it you will recognize every one of these tropes, most likely from multiple games. Like all art, Undertale 
+is iterative, it build on what came before it and I think the reason people found it so fresh is that undertale was new
+to the mainstream. Most people don't play RPG Maker games, most people will call Yumei Nikki a terrible pointless game 
+but Undertale was so accesible, so relatable, so much of lightning in a bottle that it ascended all of these properties 
+and like all the great earthbound-likes before it it brought something new to the genepool. 
+
+I want to break character for a moment here and talk about myself. I don't like undertale. I would never call it bad 
+or fault someone for having it be their favorite thing but I think because undertale was such a huge success critical 
+mass was hit and suddenly most of the earthbound-like community wasn't there because of the rich history but because of 
+undertale. This isn't a bad thing, it's always good to grow but what this resulted in were games not iterating upon 
+all the earthbound-likes that came before but on undertale specifically. A game had to be quirky, have a consistent world,
+look nice, have great music, be technically a jRPG but have a "gimmick" on top of the regular combat, be character-driven
+not as a character study but as a journey that interacted with characters, have a very literal plot by which I mean all
+ events are perceived as happening diagetically, they had to deal with emotional mental-ill related themes like 
+ anxiety, social awkwardness, feeling lonely or without purpose and what I'm trying to say is that since undertale, 
+ this is the definition of an earthbound-like. Undertale was the culmination of what came before it, it had every gene 
+ mentioned in this piece at conception but because Undertale attracted so many players that were not able to recognize 
+ this fact it effectively erased much of the genres history and replaced it with "like undertale". It's why my friend 
+ who I mentioned in the first paragraphed recognised omori as "another one of those". I'm not saying Omori is that 
+ derivative but I mention it to illustrate who from someone looking in, someone who never played a good RPG Maker game,
+ someone who thinks turn-based combat is boring and archaic, for a person like this, Omori is "another one". In the 
+ same paragraph I also said that the definition of earthbound-likes are a see-it-and-you-know-it type. I still stand 
+ by this however since Undertale, I think we'll be able to get a proper definition. Something clearly define, something
+ very close to the list of properties I just listed of. Let's go through them again, one-by-one:
+ 
+ ### An actual Definition
+ 
+ (content warning: math)
+ 
+ A game can be considered an earthbound-like if it has enough of the following features:
+ 
+ a) It is build on a framework that is considered like those of jRPGs, meaning...
+    a1) It has 2d, sprite-based, low resolution pixelart style graphics
+    a2) it is build around two distinct states ("scene"), in the "overworld" the player moves through a diagetic world, 
+    usually on 2 axis, solves light puzzles and interacts with other characters by for example talking to them or triggering 
+    the second states "battle" in which the player engages in an abstract representation of what diagetically is violence, 
+    social interaction or any another form of the one or more player entities interacting with one or more non-player entities
+    a3) Movement on the overworld is fairly basic
+    a4) there is very little mechanical challenge and mechanical depth in any gameplay system
+    a5) puzzles may be present however are rarely the focus of the game
+    a6) Can have their inspirations followed back to either DnD, Final Fantasy, Dragon Quest or...
+b) ...is directly or indirectly iterating on Mother 2: Earthbound, meaning
+    b1) Is has world that is not featured in traditional fantasy- or horror- games
+    b2) Is very character driven were chapters may revolve around a certain character instead of an activity
+    b3) have a very literal plot, meaning all actions during the plot are diagetic and non-metaphorical
+    b4) have a quirky world that has both comedic and dramatic writing
+    b5) intends to represent an intensiely intimate and personal experience 
+    b6) has moments of overt horror and dark or surprisingly disturbing subject matter
+c) focus a lot of it's presentation on static illustration and music, rarely animation or technical fidelity
+d) is aimed at a niche non-mainstream audience of younger (born after ~1989) players of any gender
+e) are made by a small team of either indie developers or if first party by a director that has not participated in many 
+mainstream projects
+
+Okay. There we have, it an actual definition. While reading you most likely already picked one of the properties and 
+thought of a game I mentioned here that does not fullfill it so I'd like to again restate how malleable this and any genre
+really is. Games can be multiple genres at once, even if they're more obscure. You can be a souls-like metroidvania, a 
+platformer racer, etc.. Secondly, who am I to just state a definition as this and tell others that that's what it means 
+and other should abide by that. I'm not, I mean I objectively am but what I do not have is the authority or intend to 
+force my opinion on others. What I tried to achieve in this piece instead is give a very surface-level history of a lineage 
+of games that I think most people would consider related, how (but not in what order) the iterated on each other and how
+it all culimated in many great, truly amazing games. Like any genre, earthbound-likes have tropes. Often these will be 
+perceived as for example "another game about depression/social anxiety" or "nother jrpg with boring combat" and sometimes
+a game will subvert these tropes and sometimes they will reproduce them exactly but offer something else in a way where 
+it eclipses the staleness and instead becomes something special. Hopefully with this you will now be able to not only 
+recognize an earthbound-like but be aware of the depth and history it carries with it and you hopefully will be motivated
+by this new game to go back and explore older games like it. Going mainstream isn't it a bad thing, it's just a thing and 
+if that means more people get to play these games and more importantly, more developers get to make more I consider that 
+very important. 
+
+### Epilogue: Is rat_game an earthbound-like?
+
+(content warning:  descpritions of sexual violence towards minors, genocide)
+
+I'd like to say a quick thank you for reading, I know it was a lot. Hopefully I remember to hid this part somewhat as 
+I don't think it will be relevant to a lot of people so feel free to skip this. If you decided not to then let me clear 
+my concious by saying that I lied to you. In the very first paragraph my friend on seeing a screenshot of Omori said 
+"Looks neat but man I just get the vibe it's a generic JRPG in a cool package". I then stated that I intuitively ask 
+myself two question. This is not true, I asked myself one additional question: "Is that what rat_game is too?". What my 
+friend said caused a lot of anxiety, for me rat_game is something very special, something so intensely personal that 
+I don't want any of my irl friends to play it so they don't find out things about me I wouldn't share myself and being 
+told that that was just another one what basically means undertale clone was something I had to process. Now the mathematician 
+in me would try to rationally prove or disprove this by going through my above definition and checking if all of the 
+properties apply to rat_game but I think that's missing the forest for the trees. I shouldn't focus on "is rat_game an earthbound-like" but rather on "is rat_game another generic earthbound-like". I tried my best to sound neutral and 
+not to condescending in this essay but I have played a lot of earthbound-likes both for fun and for research and on top
+of noticing the properties I outlined in my definition I noticed another thing: Most of them are about mildly disturbing 
+things like curable mental-illnesses, midly disturbing violence like car accidents or the death of a family member and 
+most of them don't really try to be head-y high art: Earthbound doesn't really have themes, it's not a commentary on 
+anything, really, it just tried to be a quirky fun game and during that it made fun of some of the genre tropes (like
+waiting behind the waterfall for 30mins irl) while replicating others by the letter (like it being possible to just 
+grind your way through everything). This doesn't make earthbound worse of course, not everything has to try to be 
+on that level but... I do. Most of the plot of rat_game is a metaphor for events of my life. rat_game isn't just about
+social anxiety or depression, it's about incurable diseases like schizophrenia or severe PTSD, how things like that 
+make your entire life impossible as every single thing in your reality is colored by it and also how despite 
+that people persevere and try to find happiness. rat_game has violence but, idk, at first I wanted to go all out. There's 
+a brothel in rat_game and during the chapter where you explore it you go further and furhter down into the ground and 
+I want each floor to get lower "morally", too. LIke the first floor is vanilla prostitues, then a few floors down it's 
+bdsm, a few floors down it's underage teens and snuff films and what comes even below that I will leave to your 
+imagination. While this is included in the plot know that I would never explicitely show it without having a very, very
+good reason for it. Look towards a film like "irreversiblé" to see how much of a point art has to have to justify having
+a realistic rape scene and I think this is true for all subject matter this extreme. The plot of rat_game involves 
+genocide, during the calamity 60% of all humans were executed. Hell, the second to last chapter takes places exclusively 
+in a giant hole basically where all the bodies were dumped. I don't think most earthbound-likes would go that far but
+that's not really important, I'm not just bringing these up to go "oh see how much more mature I am" I'm bringing this
+up because at no point did I see something in another earthbound-like and go "I want that too in my game". Form the
+beginning I know what I wanted, I wanted to make a game about, me basically. Not literally about me but about my life
+experience and by chance most of the things that happened in my life are way way worse than what many people would even
+tolerate in fiction. And thus, most of the things that happen in rat_game are way way worse than what many people woud
+have tolerated in... earthbound. Or undertale. Or a mainstream RPG Maker game. What I'm trying to say is that rat_game
+is indeed an earthbound-like, there's is no question. However it isn't an earhtbound because I wanted to make an 
+earthbound-like, I wanted to make rat_game and at least consciously I tried so in a vaccuum away from genre tropes 
+or marketability and while I can't guruantee it I at least have hope that that will make it "not just another jRPG about depression" but I guess we all have to find out once it's done. 
+
+C.

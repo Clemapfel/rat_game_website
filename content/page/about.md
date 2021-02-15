@@ -1,5 +1,5 @@
 +++
-titel = "About"
+title = "About"
 layout = "single"
 url = "/about/"
 +++
