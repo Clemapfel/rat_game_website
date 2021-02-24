@@ -7,110 +7,78 @@ url = "/post/earthbound-like"
 layout = "post/single"
 +++
 
-## Table Of Contents
-1. Motivation  
-2. Definition and Properties  
-3. History  
-    3.1. Earthbound<br>
-    3.2. Yumei Nikki<br>
-    3.3. OFF<br>
-    3.4. LISA the Painful<br>
-    3.5. To the Moon, Omori, Oneshot, Yumei 2kki, Mother 4<br>
-    3.6. Undertale<br>
-4. Tropes and their Shortcomings  
-5. Outlook  
-6. Is rat_game an Earthbound-like?  
-7. Addendum
+## 1. Motivation
 
-## Motivation
+I want to start this piece on a personal note, I was casually talking to a friend and I opened the conversation by showing them the following screenshot of a "omori" (which is by all accounts a very good game) completely out of context:
 
-Let's start this personally because everything that will be touched on is very personal to myself. So I was talking to a friend and I showed them the following screenshot of omori which is a very succesfull indie game however they did not know this, the picture was completely out of context. Their reaction was stronger than I anticipated: "Looks neat but man I just get the vibe it's a generic JRPG in a cool package". I intuitively asked myself two question: i) why do they think this is a jRPG and ii) why would seeing a jRPG that looks this warrant comparison to a weird set of games that are all so similar they have a bad reputation for being shallow yet good-looking?
+https://robots.net/wp-content/uploads/2021/01/Combat.jpg
 
-TODO: add omori screenshot
+I just thought it looks nice, right? Their reaction was a lot stronger than I anticipated: "Looks neat but man I just get the vibe it's a generic [western] jRPG in a cool package".
+I poked further and they went on to elaborate that they feel it's just another one of "those" games, midly disturbing subject matter, quirky world, supposedly shallow jRPG combat and an amazing visual presentation. The conversation went on but I kept thinking about what they said. It implies that omori is part of a lineage, that a out-of-context screenshot of it's battle system is enough evidence to not only know it is but to also judge it as so alike every other game in that lineage that it becomes generic. 
 
-## Definition and Examples
+In this piece I will not argue for or against omori or talk about it much at all, I won't even disclose if I agree with my friend, rather I would like to examine how we got here and what my friend was comparing omori to.
 
-In this piece I will introduce a term for a genre of game that sounds like it's
- been long-established but on further examination a selective subset of what people would consider a jRPG. "Earthbound-like" refers to a game that has the following properties:
- 
-- It's graphics are predominantly 2D, sprite-based, 3rd person
-- It has at least one of two modes of interacting with the world: 
-    - In the "overworld" a character can moves around using basic movement in a tile-based world. There they can interact with entities in basic ways like talking to them, triggering switches or getting rid of roadblocks.  
-    - In the "battles" the point of view switches compared to the overworld (usually head-on) and the will participate in a turn-based battle with at least one party member and at least one enemy
-    
-As you may notice these are also the properties of all jRPGs so why do I need a new gerne then? Answering this is somewhat tricky because it's a "you know one if you see one" type of definition so instead declaring the lowest common denominator right away let me give you a non-exhaustive lists of all games I consider earthbound-likes:
-+ The Mother Series (Mother 1, Earthbound, Mother 3)
-+ Mario RPG, Paper Mario 64, Paper Mario: TTYD, Mario & Luigi: Super Star Saga, Mario & Luigi: Partners in Time, Mario & Luigi: Bowsers Inside Story 
-+ Every commercially released RPG-Maker including Yumei-Niiki and it's spin-offs, LISA series, To the Moon, OFF, omori, Escaped Chasm, Suits: a Business RPG, .flow, IB, Dreaming Mary, The Witch's House, Misere*
-+ Undertale and it's sequels
-+ One Shot*, Escaped Chasm, Mother 4* (the fan game), Jimmy and the Pulsating Mass, Dujanah, Hylics, Lakeview Valley*, Golf Story*, Ghost Hospital*, 
+## 1.1 Some Examples
 
-(names marked with an * are games I have not yet played myself)
+I will call the genre omori is in "earthbound-like". I think most will be familiar with the term "souls-like" which may have more clearly formulated properties [1] but for the sake of argument I will simply give a one-line: "A souls-like game is a game that was inspired by Dark Souls". An earthbounhd-like, then, is obvioulsy a game inspired by Mother 2: Earthbound but I think it goes deeper than that. As I aim to illustrate in this piece Earthbound-like follow a very clear timeline of influences, earthbound way first, then other games were inspired by it and similarly to bloodborne for souls-like or castleania for metroidvanias became part of the genres pool of mechanics and inspirations. Hopefully as I illustrate my point with more and more games you yourself will form a list of properties for earthbound-likes so specific that they warrant to become a sub-genre themself. 
 
-The intention of this paper is to find what unites these games and discuss that in detail however before we take them on one-at-a-time I would like to add two properties to the above definition:  
-- The biggest appeal of the the game is it's story or presentation, not the gameplay
-- If it is made by an independent studio (and not just 1 person) not associated with a mainstream publisher, that studio is located in the western world
-- their settings can be described as surreal and/or quirky and endearing
-- If the game has turn-based battles there is a "twist" to them, like adding mechanics from a different genre or tieing the usually D&D-simulating combat into the setting
+Here is a non-exhaustive non-ordered list of games[2] I consider Earthbound-likes:
 
-Now that you know what games I'm talking about I would like to start to look at the history of the genre as I think every game on this list can be traced back to a very small set of games that inspired them. Also: yes, every earthbound-like can also be considered jRPG, however the inverse is not the case. Also also I am not trying to promote the term "earthbound-like", it simply is what I will call them in this piece and in fact the validity of having a specific genre for these is very much in question.
++ The Mother Series (Mother 1, Mother 2: Earthbound, Mother 3)
++ Mario RPG (SNES), Paper Mario 64, Paper Mario: TTYD, Mario & Luigi: Super Star Saga, M&L: Bowsers Inside Story, M&L: Partners in Time
++ Most if not all of the commercially released RPG-Maker games, including but not limited to:
+    + Yumei-Nikki, Yumei 2kki, LISA, To the Moon, OFF, One Shot, Escaped Chasms, .flow, Mother 4 (the fangame), IB, Dreaming Mary, The Witch's House, Jimmy and the Pulsating Mass, Dujanah, Hylics, Suits: A Business RPG
++ Undertale, Deltarune
 
-## History
-### Earthbound
+I think most people can already form a somewhat clear picture of what I mean but let's start this for real and what better place to star than the game that started it all.
 
-#### Raving About Earthbound for a Bit
-As the term may implay, all earthbound-likes are like - well - earthbound. Earthbound is an SNES game that was
-released in late 1990 and that was by all metrics a failure, Japan kinda liked it but in the US a really wierd
-marketing campaing based on foul-smelling stickers TODO: cite along with an above-average price of the cartridge
-because it came with a guide book ensured that Mother 2: Earthbound was a commercial disaster to the point where
-PAL regions didn't even get a version at all. My personal history with Earthbound was as predicted: I've never
-heard of it and went back to emulate it around 2013 and it went on to change my life as it did with many others. 
-Back then (that is in 2010 but in 1990 especially) Earthbound was special and unlike anything else. It looked
-like a regular final-fantasy rip-off jRPG but it didn't feel like one. First the setting was... western? It
-didn't try to emulate any specific culture but there's burger shops and traveling jazz roadshows and police
-and arcades and baseball bats, etc., it was unlike anything Final Fantasy or Dragon Quest which at that point
-(and arguably today) were the defining trends in first-party jRPGs. Along-side a fresh take on urban america
-Earthbound was also unapologetically weird. I think that's why the US Marketing team focused on those weird
-smelly stickers, one boss is literally a pile of vomit, to get to his dungeon you have to wait behind a
-waterfall for an real-life-time hour, way-blocks that would be a rock or a tree in any other game are a
-metal pencil-shaped statue and to get rid of the roadblock you use - what else - a pencil eraser. I've been just
- listing things in the game but I really can't overstate how weird and unusual everything in terms of setting was
- . The story itself was farely standard, young boy gets magical powers and goes on a heros journey to prevent big
-evil bad from ending the world. But even with this Earthbound did something extra, the last boss "Gigyas" is not
-really a villain, it's a non-corporeal entity of pure evil. It feels more like a force of nature than any specific
-individual and it's boss fight (the last of the game) is famously traumatizing. In summary earthbounds setting and story
-may not be good by objective standards but it is definitely objectively weird and unlike many other things. Pair this
- with what is one of the video game soundtracks every conceived (especially for SNES hardware) and decent-ish pixel art
- and you have a game that even though it failed it's first attempt at having an impact did so 20 years later.
- 
-#### Earthbounds Battle System
-About 30% of your play-time of Earthbound is spend battling and I'd like to focus in on this because it provides a good 
-baseline with which to compare every other battle system in this paper. While Dragon Quest and Final Fantasy usually 
-just emulate D&D dice-rules earthbound has 2 gimmicks. The first gimmick is that it's weird an obtuse, there's status
- ailments like having a runny nose or becoming infected with a parasitic mushroom that inverts you button. None of
-these status effects add any depth to the combat in my opinion what they do add though is flavor. The other gimmick
-is the back-of-the-box features, the thing every video essayist names when talking about the battle system the
-"rolling health meter". It works like this: When you take damage your 3-digit health starts ticking down at a fixed
-rate relative to the games framerate. For example if you have 800 health and take 900 damage your health starts
-ticking down but the battle continues, if you manage to heal for 100 health while the meter is at 250 the meter
-stops and you will be at 350 HP after healing. Surface level analysis would show that this system is "better" than
-just a plain Dragon Quest system of crits and selecting attacks with the A button because it adds depth, suddenly time
-is also a factor in battle and this increases tension. I would argue that the rolling health meter is clumsy, for
-example as stated it rolls at a speed relative to the framerate of the game which means that while an enemy is
-doing an attack, while your allies animations are playing out, while the battle log is scrolling, the health meter
-keeps rolling down. All of these factors are out of your control so saying that the health meter adds
-singnificant complexity is a fraily weak statement in my opinion. Effectively the rolling health meter makes it so 
-a non-zero number of times the player will frantically try to menu and save themself just in time which creates
-a positive memory and just by this metric it is worth the inclusion in my opinion, however as states I consider
-this features a gimmick and much like the weird status effects and enemy designs add flavor, not complexity. I
-would like to restate this because it is in my opinion an almost omni-present feature of earthbound-likes
-: Non turn-based Additions to the battle system are meant to add complexity but end up adding flavor more
-than anything else.  
-Overall Earthbound is a good game, I am not here to review earthbound but what I am here is to illustrate it's
-influence and much like 2013-me was playing earthbound on an emulater during breaks between college classes an
-entire                     if (left_x != 0)
-generation of jRPG fans had let Earthbound make a significant live-long impression on them and if nothing else 
-I commend any game that holds that power. 
+[1] Properties Include: Punishing and methodic gameplay, a rechargable health item that has a limited amount of uses per death (estus flask), strategically played save points (bonfires), loosing a currency upon death but being given the chance to visit the place of demise and collect most or all of the lost currency, etc.
+
+[2] Links for all indie games listed (I recommend every single one):
+
+Yumei-Nikki: https://store.steampowered.com/app/650700/Yume_Nikki/
+Yumei 2kki: https://yume2kki.fandom.com/wiki/Downloads
+LISA:  https://dingalingboy.itch.io/lisathepainfulrpg
+To the Moon: https://store.steampowered.com/app/206440/To_the_Moon/
+OFF: https://off.fandom.com/wiki/Downloads
+One Shot: https://futurecat.itch.io/oneshot
+Esaped Chasms: https://tuyoki.itch.io/escaped-chasm
+Undertale: https://store.steampowered.com/app/391540/Undertale/
+.flow: http://dotflow.wikidot.com/downloads
+IB: https://vgperson.com/games/ib.htm
+Dreaming Mary: https://dreaming-games.tumblr.com/post/83184637358/dreaming-mary-release-with-bug-fix
+The Witch's House: https://gshowitt.itch.io/the-witch-house
+Jimmy and the Pulsating Mass: https://housekeepinggames.itch.io/jimmy-and-the-pulsating-mass
+Dujanah: https://jackspinoza.itch.io/dujanah
+Hylics: https://mason-lindroth.itch.io/hylics
+Suits: A Business RPG: https://store.steampowered.com/app/410670/Suits_A_Business_RPG/
+
+## 2. History & Lineage
+
+### 2.1 Earthbound
+~~Earthbound is the Dark-Souls of..., no, I'm sorry, what I meant to say is that~~ When Earthbound released it tanked in sales, became relatively obscure almost immediately and didn't even get a PAL import because Nintendo didn't want to bother. To this day Mother 3 which is objectively a great game and whos Protagonist is in Smash Bros still has not received official localization, that's how traumatic Earthbounds lack of success was. Many blamed this on the stink-based (https://earthboundcentral.com/2010/03/earthbound-in-nintendo-power-73/) advertising but I personally believe it was mostly due to the fact that the game was bundled with a strategy guide, raising the price above what similar games would've costed off the shelf and most children in 1994 weren't willing to take a risk and spend their entires years gaming-budget on a game actively marketed as super weird, out there and unlike any other. That last point is not technically true however, Earthbound was much alike it's prequel: Mother 1 for the NES (later released as Earthbound Origins on the nintendo Eshop). I don't want to dwell to deep on earthbounds history and Mother 1 as this piece will already be long enough but I do want to note here that earthbound wasn't iconic when it came out, it took some time to become iconic. I personally played the game for the first time in 2014 on an emulator and while I think that I was relatively late to the party most people who would eventually get *really* into earthbound played around the start of the 2000s. 
+
+https://earthboundcentral.com/wp-content/uploads/2015/01/Secret_Saturn_Valley_in_Mother_by_GreggJanus.png
+
+So what made earthbound special? Fo one it was a good game but I think what made it stand out is how unlike traditional jRPG [3] it really was. It was set in suburban america, you had to actually put your money into an ATM, enemies were rabid dogs, angry ducks, homeless people, 3 psychic-ly connected moles, full-sized dinosaurs, a guy that lives inside a dungeon and the dungeon also walks around, you get the idea. It's story was almost nonsensical, an episodic fever dream of walking around a surreal world erasing pencil-shaped roadblocks made out of metal and waiting behind a waterfall for 1h to fight a literal pile of vomit. Earthbound was odd, quirky and - unlike it's advertising - incredibly charming. Pairing that with great graphics even by todays standards and one of the best soundtracks in all of gaming and you get a cult classic. All of these things only made up half of Earthbounds gameplay though, let's look at the other part.
+
+#### 2.1.1 Earthbounds Combat
+
+https://lparchive.org/Earthbound/Update%2021/16-capture_03042008_100928.png
+
+Like all traditional jRPGs earthbounds gameplay exists in one of two states, in the "overworld" you walk around talking to people, maybe solving some puzzles. While in the overworld you can walk into an enemy who may or may not be also trying to walk into you to start a very abstract representation of a battle. Instead of having a sense of place, earthbound simply had sprites floating in front a 1994 SNES SFX-Chip-induced shader fever dream. Pairing this with the weird and unique enemy designs (c.f. above figure) made for an extremely unusally looking battle system. What took place underneath that asthetic however was a lot like traditional jRPGs, maybe even generic. Peopl usually don't feel that way when thinking about their time with Earthbound though. This is for multiple reason: First of all - again - the fact you're fighting all these crazy creatures inherently brings a lot of spice and memorability into a battle system, but earthbound tries on a mechanical level as well: A lot (and I mean "a lot" as in "too many") esoteric status ailments add to the usual rock-paper-scissor weakness-means-more-damage system reminiscent of Pokémon. While there's traditional status' like being asleep, poisoned and burning there's also: having fleas, having a runny nose, feeling homesick, having a mushroom grow on you, feeling "strange", having a sunstroke. The actual [mechanical effects](https://earthbound.fandom.com/wiki/Status_Ailment) of these is fairly unclear and I think most player could not name mechanical impact they have but that didn't matter, much like the choice of setting and choice of enemies the quirky status' added flavor rather than depth. And most people have to admit, it's fun to play a game on your snes that has your character get a runny nose mid-combat so all the status' were by all accounts worth the inclusion.
+
+http://lparchive.org/Earthbound-(by-Leavemywife)/Update%2005/71-hproll.gif
+
+Another often remember feature is the "rolling" health bar when loosing or gaining health rather then instantly adding the amount to the party-members health, it instead adds to them slowly in real time meaning while you menu or while attack animations are playing out the health slowly "rolls" up or down (c.f. the above gif). The intended emergent gameplay moment of this is for you take a huge hit that would ordinarily instantly kill your character and instead having the health roll down at rate that now incentivizes fast action, if you're quick enough (and you get lucky enough that the other animations aren't too long) you may be able to select a healing item at which point your health immediately starts ticking up instead, preventing certain death. I think most player will have at least one moment like this and for that alone it was worth the inclusion but I also think that much like the numerous weird status ailments it only provides the *illusion* of depth. If you were to replace the system with the traditional die-instantly way you would only have to barely if at all tweak numbers for fights to go the exact same way they are now outcome-wise, all that changes is the potential emotional impact. I don't want to critique this system too much, I think it is a good system but much like the status ailments it's inclusion is not to add depth but to add flavor. I think it's important to recognize this and (spoiler alert) it will be a fundamental principle in games that followed in earthbounds footsteps.
+
+#### 2.1.2 Gygyas 
+
+https://i.pinimg.com/originals/14/a4/f4/14a4f46bbdc0f77e93996fe1df22300a.gif
+
+Gigyas is the penultimate villain and final boss of earthbound and it's honestly hard to describe what it even is. It's an abstract non-corporeal personification of evilness. You get to the final fight by first traveling into the future where all life on earth and even it's athmosphere is completely destroyed. Fighting it you get the first earthbound fight where there's no enemy sprite (except for pokey at during the first phase). Rather the shader-powered background is the enemy. Shigesato Itoi, Earthbounds designer, creditet the experience of walking into the wrong cinema and seeing a very violent scene as a young child as inspiration for Gigyas presentation and I think as such it is one of the best villains in all of gaming, not because of writing or mechanics but because of it's position relative to the game it's in. Up until this earthbound was really light hearted, there were some midly disturbing concepts like being in a cult and zombies but at 30s before midnight of the plot earthbound goes from Pokémon to Lovecraft out of nowhere. I think that this and only this is why it Gigyas has such an impact and I want to make note of the following: The things that make Earthbound special and memorable aren't inherently so due to the properties of the game, rather it's those properties relation to established norms, the established norms of traditiona jRPGs, of kids games, of it's owns plots tone. Earthbound is a traditional jRPG in every way but it tries very very hard to be unlike them. Rather than adding to the gameplay in a mechanically meaningful way it adds spice, so much spice in fact that instead of seeming try-hard it ascended to cult status and became one of the most influential games of all time. Hopefully I'm not coming off as too negative here but Earthbound is a good game *despite* it's gameplay, *despites* it's writing and what it showed the world was truely unique because of that... Until it wasn't 15 years later.
+
+[3] Games with turn-based combat and 2d sprite-based graphics such as the Final Fantasy and Dragon Quest Series, Chrono Trigger, Suikoden, Tales of Phantasia, Xenogears and most recently Octopath Traveler. Unlike my list of earthbound-likes I don't think I have to elaborate more on what I mean when I say "traditional jRPG"
 
 ### RPG Maker 
 
