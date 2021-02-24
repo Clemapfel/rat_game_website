@@ -76,38 +76,23 @@ Another often remember feature is the "rolling" health bar when loosing or gaini
 
 https://i.pinimg.com/originals/14/a4/f4/14a4f46bbdc0f77e93996fe1df22300a.gif
 
-Gigyas is the penultimate villain and final boss of earthbound and it's honestly hard to describe what it even is. It's an abstract non-corporeal personification of evilness. You get to the final fight by first traveling into the future where all life on earth and even it's athmosphere is completely destroyed. Fighting it you get the first earthbound fight where there's no enemy sprite (except for pokey at during the first phase). Rather the shader-powered background is the enemy. Shigesato Itoi, Earthbounds designer, creditet the experience of walking into the wrong cinema and seeing a very violent scene as a young child as inspiration for Gigyas presentation and I think as such it is one of the best villains in all of gaming, not because of writing or mechanics but because of it's position relative to the game it's in. Up until this earthbound was really light hearted, there were some midly disturbing concepts like being in a cult and zombies but at 30s before midnight of the plot earthbound goes from Pokémon to Lovecraft out of nowhere. I think that this and only this is why it Gigyas has such an impact and I want to make note of the following: The things that make Earthbound special and memorable aren't inherently so due to the properties of the game, rather it's those properties relation to established norms, the established norms of traditiona jRPGs, of kids games, of it's owns plots tone. Earthbound is a traditional jRPG in every way but it tries very very hard to be unlike them. Rather than adding to the gameplay in a mechanically meaningful way it adds spice, so much spice in fact that instead of seeming try-hard it ascended to cult status and became one of the most influential games of all time. Hopefully I'm not coming off as too negative here but Earthbound is a good game *despite* it's gameplay, *despites* it's writing and what it showed the world was truely unique because of that... Until it wasn't 15 years later.
+Gigyas is the penultimate villain and final boss of earthbound and it's honestly hard to describe what it even is. It's an abstract non-corporeal personification of evilness. You get to the final fight by first traveling into the future where all life on earth and even it's athmosphere is completely destroyed. Fighting it you get the first earthbound fight where there's no enemy sprite (except for pokey at during the first phase). Rather the shader-powered background is the enemy. Shigesato Itoi, Earthbounds designer, creditet the experience of walking into the wrong cinema and seeing a very violent scene as a young child as inspiration for Gigyas presentation and I think as such it is one of the best villains in all of gaming, not because of writing or mechanics but because of it's position relative to the game it's in. Up until this earthbound was really light hearted, there were some midly disturbing concepts like being in a cult and zombies but at 30s before midnight of the plot earthbound goes from Pokémon to Lovecraft out of nowhere. I think that this and only this is why it Gigyas has such an impact and I want to make note of the following: The things that make Earthbound special and memorable aren't inherently so due to the properties of the game, rather it's those properties relation to established norms, the established norms of traditiona jRPGs, of kids games, of it's owns plots tone. Earthbound is a traditional jRPG in every way but it tries very very hard to be unlike them. Rather than adding to the gameplay in a mechanically meaningful way it adds spice, so much spice in fact that instead of seeming try-hard it ascended to cult status and became one of the most influential games of all time. Hopefully I'm not coming off as too negative here but Earthbound is a good game *despite* it's gameplay, *despites* it's literal plot and what it showed the world was truely unique because of that.
+
+..Until it wasn't unique anymore like 20 years later.
 
 [3] Games with turn-based combat and 2d sprite-based graphics such as the Final Fantasy and Dragon Quest Series, Chrono Trigger, Suikoden, Tales of Phantasia, Xenogears and most recently Octopath Traveler. Unlike my list of earthbound-likes I don't think I have to elaborate more on what I mean when I say "traditional jRPG"
 
 ### RPG Maker 
 
-In late 2000 a mere 10 years after earthbound and another 10 before it's resurfacing into the mainstream RPG Maker
-was created. Intended as 50% engine and 50% development tool it boiled down what makes a jRPG to the point where
-anyone can now create one by simply clicking together elements and adding in a few sprites. I sound facetious but
-let me state something clearly right now: RPG Maker is an overwhelming good force on this genre and games in
-general. RPG Maker to jRPGS what Flash was to Animators, suddenly people with barely any IT education
-could and no ressources other than some time could create games, on their own, and the games are actual games
-. RPG Maker was and mostly still is somewhat primitive however. Before we continue and talk about great games
-made in RPG Maker, I would like to critique a lot of the things RPG Maker brings with them as those will also
-be applicable for any game made in it:
-Games run at a window size equal to it's native resolution. What this means is that 1 pixel in a sprite in rpg
-maker is the size of 1 pixel on your physical monitor. As pixel art demands a low native resolution this means rpg
-maker games take place in a window in the center of the screen. As monitors increase in size and resolution this will
-just get worse and worse and is honestly the main issue why this scene of games is a niche thing. Similarly RPG
-Maker games have terrible performance. A game that may displays 50 tiny sprites moving on screen will
-drain the battery of your laptop like you're mining bitcoins. 
-RPG Maker prohibits users from commercially releasing a game that has made substantial modifications to their
-engine. While I get the idea behind this (basically they don't want to make it open source but they also don't want
-to be held liable when someone writes malware) this fact is incredibly limiting when you think about it. While the
-"skill" floor has ben push way down to the point were anyone can now create a jRPGs the corresponding ceiling has
-been nailed down just above ground level and has been legally required to never raise above it. Simply put you
-can't do anything in RPG maker, you can only make a very specific game with a very specific set of features. It
-has to be tile-based, it has to light puzzles or turn-based combat, it has to 2D top down, etc.. To put it
-blunty, RPG Maker is empowering, but it is also incredibly limiting. Not too limiting however to not make
-great games so let's talk about some of those.
+https://cdn.cloudflare.steamstatic.com/steam/apps/383730/ss_c65670a156c17d8a79a2fe44caee977bdae40c17.600x338.jpg?t=1598946198
+
+So you really liked earthbound and you want to make your own Earthbound, what do you do? Well you could get a degree in CS and learn to program and spend 3 years in your bedroom creating a game from scratch OR you could just take earthbound and... make it yours by modifying the actual game for the SNES with hacking tools. This is called romhacking and I only want to mention earthbounds romhacking scene because of one very important actor that will have their start here but even in 2000 people wanted to make their own Earthbound and while they didn't technically need to be able to code it was still kinda hard for the non tech-literate. That is until in late 2000 [RPG Maker](https://www.rpgmakerweb.com/) was created. Intended as 45% Engine, 45% development tool, 10% publishing platform RPG Maker boiled traditional jRPGs down  to their purest form. It was literally designed to be a tropy jRPG, turn-based combat, high-fantasy setting, tile-based movement, 2d-sprites, the works. It was also designed to be incredibly easy to use and it was, much like what Flash was for animators, with RPG Maker every person with a small amount of determination and even smaller amount of money can create their own game. However the games were inherently limited. Modifying the RPG Maker engine is hard, not only do the Terms of Service not really like that but it just doesn't give tools and absolute freedom some games need: Games had to run in a tiny window at native resolution, it was terribly optimized, displaying fonts broke constantly, features were slowly getting rolled out with bad backwards-compatibility, it wasn't a very good game engine back then (I heard it's pretty decent nowadays though) but what it was very good at was giving players who were really into that Earthbound game a tool to make their own. And they did. 
 
 #### Yumei Nikki
+
+https://giantbomb1.cbsistatic.com/uploads/original/2/24373/2466891-yume_kyuu.png
+
+http://www.bitcreature.com/wp-content/uploads/2012/07/Yumi.jpg
 
 Yumei Nikki was released by the highly emblematic "Kikiyama", the games name in japanese translates to "dream diaries" 
 and while it's a very odd game I am of the opinion it is one of the most influential games of all time. Yumei Nikki
