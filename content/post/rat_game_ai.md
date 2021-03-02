@@ -1,5 +1,7 @@
+### 1. Introduction
 
-TODO: introduction
+On October 17th, 2005 "F.E.A.R.", a horror FPS, released. It had one of the most widely appreciated AI, controlling multiple enemy soldiers with one entity, formulating goal-oriented and seemingly well-coordinated plans to flank the player, user objects and their surrounding to their advantage and support each other with cover fire and the like. On November 17th, 2008 "Left 4 Dead" a survival game with zombies introduced the world to an AI Director that not only controlls hordes of zombies but directs them in a way that when the player is being overwhelmed they act less aggressive and have worse pathfinding and if the player is killing man without problem it will call in reinforcements and dynamically up the tension.
+In April 2007 "Pokémon Diamond" a turn-based jRPG released and it's final boss Cynthia was what the community considers one of the hardest bosses in Pokémon. Cynthias AI randomly choose one of 4 moves, could heal up to 3 of her 6 Pokémon at most once and would switch if she notices that her Pokémon is weak to your Pokémon. You may notice a bit of a discrepancy in sophistication there but let's say it's a product of it's time and Pokémon isn't about battling anyway. Well, in July 2018, Nintendo released what I consider one of the most quintessential jRPG: Octopath Traveler. Octopath travelers enemy choose from a small list (less than 4) of unique attacks at random. If their health is low they may heal. Furthermore every bosses will use a certain attack like a big AOE damage hit every n turns. That's it. I could go on but I personally consider most of the jRPGs and similar battle systems since their inception to be vastly behind the flashy 3d FPS AI and that's odd to me, surely it must be way, way easier to implement an AI for something that isn't real time, doesn't have a taxing giant engine running at the same time, is inherently divided into turns and contains at most 8 - 12 entities instead of entire armies of zombies. Yet most jRPGs don't bother, it's like they just gave up on trying. Well I did, I tried to extend what has become a trope at this point and introduce a similar level of complexity into turn-based jRPG AI by employing simple tricks and clever design. Nothing that I will detail in this post requires a college degree, there's no dynamic learning algorithm or somethign like that and that's the point. This article aims to give designers a guide on how to set up their system in a way where the theoretical upper limit of sophistication for their AI is endless and furthermore shed light on how it works in my game in detail. 
 
 ### 2. Entities and their Properties
 
@@ -260,21 +262,23 @@ Now that we have full access to all past actions our AI can decide in a way more
 
 So far we taught our AI how to choose which move not to use, however it still decides at pure random which of the possible moves to use. To alleviate this we give each move a *weight* or score, the higher the score the better of an decision it is to use that move. The AI picks the move with the highest score, if two scores are the same we randomized which one to pick. [2]
 
-We could just program a 15k lines of code AI that has a case for each move and goes through them one by one but from an implementation perspective this is not very good practice. To make the score system like this scalable I consider it a good choice to instead encapsulated the scoring-scheme inside each move. Let's consider our poisoned dagger (c.f. Chapter 2) example again:
+[2] Note that from a game design perspective it is ill-advised to have the AI pick the objectively best option every time. This will create a situation similar to theoretical game theory where both participants are assume to make the most rational decision based on their current information. You can but shouldn't assume your player to work this well, humans aren't perfect and requiring perfection will prove not fun fairly quick. Instead randomize an error rate for your AI, 25% of the time it picks from the top5 options instead of the top option for example.
+
+We could just write a 15k lines of code AI that has a case for each move and goes through them one by one but from an implementation perspective this is not very good practice. To make a scoring system like this scalable, I consider it a good choice to instead encapsulated the scoring-scheme inside each move. Let's consider our poisoned dagger (c.f. Chapter 2) example again:
 
 ```cpp
 // Poisoned Dagger implementation
 
 mana_cost = 10;
 
-void apply(Entity user, Entity target) const { 
+void apply (Entity user, Entity target) const { 
 
 	user._mana -= this->_mana_cost;
 	target._health -= (user._attack - target._defense);
 	target._status.insert(POISONED);
 }
 
-float score(Entity user, Entity target) const {
+float score (Entity user, Entity target) const {
 
 	// total score (recommendation of wether to use the move at all)
 	float score = 0;
@@ -311,11 +315,28 @@ Poisoned Dagger Scores:
 	Entity D: 3;
 	Entity E: 2;
 ```
-Simply from the scores we can deduce that A and C are allies of the user, B is not poisoned but has enough health, E is already poisoned but would be killed be the move and D is not poisoned and would be killed. A naive approach would just tell the AI to pick D as it has the highest score but if you think about, for both D and E the poisoning is irrelevant because it will die instantly anyway. I intentionally implemented the ``score`` function dodgily likes this to illustrate how scoring a target is more art than science. Which condition rewards how points is up to the designer and it is advised to introduce some amount of fuzzyness on top of that so the AI doesn't become predictable. 
-Let's 
+Simply from the scores we can deduce that A and C are allies of the user, B is not poisoned but has enough health to tank the hit, E is already poisoned but would be killed be the move and D is not poisoned and would be killed. A naive approach would just tell the AI to pick D as it has the highest score but if you think about, for both D and E the poisoning is irrelevant because it will die instantly anyway. I intentionally implemented the ``score`` function dodgily likes this to illustrate how scoring a target is more art than science. Which condition rewards how many points is up to the designer and it is advised to introduce some amount of fuzzyness on top of that so the AI doesn't become predictable. One may propose an approach of doing a proper statistic optimization or simulating test fights and numerically evaluating which scoring theme results in the most wins but I would advise caution, not only is this approach unnecessarily hard work but we're also not technically dealing with an optimization problem. This AI is for a video game, it shouldn't always act optimally and the subtle hand of a designer modifying how each situation is evaluated instead of simply computing the optimal choice and then randomnly either picking it or not will in my opinion result in a more fun opponent.
+Let's go back to ``normalize``, if you only consider scores for a single move it's simple to pick the best version, but what if our scoring results look like this:
 
-[2] Note that from a game design perspective it is ill-advised to have the AI pick the objectively best option every time. This will create a situation similar to theoretical game theory where both participants are assume to make the most rational decision based on their current information. You can but shouldn't assume your player to work this well, humans aren't perfect and requiring perfection will prove not fun fairly quick. Instead randomize an error rate for your AI, 25% of the time it picks from the top5 options instead of the top option for example.
+```
+Poisoned Dagger Scores:
+	Entity A: -10;
+	Entity B: 1; 
+	Entity C: -10;
+	Entity D: 3;
+	Entity E: 2;
 
+Heal Scores:
+	Entity A: 1;
+	Entity B: -11;
+	Entity C: 2;
+	Entity D: -7;
+	Entity E: -3;
+```
+
+How do you pick which move to use? I haven't shown you how ``heal`` scoring works just returning a number is meaningless. One could argue that each score should take into account all other scores and give a proportional result but this again is not very scalable. Instead the scores should be properly normalized so comparing two moves as well as two targets for the same move is valid. 
+
+#### 3.3 Comparing Scores
 
 
 
