@@ -1,5 +1,5 @@
 +++
-title = "Defining Earthbound-likes: A Genealogy and Personal Examination "
+title = "Defining Earthbound-likes: A Genealogy and Personal Examination"
 date = 2021-03-01T22:41:08+01:00
 author = "C. Cords"
 draft = false
@@ -10,6 +10,21 @@ layout = "post/single"
 ## Abstract
 
 ### Table of Contents
+
+1. Motivation
+    1.1 Some Examples
+2. Earthbound
+    2.1 Earthbounds Combat
+    2.2 Giygas
+3. RPG Maker
+3.1 Yume Nikki
+3.2 OFF
+4. Super Mario RPG and it's Sequels
+5. LISA: The Painful
+5.1 And then came many Others
+6. Undertale
+7. An actual Definition
+8. Footnotes
 
 ## 1. Motivation
 
@@ -63,9 +78,7 @@ For now, here is a non-exhaustive, non-ordered list of games I consider Earthbou
 
 I think most people that are familiar with these games can already form a somewhat clear picture of what I mean when I say Earthbound-like but let's build my definition step by step, with the first step being, of course:
 
-## 2. History & Lineage
-
-### 2.1 Earthbound
+## 2 Earthbound
 ~~Earthbound is the Dark-Souls of ...~~ When Earthbound released it tanked in sales, became relatively obscure almost immediately and didn't even get a PAL import because Nintendo didn't want to bother. To this day Mother 3 which is objectively a great game and whos Protagonist is in Smash Bros still has not received official localization, that's how traumatic Earthbounds lack of success was to them. Many blamed this on the <a href="https://earthboundcentral.com/2010/03/earthbound-in-nintendo-power-73/" target="_blank">stink-based</a> advertising but I personally believe it was mostly due to the fact that the game was non-optionally bundled with a strategy guide thus raising the price above what similar games would've costed off the same shelf. Most children in 1994 weren't willing to take a risk and spend their entires years gaming-budget on a game actively marketed as super weird and unlike any other game they knew. 
 That last point is not technically true however, Earthbound was a whole lot like it's prequel: Mother 1 for the NES (later released as <a href="https://www.nintendo.co.uk/Games/NES/EarthBound-Beginnings-1025416.html" target="_blank">Earthbound Beginnings</a> on the Nintendo Eshop. I don't want to dwell to deep on Earthbound history and Mother 1, there are <a href="https://earthboundcentral.com" target="_blank">entire websites</a> dedicated to it and this piece will already be long enough as is but what I want you to want to note here is that Earthbound wasn't iconic when it came out, no, it took some time to become iconic. I personally played the game for the first time in 2014 on an emulator however I was relatively late to the party most people who would eventually get *really* into Earthbound played it around the start of the 2000s. 
 
@@ -77,7 +90,7 @@ That last point is not technically true however, Earthbound was a whole lot like
 
 So what made Earthbound special? Fo one it was a good game but I think what made it stand out is how unlike traditional jRPG <a href="#[2]">[2]</a> it really was. It was set in suburban america, you had to actually put your money into an ATM, enemies were rabid dogs, angry ducks, homeless people, three psychicly connected moles, full-sized dinosaurs, a guy that lives inside a dungeon and the dungeon is also a statue/robot that walks around, you get the idea. It's story was almost nonsensical, an episodic fever dream of walking around a surreal world erasing pencil-shaped roadblocks made out of metal and waiting behind a waterfall for 1h in real time to fight a literal pile of vomit. Earthbound was odd, quirky and - unlike it's advertising - incredibly charming. Pairing that good graphics even by todays standards and one of the best soundtracks in all of gaming and you get a cult classic. While all of these things are important, they only made up half of Earthbound gameplay.
 
-### 2.1.1 Earthbounds Combat
+### 2.1 Earthbounds Combat
 
 <center>
 <img src="https://lparchive.org/Earthbound/Update%2021/16-capture_03042008_100928.png
@@ -95,7 +108,7 @@ Like all traditional jRPGs, gameplay in Earthbound is in one of two states: in t
 
 Another often remember feature is the "rolling" health bar (c.f. Fig. 2.2). When loosing or gaining health, rather than instantly adding the given amount to the party-members healthbar it instead adds to it slowly and in real time. "Real time" meaning that while you menu or wait for attack animations to play out the health slowly "rolls" up or down. The intended emergent gameplay moment of this is for you take a huge hit that would ordinarily instantly kill your character and instead having the health roll down at rate that now incentivizes fast action, if you're quick enough (and you get lucky enough that the other animations aren't too long) you may be able to select a healing item at which point your health immediately starts rolling up instead, avoiding death. I think most player will have at least one moment like this and for that alone this system was worth the inclusion but I also think that much like the numerous weird status ailments it only provides the *illusion* of depth. If you were to replace the system with the traditional die-instantly way of taking damage you would would only need to redesign a single-digit number of encounters <a href="#[3]">[3]</a>ver an entire playthrough in order for them to go the exact same way, all that really changes is the potential emotional impact. I don't want to critique this system too much, I think it is a good system but much like the status ailments it's inclusion did not result in adding significant death, it resulted in adding flavor. I think it's important to recognize this and (spoiler alert) it will be a fundamental principle in games that followed in Earthbound footsteps.
 
-#### 2.1.2 Giygas 
+#### 2.2 Giygas 
 
 <center>
 <img src="https://i.pinimg.com/originals/14/a4/f4/14a4f46bbdc0f77e93996fe1df22300a.gif">
@@ -146,8 +159,8 @@ tiled top down perspective and being made in RPG Maker but by being so strange y
 influence on a whole generation of indie-devs. Maybe it is because of the RPG Maker community but over the years most games inspired by earthbound were made by people who were also in turn inspired by Yume Nikki and I think seeing this game as the Castlevania of Metroidvanias, the Bloodborne of Souls-like, one of the ur-members of the Earthbound-like lineage sheds light on not only it's influence but on what made the game interesting even in 2003.
 
 <center>
-<img src="https://static.wikia.nocookie.net/yumenikki/images/7/72/Dence_Woods%28Green_man%29.jpg/revision/latest?cb=20130304095713">
-<br><b>Figure 3.1.1</b>: <i>Shitai-San (yes, all of them have names), the car crash victim in Yume Nikki. (source: yume nikki wiki)</i>
+<img src="https://steamuserimages-a.akamaihd.net/ugc/931550164872436340/8926018E340CAF017FD63013C64A282AF3E0E32A/?imw=1024&imh=505&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true">
+<br><b>Figure 3.1.1</b>: <i>There is a very low chance that operating the light switch in this house in Yume Nikki leads to an other non-interactable encounter with Uboa. <a href="#[4]">[4]</a> </i>
 </center>
 
 Similar to the chapter on Earthbound I would like to take inventory of Yume Nikkis properties:
@@ -403,14 +416,63 @@ Footnotes:
 
 <p id ="[2]">[2] Games with turn-based combat and 2d sprite-based graphics such as the Final Fantasy and Dragon Quest Series, Chrono Trigger, Suikoden, Tales of Phantasia, Xenogears and most recently Octopath Traveler. Unlike my list of earthbound-likes I don't think I have to elaborate more on what I mean when I say "traditional jRPG"</p>
 
-<p id="[3]">[3] If I'm not mistaken only the a href="https://earthbound.fandom.com/wiki/Nuclear_Reactor_Robot" target="_blank">end-game round robot that explodes when you kill it</a> is an enemy that was designed specifically with the rolling health in mind</p>
+<p id="[3]">[3] If I'm not mistaken only the <a href="https://earthbound.fandom.com/wiki/Nuclear_Reactor_Robot" target="_blank">end-game round robot that explodes when you kill it</a> is an enemy that was designed specifically with the rolling health in mind</p>
 
+<p id="[4]">[4] Note how the style of room layout and perspective is very similar to earthbound: 
+
+<center>
+<img src="https://blenderartists.org/uploads/default/original/3X/a/3/a3bc34a8540c4018467b9cc54cd57cc5dcfa0361.png" style="width:660px;object-fit:fill">
+<img src="https://steamuserimages-a.akamaihd.net/ugc/931550164872436340/8926018E340CAF017FD63013C64A282AF3E0E32A/?imw=1024&imh=505&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true">
+</center>
 
 
 <hr>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 ### Hidden Epilogue: Is rat_game an earthbound-like?
+
+(content warning:  descpritions of sexual violence towards minors, genocide)
+
+I'd like to say a quick thank you for reading, I know it was a lot. Hopefully I remember to hid this part somewhat as 
+I don't think it will be relevant to a lot of people so feel free to skip this. If you decided not to then let me clear 
+my concious by saying that I lied to you. In the very first paragraph my friend on seeing a screenshot of Omori said 
+"Looks neat but man I just get the vibe it's a generic JRPG in a cool package". I then stated that I intuitively ask 
+myself two question. This is not true, I asked myself one additional question: "Is that what rat_game is too?". What my 
+friend said caused a lot of anxiety, for me rat_game is something very special, something so intensely personal that 
+I don't want any of my irl friends to play it so they don't find out things about me I wouldn't share myself and being 
+told that that was just another one what basically means undertale clone was something I had to process. Now the mathematician 
+in me would try to rationally prove or disprove this by going through my above definition and checking if all of the 
+properties apply to rat_game but I think that's missing the forest for the trees. I shouldn't focus on "is rat_game an earthbound-like" but rather on "is rat_game another generic earthbound-like". I tried my best to sound neutral and 
+not to condescending in this essay but I have played a lot of earthbound-likes both for fun and for research and on top
+of noticing the properties I outlined in my definition I noticed another thing: Most of them are about mildly disturbing 
+things like curable mental-illnesses, midly disturbing violence like car accidents or the death of a family member and 
+most of them don't really try to be head-y high art: Earthbound doesn't really have themes, it's not a commentary on 
+anything, really, it just tried to be a quirky fun game and during that it made fun of some of the genre tropes (like
+waiting behind the waterfall for 30mins irl) while replicating others by the letter (like it being possible to just 
+grind your way through everything). This doesn't make Earthbound worse of course, not everything has to try to be 
+on that level but... I do. Most of the plot of rat_game is a metaphor for events of my life. rat_game isn't just about
+social anxiety or depression, it's about incurable diseases like schizophrenia or severe PTSD, how things like that 
+make your entire life impossible as every single thing in your reality is colored by it and also how despite 
+that people persevere and try to find happiness. rat_game has violence but, idk, at first I wanted to go all out. There's 
+a brothel in rat_game and during the chapter where you explore it you go further and furhter down into the ground and 
+I want each floor to get lower "morally", too. LIke the first floor is vanilla prostitues, then a few floors down it's 
+bdsm, a few floors down it's underage teens and snuff films and what comes even below that I will leave to your 
+imagination. While this is included in the plot know that I would never explicitely show it without having a very, very
+good reason for it. Look towards a film like "irreversiblé" to see how much of a point art has to have to justify having
+a realistic rape scene and I think this is true for all subject matter this extreme. The plot of rat_game involves 
+genocide, during the calamity 60% of all humans were executed. Hell, the second to last chapter takes places exclusively 
+in a giant hole basically where all the bodies were dumped. I don't think most earthbound-likes would go that far but
+that's not really important, I'm not just bringing these up to go "oh see how much more mature I am" I'm bringing this
+up because at no point did I see something in another earthbound-like and go "I want that too in my game". Form the
+beginning I know what I wanted, I wanted to make a game about, me basically. Not literally about me but about my life
+experience and by chance most of the things that happened in my life are way way worse than what many people would even
+tolerate in fiction. And thus, most of the things that happen in rat_game are way way worse than what many people woud
+have tolerated in... earthbound. Or undertale. Or a mainstream RPG Maker game. What I'm trying to say is that rat_game
+is indeed an earthbound-like, there's is no question. However it isn't an earhtbound because I wanted to make an 
+earthbound-like, I wanted to make rat_game and at least consciously I tried so in a vaccuum away from genre tropes 
+or marketability and while I can't guruantee it I at least have hope that that will make it "not just another jRPG about depression" but I guess we all have to find out once it's done. 
+
+C.
 
 (content warning:  descpritions of sexual violence towards minors, genocide)
 

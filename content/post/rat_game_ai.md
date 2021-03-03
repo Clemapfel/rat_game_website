@@ -1,3 +1,12 @@
++++
+title = "Adaptive AI in jRPGs: A Detailed Guide"
+date = 2021-03-01T22:41:08+01:00
+author = "C. Cords"
+draft = false
+url = "/post/jrpg-ai"
+layout = "post/single"
++++
+
 ### 1. Introduction
 
 On October 17th, 2005 "F.E.A.R.", a horror FPS, released. It had one of the most widely appreciated AI, controlling multiple enemy soldiers with one entity, formulating goal-oriented and seemingly well-coordinated plans to flank the player, user objects and their surrounding to their advantage and support each other with cover fire and the like. On November 17th, 2008 "Left 4 Dead" a survival game with zombies introduced the world to an AI Director that not only controlls hordes of zombies but directs them in a way that when the player is being overwhelmed they act less aggressive and have worse pathfinding and if the player is killing man without problem it will call in reinforcements and dynamically up the tension.
