@@ -4,6 +4,7 @@
 
 {{ define "header" }}
   {{ partial "bg_image.html" }}
+
 <style>
 header {
     padding-left: 4em;
@@ -24,7 +25,6 @@ header {
 
 {{ end }}
 
-
 {{ define "main" }}
   {{ if ne $.Site.Params.hackcss.disabled true }}
     {{ with resources.Get "css/conditional/layouts/post/single.css" | minify }}
@@ -33,34 +33,33 @@ header {
   {{ end }}
   <article itemscope itemtype="https://schema.org/BlogPosting">
     {{ template "_internal/schema.html" . }}
+
     <header>
-      <h1 itemprop="headline name" style="color:#27FF92">{{ .Title }}</h1>
+      <a class="muted" id="Title" href="/post" style="float:right; position:relative; top:-2em; color:#00f7c6; "> << back to index </a>
+      <h1 itemprop="headline name" style="color:#00f7c6">{{ .Title }}</h1>
       <hr style="border:1px solid #e92d7d"> </hr>
       <p class="muted">
         {{ partial "post/meta.html" . }}
+        {{ partial "post/related-content.html" . }}
       </p>
       <br>
-
 
       {{ if .Description }}
         <blockquote itemprop="description">{{ .Description }}</blockquote>
       {{ end }}
       {{ partial "image/header.html" . }}
-
     </header>
     <div itemprop="articleBody">
+        <span class="muted" style="float:right; position:relative; top:0em;">
+          <a href="#Comments" style="color:#00f7c6;">&#11015; jump to comments</a>
+        </span>
       {{ .Content }}
+      <span class="muted" style="float:right; position:relative; top:5em;">
+        <a href="#Title" style="color:#00f7c6;">&#11014; jump to beginning</a>
+      </span>
+      {{ partial "comments.html" }}
     </div>
-    <footer>
-      <br>
-      <hr style="border:1px solid #e92d7d"> </hr>
-      {{ partial "post/byline.html" . }}
-      {{ partial "post/related-content.html" . }}
-    </footer>
+
   </article>
 {{ end }}
-{{ define "footer" }}
-  <small class="muted">
-    {{ partial "copyright-notice.html" . }}
-  </small>
-{{ end }}
+
