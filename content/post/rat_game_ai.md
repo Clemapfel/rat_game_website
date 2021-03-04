@@ -5,6 +5,7 @@ author = "C. Cords"
 draft = false
 url = "/post/jrpg-ai"
 layout = "post/single"
+categories = ["programming", "rat_game"]
 +++
 
 ### 1. Introduction

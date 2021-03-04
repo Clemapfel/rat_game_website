@@ -5,6 +5,7 @@ author = "C. Cords"
 draft = false
 url = "/post/earthbound-like"
 layout = "post/single"
+categories = ["game design"]
 +++
 
 ## Abstract
