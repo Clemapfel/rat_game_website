@@ -1,5 +1,5 @@
 +++
-title = "Adaptive AI in jRPGs: A Detailed Guide"
+title = "[WIP] Adaptive AI in jRPGs: A Detailed Guide"
 date = 2021-03-01T22:41:08+01:00
 author = "C. Cords"
 draft = false
@@ -21,7 +21,12 @@ The actors during battle are called "Entity", I think it's easiest to compare th
 
 ```cpp
 
-enum StatusAilment { DEAD = -1, NO_STATUS = 0, POISONED = 1, STUNNED = 2, BURNED = 3, FROZEN = 4};
+enum StatusAilment { 
+    DEAD = -1, 
+    NO_STATUS = 0, 
+    POISONED = 1, 
+    STUNNED = 2
+};
 
 struct Entity {
 
@@ -153,7 +158,7 @@ pair<Move, Entity> ask_ai_for_action(user)
 ```
 Randomness is often desirable for AI as it makes it impossible to know for sure what move the enemy will make and thus prevents trivializing counterplay but this is not the way to go about it. For one the ai picks one target from *all* entities, so it may by chance stab another enemy (it's ally) or even itself. Furthermore if the user does not have enough mana to user the move, it will fail. We can prevent this by constraining the choice of move and target while still utilizing randomness
 
-```
+```cpp
 pair<Move, Entity> ask_ai_for_action(user) 
 {
 	pair<Move, Entity> out;

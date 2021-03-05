@@ -6,19 +6,9 @@
   {{ partial "bg_image.html" }}
 
 <style>
-header {
-    padding-left: 4em;
-    margin-left: -4em;
-    padding-right: 4em;
-    margin-right: -4em;
-
-    padding-top: 0em;
-    margin-top: -1.5em;
-    padding-bottom: 2em;
-    margin-bottom: -5em;
-
-    min-height: 10vh;
-
+main {
+    padding-top: 3em;
+    margin-top:-3em;
     background-color: #1d1d1d;
 }
 </style>
@@ -35,7 +25,9 @@ header {
     {{ template "_internal/schema.html" . }}
 
     <header>
-      <a class="muted" id="Title" href="/post" style="float:right; position:relative; top:-2em; color:#00f7c6; "> << back to index </a>
+      <span class="muted" style="float:inherit; position:relative; top:1em;">
+        <a href="/post" style="color:#00f7c6;"> << back to index</a>
+      </span>
       <h1 itemprop="headline name" style="color:#00f7c6">{{ .Title }}</h1>
       <hr style="border:1px solid #e92d7d"> </hr>
       <p class="muted">
@@ -61,5 +53,9 @@ header {
     </div>
 
   </article>
+{{ end }}
+
+{{ define "footer" }}
+  {{ partial "footer.html" }}
 {{ end }}
 

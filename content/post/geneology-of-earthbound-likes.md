@@ -1,5 +1,5 @@
 +++
-title = "Defining Earthbound-likes: A Genealogy and Personal Examination"
+title = "[WIP] Defining Earthbound-likes: A Genealogy and Personal Examination"
 date = 2021-03-01T22:41:08+01:00
 author = "C. Cords"
 draft = false
@@ -7,8 +7,14 @@ url = "/post/earthbound-like"
 layout = "post/single"
 categories = ["game design"]
 +++
-
-## Abstract
+<center>
+<h2> Abstract</h2>
+</center>
+<center>
+<p style="max-width:80%;display:inline-block">
+Earthbound (1994, SNES) has been hugely influential on both niche indie games and large mainstream AAA successes. This article proposes that a lineage of games, inherently linked by the specific design decision and artistics ideas the share form a new genre "Earthbound-likes". As Earthbound, Yumei Nikki, various commercial RPG Maker games such as OFF and LISA, the Mario RPG series and lastly Undertale are examind specific properties they went on to contribute to the lineage and thus subsequent games are identified and collected to form a definition, a checklist of what makes any game an "Earthbound-like". This article aims to give future generations a way to appreciate these often somewhat niche games for what they contributed to the genre and what their successors will surely go on to contribute to many games to come. 
+</p>
+</center>
 
 ### Table of Contents
 
@@ -412,6 +418,8 @@ C.
 <hr>
 
 Footnotes: 
+
+<p id="[0]">[0] Transitively meaning if A influenced B and B influenced C then even if the developer of C is unaware of As existence some of As design and spirit will be inherited onto C.
 
 <p id="[1]">[1] Properties Include: Punishing and methodic gameplay, a rechargable health item that has a limited amount of uses per death (estus flask), strategically played save points (bonfires), loosing a currency upon death but being given the chance to visit the place of demise and collect most or all of the lost currency, etc.</p>
 

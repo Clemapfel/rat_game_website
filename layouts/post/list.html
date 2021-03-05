@@ -22,9 +22,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 {{ define "main" }}
   <header>
     <span>
-      <a class="muted" href="/" style="float:right; position:relative; top:-2em; color:#00f7c6; "> << back to home</a>
-      <span><h1 itemprop="name" style="color:#00f7c6;">[Index]</h1></span>
-    </span>
+      <span class="muted" style="float:right; position:relative; top:1em;">
+        <a href="/" style="color:#00f7c6;"> << back to home</a>
+      </span>
+      <h1 itemprop="name" style="color:#00f7c6;">[Index]</h1>
     <hr style="border:1px solid #eb1c79">
   </header>
   {{ $scratch := newScratch }}
