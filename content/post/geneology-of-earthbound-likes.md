@@ -16,24 +16,24 @@ Earthbound (1994, SNES) has been hugely influential on both niche indie games an
 </p>
 </center>
 
-### Table of Contents
+## Table of Contents
 
-1. Motivation
-    1.1 Some Examples
-2. Earthbound
-    2.1 Earthbounds Combat
-    2.2 Giygas
-3. RPG Maker
-3.1 Yume Nikki
-3.2 OFF
-4. Super Mario RPG and it's Sequels
-5. LISA: The Painful
-5.1 And then came many Others
-6. Undertale
-7. An actual Definition
+1. Motivation<br>
+   1.1 Some Examples<br>
+2. Earthbound<br>
+    2.1 Earthbounds Combat<br>
+    2.2 Giygas<br>
+3. RPG Maker<br>
+3.1 Yume Nikki<br>
+3.2 OFF<br>
+4. Super Mario RPG and it's Sequels<br>
+5. LISA: The Painful<br>
+5.1 And then came many Others<br>
+6. Undertale<br>
+7. An actual Definition<br>
 8. Footnotes
 
-## 1. Motivation
+## 1 Motivation
 
 I want to start this piece on a personal note, I was casually talking to a friend and I opened the conversation by showing them the following screenshot of a "omori" (which is by all accounts a very good game) completely out of context:
 
@@ -122,7 +122,6 @@ Another often remember feature is the "rolling" health bar (c.f. Fig. 2.2). When
 <br><b>Figure 2.1.2</b>: <i>Animated .gif showing the background texture and shader during the battle against Giygas. Note the vague shape of a fetus with a brain and umbilical cord in the pattern.</i>
 </center>
 
-
 Giygas is the penultimate villain and final boss of Earthbound and it's honestly hard to describe what it even is in lore. It's an abstract, non-corporeal personification of evilness in general. You get to the final fight by first traveling into the future where all life on earth and even the athmosphere is completely destroyed, you enter a womb-like structure and fighting against it it's the first and only Earthbound fight that is not just a static sprite in front of a shader background (except for pokey at during the first phase). Rather, the shader background *is* the enemy producing an effect of overwhelming size and etherealness. Shigesato Itoi, Earthbounds designer, credited the experience of walking into the wrong cinema and seeing a very violent scene as a young child as inspiration for Giygas presentation and I think it is one of the most memorable villains in all of gaming, not because of writing or mechanics but because of it's position and the tone of the encounter relative to the game it resides in. Up until this fight Earthbound was really light hearted, there were some midly disturbing concepts like being in a cult and zombies but at five-seconds-before-midnight hour of the plot Earthbound goes from Pokémon Villains to full Lovecraft out of nowhere. I personally think that this and only this is why it Giygas has such an impact. The things that make Earthbound special and memorable aren't inherent to their properties, rather it's those properties in relation the established norms of traditiona jRPGs, of kids games, of Earthbounds own plots tone. Earthbound is a traditional jRPG in every way except in affect, it tries very very hard to be unlike them and for most people it succeeds. Rather than adding to the gameplay in a mechanically meaningful way it adds spice, so much spice in fact that instead of seeming try-hard it blew past that and ascended to cult status and became one of the most influential games of all time. 
 I may have been coming of as negative so far but I do want to explicitely state that Earthbounds deserves this. Earthbound is an amazing game, amazing despite it's gameplay and that gameplay barely matters if all other parts are this unique
 
@@ -139,13 +138,15 @@ Let's quickly take inventory of some of Earthbounds properties though:
 ### 3 RPG Maker 
 
 <center>
-<img src="https://cdn.cloudflare.steamstatic.com/steam/apps/383730/ss_c65670a156c17d8a79a2fe44caee977bdae40c17.600x338.jpg?t=1598946198
-">
-<br><b>Figure 3</b>: <i>UI for creating a battle of the first english version of RPG Maker</i>
+<a href="https://cdn.cloudflare.steamstatic.com/steam/apps/383730/ss_c65670a156c17d8a79a2fe44caee977bdae40c17.1920x1080.jpg?t=1598946198" target="_blank" style="border-bottom:transparent">
+<img src="https://cdn.cloudflare.steamstatic.com/steam/apps/383730/ss_c65670a156c17d8a79a2fe44caee977bdae40c17.1920x1080.jpg?t=1598946198">
+</a>
+<br><b>Figure 3</b>: <i>UI for creating a battle in the first english version of RPG Maker (source: steam)</i>
 </center>
 
 
-So you really liked Earthbound and you want to make your own Earthbound, what do you do? Well you could get a degree in CS and learn to program and spend 3 years in your bedroom creating a game from scratch OR you could just take Earthbound and... make it yours by modifying the actual game for the SNES with hacking tools. This is called romhacking and I only want to mention Earthbound romhacking scene because of one very important actor that will have their start here but even in 2000 people wanted to make their own Earthbound and while they didn't technically need to be able to code it was still kinda hard for the non tech-literate. That is until in late 2000 [RPG Maker](https://www.rpgmakerweb.com/) was created. Intended as 45% Engine, 45% development tool, 10% publishing platform RPG Maker boiled traditional jRPGs down  to their purest form. It was literally designed to be a tropy jRPG, turn-based combat, high-fantasy setting, tile-based movement, 2d-sprites, the works. It was also designed to be incredibly easy to use and it was, much like what Flash was for animators, with RPG Maker every person with a small amount of determination and even smaller amount of money can create their own game. However the games were inherently limited. Modifying the RPG Maker engine is hard, not only do the Terms of Service not really like that but it just doesn't give tools and absolute freedom some games need: Games had to run in a tiny window at native resolution, it was terribly optimized, displaying fonts broke constantly, features were slowly getting rolled out with bad backwards-compatibility, it wasn't a very good game engine back then (I heard it's pretty decent nowadays though) but what it was very good at was giving players who were really into that Earthbound game a tool to make their own. And they did. 
+So you really liked Earthbound and you want to make your own Earthbound, what do you do? Well you could get a degree in CS and learn to program and spend 3 years in your bedroom creating a game from scratch OR you could just take Earthbound and... make it yours by modifying the actual game for the SNES with hacking tools. This is called romhacking and I only want to mention Earthbound romhacking scene because of one very important actor that will have their start here, nevertheless even in 2000 people wanted to make their own Earthbound and while they didn't technically need to be able to code it was still kinda hard for the non tech-literate. 
+That is until in late 2000 [RPG Maker](https://www.rpgmakerweb.com/) was created. Intended as 45% Engine, 45% development tool, 10% publishing platform, RPG Maker boiled traditional jRPGs down to their purest form. It was literally designed to be the tropiest of jRPGs, turn-based combat, high-fantasy setting, tile-based movement, 2d-sprites, the works. It was also designed to be incredibly easy to use, much like what Flash did for animators, with RPG Maker every person with a small amount of determination and even smaller amount of money can create their own game. However the games were inherently limited. Modifying the RPG Maker engine is hard, not only do the Terms of Service not really like that you try but it just doesn't give the tools and absolute freedom some games need. For example (and this is true especially for earlier versionss of the engine) games had to run in a tiny window at native resolution, the engine was terribly optimized, displaying fonts broke constantly, features were slowly getting rolled out with limited backwards-compatibility. That is to say it wasn't a very good game engine back then (I heard it's pretty decent nowadays though) but what it was very good at was giving players who were really into Earthbound but not at all into computer science a tool to make their own. And so they did. 
 
 ### 3.1 Yume Nikki
 
@@ -153,7 +154,6 @@ So you really liked Earthbound and you want to make your own Earthbound, what do
 <img src="https://giantbomb1.cbsistatic.com/uploads/original/2/24373/2466891-yume_kyuu.png">
 <br><b>Figure 3.1</b>: <i><a href="https://yumenikki.fandom.com/wiki/KyuuKyuu-kun" target="_blank">KyūKyū-kun</a>, a non-interactable NPC in Yume Nikki who rubs a staricase, emitting a scrubbing noise similar to plastic gloves on glass (source: giantbomb)</i>
 </center>
-
 
 Yume Nikki was released by the highly emblematic "Kikiyama", the games name in japanese translates to "dream diaries" and fitting of it's title it's incomprehensible yet incredibly emotionally affecting. It was made with a very old version of RPG Maker and I can't help but think that that is why Yume Nikki chose to completely forgo one of the defining features of jRPGs: turn-based combat. Yume Nikki is a jRPG excep it's all overworld. There's basically no puzzles and in the game you just kinda walk around, looking at things. Today some would call Yume Nikki a walking simulator, you explore a set of vast worlds, 
 visually distinct from each other but very same-y within themself. Limited Interaction with the environment happens through 
@@ -202,7 +202,7 @@ Let's do our inventory for OFF:
 
 I've cheekily copy pasted some of those points in order to strengthen my thesis but let's keep going anyway:
 
-### 4. Super Mario RPG, Super Star Saga and Paper Mario 64
+### 4  Super Mario RPG, Super Star Saga and Paper Mario 64
 
 Taking a break from the no-budget indie games I'd like to circle back to a first-party game that had all the funding in 
 the world and (unlike earthbound) the matching success. In 1996 Nintendo joined forces with the at that point incredibly critically acclaimed square who was just fresh of Final Fantasy 3, one of the best jRPG of all time, to use the lovable plumber known for jumping when you press A in a...turn-based battle system? I think the devs were aware of this discrepancy and proceeded to solve the issue with a fresh and ingenious idea they went on to carry an entire franchise worth of sequels. 
@@ -235,93 +235,63 @@ What I'm trying to say is that the Mario RPG series are unlike other Mario games
 <img src="https://33.media.tumblr.com/070c3168b5f96c9cdb1b83e38c2ab703/tumblr_nelp1b7Zm71rrftcdo1_500.gif">
 <br><b>Figure 4.3</b>: <i>Mario & Luigi: Super Star Sagas (GBA) last boss. During this attack animation the player has to time the A and B presses independently to make Mario and Luigi jump respectively.</i>
 </center>
- 
-### LISA: The Painful
 
-(content warning: descriptions of gore, sexual violence and domestic abuse)
+Instead of taking a multiple points inventory I'd instead just like to note a single property of the Mario RPG Series: The battle system was made interesting not through strategic or conceptual complexity but through insertion of out-of-genre mechanically interesting gameplay. 
 
-LISA is another RPG Maker game whoever I consider it fairly distinct and I think most people who aren't intimiately 
-familiar with the engine or read up on it will not immediately notice that LISA is made in it. For one the perspective
-is shifted from a top down view to 2d side-view similar to the original mario games. Another thing that makes LISA 
-stand out from the crowd of RPG Maker games is it's "combo system". Instead of simply selecting an attack or consumable
-from a static list the player instead has to input a combination of buttons, for example WAA could be a punch and WSS 
-could be a kick and so on. Not every permutation of {W, A, S, D} has a corresponding attack but that is precisely the point
-in my opinion. You could argue that this is pointed, in the end it is functionally equivalent to just selecting an attack
-but I would disagree with this. For one the most obvious advantage of this system is simulating mechanical challenge. 
-It is not actually hard to input certain moves and there's even a list of all combinations however pressing 4 keys 
-each time you attack and having it be accompanied by a flashy combination simulates what the Mario RPG series did so
-execellently: there is now a tactile component to the RPG Maker combat and I think while intellectually it doesn't 
-seem that valuable from a player experience point of view it improves the game. 
-Now you may by no have noticed a trend in my writing, I don't really want to talk about a game in detail or review, I 
-don't really want to talk about a game in detail or review it rather I want to first find out why a game is an 
-earthbound-like and then identify what part of that game became a gene passed down in future generations of earthbound-likes.
-For LISA, this is not the combo system. It's not the 2D view and the light platforming that comes with that rather it is
-it's adult themes. It's still quirky but lisa has explicit gore, violence, rape, body horror, etc.. None of this will 
-be actually disturbing to most people because it is after all a low-res RPG Maker game that looks kinda same-y but the 
-game does a good job of framing these disturbing things in a way were they actually land. For example in one scene the
-protagonist is trying to find out where another character is being held and to do this he captures and then tortures one
-of the enemy combatants. Not only is it an explicit cutscene of just that happening but the player actively takes part 
-in it having to hit a QTE for each punch the main character (henceforth "MC") inflicts on the captive. 
-In a similar scene the MC has a flashback to his childhood of living in a low-income house with a father that is explicitely 
-abusive both emotionally and phsyically (and most likely sexually as can be inferred from subtext in LISAs predecessor).
-This is shown, you actually see your father belittle you and throw a bottle at you and you manually walk the MC to a 
-playground to get beaten up and bullied. I am not comfortable of inferring things of a still-livign artists personal life
-but the framing implies this as very personal and similar to Yume Nikki this intimitacy acts as an amplifier for how 
-serious the player takes the violence. LISA can be funny, gross and is almost always quirky but what makes it special
-enough to change the course of the genre of earthbound-likes is how it dealt with explicit, highly disturbing subject 
-matter in a way that in no way minimized them and made it feel personally by having the player play through the revelant
-sequences.
+### 5 LISA: The Painful
 
-TODO: pic of brad getting bottle thrown at him
+(content warning: depictions of gore, descriptions of sexual violence and domestic abuse. skip to [here](#6) to avoid them)
 
-Also I shouldn't just leave it merely implied, LISA is more graphic than most people would expect, it doesn't go as far
-as to literally show sexual violence but characters get their arms cut off, their face melted, shoot themself in the head
-and slowly bleed out on the floor while their intestent are hanging out of their punctured belly. I don't consider 
-violence for violences sake a feature that improves a work of art but by staying respesctful when it is warranted (like
-with sexual abuse or domestic violence against children) and balancing out the gore and blood with enough absurdity and
-jokes LISA kind of ripped off the band-aid. Since LISA (there are almost certainly games before it that did this of course), nothing it taboo anymore. Earthbound-likes are free to show whatever they want and making a game that is explicitely adult-only is not only commercially viable but is respected by the audience. 
+LISA (2014) is another RPG Maker game, it was made in RPG Make VX Ace which unlike the version Yume Nikki and OFF were made in does offer developers a lot more freedom. LISA breaks with the trend of top-down 45° angle graphics and instead migrates to a 2d side-view, also including light platforming elements. Just like Mario RPG Lisa slotted another genre into battles, this time more akin to fighting game combos or maybe comapring it to DDR would be more correct. You enter button combinations and depending on which permutation was inputted, the character will do a certain special attack.
 
-TODO: pic of mcdonalds mask falling off 
+<center>
+<img src="https://comicvine1.cbsistatic.com/uploads/original/11122/111225835/5456073-dropkick.gif">
+<br><b>Figure 5.0 </b>: <i>The player inputs a series of button presses to trigger a special attack "dropkick" and deal additional damage in LISA. (source: comic vine)</i>
+</center>
 
-### And so came many others
+While at first glance both the platforming and combo system make LISA a fairly unique RPG Maker game I don't don't actually want to bring LISA up because of this. What makes LISA unique, especially in 2014 was the subject matter and how dark LISA was truly willing to be. Without going into story details, LISA focuses explicit scene of the Protagonist torturing or murdering someone in their way, of being gunned down and slowly bleeding out, enemy factions commiting essentially genocide and through out the game there are flashbacks to the protagonists live which show domestic abuse, a child that was never loved and ravagely beaten by their friends and family, you get the idea. I don't consider LISA a very profound game, it explicitely contrasts these dark themes with levity, jokes about someone pooping in the open and homoerotic barbers construction a middle finger out of their combined hair yet still underneath all the edgyness is a core that many players will find emotionally exposing and real. 
 
-With dev-tools improving and earthbound-likes finding indie success RPG Maker games went from being an underground thing
-for people who "aren't able to make real games" to a valid genre. As such many many other followed, some of them were 
-simple made-by-one-teenager games that don't really have anything good to offer but still had love and effort poured into
-them. RPG Maker games stopped being jRPGs, titles like "To the moon" used the tool to tell a straight forward drama that 
-is more akin to a traditional walking simulator and had writing that is legendary for making most people cry and as such
-will fit right in with "Gone Home" and similar titles. Professional artists came out of the woodworks and used RPG Maker
-not only as an outlet but as a job, creating games like "Omori" landing 6-figure kickstarter campaigns and having
-multi-person teams working on not only the game but ports and merchandise and nowadays in 2021 RPG Maker seized to be
-a trope, a type of game and is now an engine for 2D games, just like Unity or Unreal. I'm glossing over many excellent 
-titles for the sake of brevity but let me just list off a bunch of them as I do actually want to make a point:
+<center>
+<img src="https://pbs.twimg.com/media/Egg9jT3UMAYGQpj?format=jpg&name=large">
+<br><b>Figure 5.1 </b>: <i>"Joy Mutant" throne for the Trumpeter exhibiting <a href="https://youtu.be/Ge-WW6KUqNo?t=51">Akira-esque</a> body horror. (source: @RanarifSC on twitter) </i>
+</center>
 
-i) Oneshot: a "roguelike" game where you can only die once, the game locks up afterwards so you really do only have "one shot"
-ii) Yume 2kki, an official sequel sanctioned by the original dev
-iii) Jimmy and the Pulsating Mess, a true earthbound-like in that it is very much like earthbound, luckily Earthbound is good
-enough for that to be a hook, not a negative
-iv) Mother4 (now renamed to TODO): an actual sequel the the warmly regarded but cast-into-obscurity-by-nintendo to the 
-next game in the Mother series: mother 3. Mother4 was a multi-person project that was put on hold when the chance of
-getting a seize-and-desist by nintendo seem likely enough to warrant filing off the serial numbers in order to transform
-the project into something commercially viable
-v) Ib, a spritiual sequel to yume nikki that took the afterthough that was melee combat and made it a core-feature of the 
-gameplay, completely substituting turn-based-combat instead
-vi) "The Witches House", "Mad Father", "Angels of Death" three game whos devs are unrelated but that all brought true horror
-into the RPG Maker format. These games are much closer to resident evil than to final fantasy and much like LISA do not 
-hold back in the violence and disturbing subject matter 
+Like OFF, Lisa was made by essentially one person, also like OFF not very much is known about them. They intentionally used fictional characters from the game to <a href="https://widdly2diddly.bandcamp.com/album/lisa-soundtrack" target="_blank">release their music</a>, yet the sincerity and realism of how domestic abuse was portrayed in LISA let many people form a parasocial relationship with the perceived identity of the dev. I'd like to clarify here that I am not saying that either the dev or someone close to them has experienced domestic abuse, rather I'm pointing out the through death of the author the devs persona, the entity that seemingly made a game about all these intensely personal things, will have some audience members project those experience onto them. Yume Nikki dealt with loneliness and to some extend trauma but LISA not only went more towards the trauma side but showed it in explicit, disturbing detail. As we've gone through the other games so far every game had a design decision or idea that went on to be inherited. LISA does not have many original design decision, what LISA contributed is taking the lid of the darkest side of Earthbounds-likes. Giygas was dark for that game but LISA was dark, even for the real world. It took away the stigma of RPG Maker games having to imitate Earthbound in a way where most of it is quirky and child-friendly and then some of it is surprisingly dark. Since LISA, everything can be pretty much as dark you want. LISA was a huge success and it showed devs that doing this is not only commercially viable but has a chance to have a huge impact on their audience. 
+Also I shouldn't just leave it merely implied, not only the subject matter but the imagery of LISA is explicitely adult. It doesn't depict <a href="https://en.wikipedia.org/wiki/Irr%C3%A9versible", target="_blank">graphic rape scenes</a> or realistic gore but for what is achievable in RPG Maker and with pixel art LISA went farther than any Earthbound-like has gone so far. 
 
-All games I've listed in this chapter (and all previous chapters) are great games. I may not love some of them but 
-I consider them important and worth the time and money that was spend to create them. They are the cream that rose to the 
-top out of an arguably endless see of half-abandoned or naively implement RPG Maker games/clones and I cannot stress 
-enough how many there were. Seeing that you can actually sell these games for real money many devs tried to promote their
-hobby-project they just made to learn how to do pixel art into a job. I will never condemn artistic ambition but I think
-I echo many more mainstream-gamers thoughts when I state that earthbound-like went from a type of game to a vast community,
-if you wanted to do you can have your entire life revolve around them, all your friends are into them, you live on the RPG 
-Maker forums, you watch youtubers (TODO: link NitroRad, Jordan Under) that cover them, you found your boyfriend on an 
-RPG Maker discord server and you haven't touched your oil colors and brushes because you only do pixel art now. I'm being
-facetious but there really was a community here, it was still a niche hobby but it was very much not obscure anymore. However...
+<center>
+<a href="https://vignette.wikia.nocookie.net/lisa-rpg/images/5/51/StayEnding.PNG/revision/latest?cb=20151014021457" style="border-bottom: transparent" target="_blank">
+<img src="https://vignette.wikia.nocookie.net/lisa-rpg/images/5/51/StayEnding.PNG/revision/latest?cb=20151014021457">
+</a>
+<br><b>Figure 5.2 </b>: <i>Scene from LISA: The Joyful (2015) showing a mutant cradling a child with the desecrated corpses of two seminal characters nearby</i>
+</center>
+<br>
 
-### Then came Undertale 
+<blockquote>
+<div class="muted" id="6">
+Much like LISA does itself I'd like to insert somewhat arbitrarily placed levity here by noting that LISA: The Painful has a hidden area in which there is a school of fish with tiny feet living on land. <a href="https://lisa-rpg.fandom.com/wiki/Harvey_Alibastor" target="_blank">One of the fish is a lawyer</a> who you recruit and if you use his special attacks in battle he damages the enemy with paper cuts and the force of the justice system. 
+</div>
+</blockquote>
+
+Much like before I'd like to take inventory of properties LISA exhibits before we continue:
++ profoundly dark and disturbing subject matter that is thematically motivated by the main characters psyche
++ quirky and sometimes funny plot
++ little strategic challenge
++ inserts a out-of-genre system to make battle more mechanically challenging
++ made in RPG Maker by a single person
+
+### 6 And so came many others
+
+With dev-tools improving and Earthbound-likes finding widespread indie success RPG Maker games went from being an underground thing for devs who supposedly "aren't able to make real games" to a valid engine, delivery tool and genre. As such, many such games followed suit, from simple made-by-one-teenager games that don't really have anything good to offer but still had enough love and effort poured into them to have been worth the time and purchase to multi-person teams with tens of thousands worth of budget and capital to be spend on artists and writers. RPG Maker stopped being exclusively for amateurs and much like Yume Nikki did all this time ago many games wouldn't really be classified as jRPGs at all. Titles like "To the Moon" are more of a 2d interactive story than an RPG, yet it saw mainstream success and is regarded as one of the most emotionally impactful games from that decade. Here is a non-ordered list with a quick blurb to highlight many of the not exclusively RPG Maker games that came out during this period:
+
+i) Oneshot: a "roguelike" RPG Maker game where you can only die once, the game locks up afterwards so you really do only have "one shot"
+ii) Yume 2kki, an official sequel sanctioned by the original dev 
+iii) Mother4, a direct sequel to Mother3 made by a team of talented non-nintendo devs. Sadly while nintendo refuses to support the mother series they do still seize and desist anything that tries to do it for them (#freemelee) 
+iv)"The Witches House", "Mad Father", "Angels of Death" three game whos devs are to my knowledge completely unrelated yet all had the same idea of bringing a resident evil style pure horror game into the earthbound-like RPG Maker format
+
+Lastly "Omori" despite my friends initial opinion of it earned 200 000$ on kickstarter and was not only delivired to critically acclaim but is now being ported to non-PC consoles and is by all measures a huge success. By this point in time Earthbound-likes have seized to be niche at all, they are a full industry and a pillar of gaming and for every obscure bland direct earthbound copy there is a wholely original (if strongly inspired) game that enriched many peoples lifes. One title however stands far above them all, so ubiquitously succesfull and impactful that many see it as the culmination and potential implosion of the earthbound-like genre.
+
+### 7 Undertale 
 The big one, one of the most influential games of all time in my opinion and *the* supposed rags-to-riches story of a 
 guy in his bedroom playing around with first RPG Maker and then Game Maker that made a game that blew up and sold over 
 a million copies. Now first I would like to explicitely state that the time-line I am implying in this essay is not 
@@ -370,31 +340,33 @@ not as a character study but as a journey that interacted with characters, have 
  
  ### An actual Definition
  
- (content warning: math)
+ Through out this article we have not only looked at important games that got us to the point where we are to day by inspiring each other and subsequent games but I have tried to systematically highlight things each game passed on, their "genes" so to say. If we pool these together in a set and try to find a mostly satisfactory least common denominator, we can assume that this is as close to the definition of what I call "Earthbound-likes" as we can get. 
  
  A game can be considered an earthbound-like if it has enough of the following features:
  
- a) It is build on a framework that is considered like those of jRPGs, meaning...
-    a1) It has 2d, sprite-based, low resolution pixelart style graphics
-    a2) it is build around two distinct states ("scene"), in the "overworld" the player moves through a diagetic world, 
-    usually on 2 axis, solves light puzzles and interacts with other characters by for example talking to them or triggering 
-    the second states "battle" in which the player engages in an abstract representation of what diagetically is violence, 
-    social interaction or any another form of the one or more player entities interacting with one or more non-player entities
-    a3) Movement on the overworld is fairly basic
-    a4) there is very little mechanical challenge and mechanical depth in any gameplay system
-    a5) puzzles may be present however are rarely the focus of the game
-    a6) Can have their inspirations followed back to either DnD, Final Fantasy, Dragon Quest or...
-b) ...is directly or indirectly iterating on Mother 2: Earthbound, meaning
-    b1) Is has world that is not featured in traditional fantasy- or horror- games
-    b2) Is very character driven were chapters may revolve around a certain character instead of an activity
-    b3) have a very literal plot, meaning all actions during the plot are diagetic and non-metaphorical
-    b4) have a quirky world that has both comedic and dramatic writing
-    b5) intends to represent an intensiely intimate and personal experience 
-    b6) has moments of overt horror and dark or surprisingly disturbing subject matter
-c) focus a lot of it's presentation on static illustration and music, rarely animation or technical fidelity
-d) is aimed at a niche non-mainstream audience of younger (born after ~1989) players of any gender
-e) are made by a small team of either indie developers or if first party by a director that has not participated in many 
+a) It usually has 2d, sprite-based, low resolution pixelart style graphics
+
+b) it is build around two distinct states, in the "overworld" the player moves through a diagetic world, usually on 2 axis, solves light puzzles and interacts with other characters by for example talking to them or triggering the second state, "battle", in which the player engages in an abstract representation of what diagetically is a violent fight or another form of confrontation suchs as social interactions. Note that the "battle" state can be absent completey in certain games, the overworld part however is not optional.
+
+c) Movement on the overworld is mechanically basic
+
+d) there is very little strategic depth in any gameplay system such as battles and fights
+d1) However these systems are enriched by an out-of-genre mechanic such as shoot-em-ups, fighting games, dating sims, etc.
+d2) The vanilla version of the battle system (the battle system without the out-of-genre gameplay) is similar to those in early Final Fantasy, D&D or Dragon Quest games
+
+e) It is directly or transitively[5](#[5]) iterating on Mother 2: Earthbound, meaning it... 
+    e1) has world that is considered unusual compared to traditional fantasy jRPGs such as Dragon Quest or Final Fantasy
+    e2) Is very character driven, chapters or entire plothreads may revolve around a certain character instead instead of a driving external goal
+    e3) have a quirky world that has both comedic and dramatic in writing
+    e4) intends to represent an intensiely intimate and personal experience 
+    e5) has moments of overt horror and dark or surprisingly disturbing subject matter
+    
+f) focus a lot of it's presentation on static illustration and music rather than elaborate animation or higher fidelity graphics
+
+g) are made by a small team of either indie developers or if first party by a director that has not participated in many 
 mainstream projects
+g1) these developer found their footing in the earthbound-, rpg-maker- or undertale-community 
+
 
 Okay. There we have, it an actual definition. While reading you most likely already picked one of the properties and 
 thought of a game I mentioned here that does not fullfill it so I'd like to again restate how malleable this and any genre
@@ -419,8 +391,6 @@ C.
 
 Footnotes: 
 
-<p id="[0]">[0] Transitively meaning if A influenced B and B influenced C then even if the developer of C is unaware of As existence some of As design and spirit will be inherited onto C.
-
 <p id="[1]">[1] Properties Include: Punishing and methodic gameplay, a rechargable health item that has a limited amount of uses per death (estus flask), strategically played save points (bonfires), loosing a currency upon death but being given the chance to visit the place of demise and collect most or all of the lost currency, etc.</p>
 
 <p id ="[2]">[2] Games with turn-based combat and 2d sprite-based graphics such as the Final Fantasy and Dragon Quest Series, Chrono Trigger, Suikoden, Tales of Phantasia, Xenogears and most recently Octopath Traveler. Unlike my list of earthbound-likes I don't think I have to elaborate more on what I mean when I say "traditional jRPG"</p>
@@ -428,6 +398,8 @@ Footnotes:
 <p id="[3]">[3] If I'm not mistaken only the <a href="https://earthbound.fandom.com/wiki/Nuclear_Reactor_Robot" target="_blank">end-game round robot that explodes when you kill it</a> is an enemy that was designed specifically with the rolling health in mind</p>
 
 <p id="[4]">[4] Note how the style of room layout and perspective is very similar to earthbound: 
+
+<p id="[5]">[5] Transitively meaning that if A influenced B and B influenced C then even if the developer of C has no knowledge of the existence of A then C is still influenced by A. 
 
 <center>
 <img src="https://blenderartists.org/uploads/default/original/3X/a/3/a3bc34a8540c4018467b9cc54cd57cc5dcfa0361.png" style="width:660px;object-fit:fill">
