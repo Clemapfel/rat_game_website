@@ -42,10 +42,13 @@ main {
       {{ partial "image/header.html" . }}
     </header>
     <div itemprop="articleBody">
-        <span class="muted" style="float:right; position:relative; top:0em;">
-          <a href="#Comments" style="color:#00f7c6;">&#11015; jump to comments</a>
+        <span class="muted" style="float:right; position:relative; top:-1em;">
+          <a href="#Comments" style="color:#00f7c6; ">&#11015; jump to comments</a>
         </span>
+        <br>
+      <span style="float:none; position:relative; top:-3em">
       {{ .Content }}
+      </span>
       <span class="muted" style="float:right; position:relative; top:5em;">
         <a href="#Title" style="color:#00f7c6;">&#11014; jump to beginning</a>
       </span>
