@@ -221,7 +221,7 @@ class SceneSnapshot {
 			return _entities;
 		}
 
-		const bool is_first_snapshot;		
+		const bool is_first_snapshot;
 		const LastAction last_action;
 
 	private:
@@ -315,7 +315,7 @@ float score (Entity user, Entity target) const {
 	if (target.is_enemy == user.is_enemy)
 		score = -10;	// note = instead of += resets others
 
-	auto normalize = [](float score) { ... };
+	auto normalize = [](float score) { return score; }; // noop for now
 	return normalize(score);
 }
 ```
