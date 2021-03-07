@@ -187,6 +187,7 @@ pair<Move, Entity> ask_ai_for_action(user)
 	return out;
 }
 ```
+
 We now have replicated the AI of the first 3 generations Pokémon games. In these games there is one further constraint that if the user has a move that would be very effective (deal extra damage to a target with a specific elemental type) then all moves that wouldn't be very effective are also discarded. In the very first Pokémon games from 1990 this [created a softlock](https://www.youtube.com/watch?v=CClsivwN8aw&lc=UgzUIZGpL-9YN6IptHB4AaABAg) (a game state in which it is both impossible to win and loose) because some Enemies will only have a single super effective move and as the AI discards all other moves without consideration this results in an Enemy using the same move over and over. Our D&D system currently has no such constraint but to emulate it, let's say we want to prevent the AI from picking the same move twice in a row. How would we go about this? We could simply create a new variable that holds the move the AI used last turn and compare wether the current decision would use the same move again. While this works, what if we want the AI to only use a move 5 times total? What about every 5 turns the AI should use a specific move the heals the user? Again we could introduces more and more counters and variables for each scenario but this is hardly scalable. What we instead need is general purpose *memory*, we need to only consider the current state of the scene but all relevant previous states. 
 
 #### 3.1 Memory
