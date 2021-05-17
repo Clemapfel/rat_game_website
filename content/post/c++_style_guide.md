@@ -18,35 +18,45 @@ code {
 
 <h1 id="INTRODUCTION"> Introduction </h1>
 
-I learned programmring pretty much on my own completely out of context very late in my life and I've come to realize that writing a programm should require the same amount of editing work as if I was writing a paper, a pamphlet or a blog. Often code is seen as 100% utilitarian and as long as it works right it's as good as it needs to be and I vehemently agree with this. Often people complain about badly kept documentation which is a problem obviously but it can be alleviated greatly if any potential user or colleague working on your library can just read the header and understand whats happened. For me this is the central goal for writing code, obviously it should work and also obviously it should be as optimal as possible in a performance sensitive context but apart from those two factors readability, clarity should always be prioritized. Often people treat tis as a zero-sum-game and it really isn't, I especially noticed this when learning GLSL where often reference material was written like we're still in the 70s and variables have a character limit so they take up less space in your 1kb ram. 
-My goal with this piece is to give any potential collaborater, employee or employer of mine to have not only a reference of how to reproduce my specific coding style but to understand why I do certain things they way I do. Some things are as arbitrary as "it just looks nicer" but often I have a clearly formulated goal behind certain rules. Secondly by writing this piece I'm forced to interrogate my own Style and investigate wether I adhered to properly and if my choices really do make sense. I have to admit that especially for 1-person-projects where I don't excpect anybody to ever see the code I will slack off but this past year I've been trying to eliminate that attitude entirely, mostly because adhering to your standards just makes you better at writing clean `code` the first time. 
+People, especially outside of CS, often think of code as purely utilitarian. It's like a machine, it doesn't matter how dirty a motor looks inside as long as it's working and a well-trained mechanic can fix it when it breaks. I disagree with this, writing a programming skript is pretty much identical to writing a report or pamphlet. It should be formatted for maximum clarity, ease of reading and to be understandable to the broadest set of people. This is especially important in interdisciplinary fields like bioinformatics or applied statitics, often your co-worked only have a basic understanding of programming and expecting them to understand a concurrent program the first time they read is is unrealistic and halts productivity. Obviously correctness is essential but in my opinion codes formatting should have the same amount of care and effort put into as someone would writing and formatting their dissertation. 
+Irregardless of these ideological factors there isn't always a best answer. When developing a styleguide the most important thing is to just stick to it and have a reason for doing things. Even if a specific decision isn't that consequential, sticking to that format 100% of the time is what makes code readable. In a multi-person setting this means the team has to decide on one way of doing things before the first line of code is written and that is what this document is for. 
 
-<div class="muted"><small>(The following is intended for C++17 and up. Unless stated otherwise. A similar guide for Lua and maybe R may be relased in the future)</small></div>
+I started learning programming very late in my life in around 2016 with basically no guidance from someone more skilled than me. What I've come to realize over the years was that I went through a process of slowly iterating on my own ideosyncracies and that by the time I felt like I did develop my own well-justified style I tended to always gravitytate to the newest way of doing things so formalizing all the somewhat unconcsious decisions in a guide like this will also help me interrogate my own way of doing things and I will be the first person to change my mind should something come to my attention that's better than what I'm currently doing.
 
+<h2 id="QUICKSTART"> Quickstart </h2>
+skip to <a href="#EXAMPLE">here</a> for a fully syntax highlighted code example that has all the possible cases
 
 <h1 id="TOC">Table of Contents</h1>
-    0. <a href="#INTRODUCTION">Introduction</a><br>
-    1. <a href="#VARIABLES">Variables</a><br>
-    1.1 <a href="#VARIABLES_NAMING">Naming</a><br>
-    1.2 <a href="#VARIABLES_DECLARATION">Declaration</a><br>
-    2. <a href="#OPERATORS">Operators</a><br>
-    2.1 <a href="#OPERATORS_PTR">References, Pointers, rvalues</a><br>
-    2.2 <a href="#OPERATORS_LOGIC">Logical Operators</a><br>
-    2.3 <a href="#OPERATORS_NUMERIC">Numerical Operators</a><br>
-    2.4 <a href="#OPERATORS_PREFIX">Pre- and Postfix Increment</a><br>
-    3. <a href="#FUNCTIONS">Functions</a><br>
-    3.1 <a href="#FUNCTIONS_MEMBER">Member Functions</a><br>
-    3.2 <a href="#FUNCTIONS_LAMBDA">Lambda</a><br>
-    4. <a href="#CLASSES">Classes</a><br>
-    5. <a href="#COMMENTS">Comments and Documentation</a><br>
-    6. <a href="#EPILOGUE">Closing Remarks</a><br>
-    6.1 <a href="#EPILOGUE_GIT">Version Control</a><br>
-    
-    
-<h1 id="VARIABLES">Variables</h1>
-<h3 id="VARIABLES_NAMING"> Naming </h3>
+0. <a href="#QUICKSTART">Quickstart</a>
+1. <a href="#VARIABLES">Variables</a>
+1.1 <a href="#VARIABLES_NAMING">Naming</a>
+1.2 <a href="#VARIABLES_DECLARATION">Declaration</a>
+2. <a href="#OPERATORS">Operators</a>
+2.1 <a href="#OPERATORS_PTR">References and Pointers</a>
+2.2 <a href="#OPERATORS_LOGIC">Logical Operators</a>
+2.3 <a href="#OPERATORS_NUMERIC">Numerical Operators</a>
+2.4 <a href="#OPERATORS_PREFIX">Pre- and Postfix Increment</a>
+3. <a href="#FUNCTIONS">Functions</a>
+3.1 <a href="#FUNCTIONS_MEMBER">Member Functions</a>
+3.2 <a href="#LAMBDAS">Lambdas</a>
+3.3 <a href="#RETURN_AUTO">Auto-deducing Return Types</a>
+4. <a href="#CLASSES_ENUMES">Classes & Enums</a>
+4.1 <a href="#CLASSES_NAMING">Naming</a>
+4.2 <a href="#CLASS_VS_STRUCT">Class vs. Struct</a>
+4.3 <a href="#HPP_VS_CPP">Order of access-specified members: .hpp vs .cpp</a>
+4.3.1 <a href="#FILENAMES">Filenames</a>
+4.3.2 <a href="#HEADER_ONLY">Template for Header-only Libraries</a>
+4.3.3 <a href="#NON_HEADER_ONLY">Template for Non-Header-Only</a>
+5. <a href="DOCUMENTATION">Comments & Documentation</a>
+5.1 <a href="#DOCUMENTATION">In-File Documentation</a>
+6. <a href="#EPILOGUE">Closing Remarks</a>
+6.1 <a href="#EPILOGUE_GIT">Version Control</a>
+6.2 <a href="#EPILOGUE_BENCHMARK">Testing and Profiling</a>
+6.3 <a href="#EPILOGUE_OPTIMIZATION">When Optimization is not Appropriate</a>
+6.4 <a href="#EPILOGUE_REFACTOR">The Golden Rule: Always Refactor Once</a>
+7. <a href="#THANKS">Thanks and References</a>
 
-The following Variable naming scheme should be adhered to at all times, in all languages unless physically impossible. <small>(Looking at you, Swift, no emotes and umlaute in var-names anymore)</small>
+The following variable naming scheme should be adhered to at all times, in C++ and all other languages unless physically impossible. <small>(Looking at you, Swift, no emotes and umlaute in var-names anymore just because it's possible doesn't mean you should do it)</small>
 
 <table style="width:100%">
   <tr>
@@ -56,7 +66,7 @@ The following Variable naming scheme should be adhered to at all times, in all l
     <th>Example</th>
   </tr>
   <tr>
-    <td>local scope</td>
+    <td>local class or function scope</td>
     <td>non-const or const</td>
     <td>lower-case snake_case</td>
     <td>
@@ -103,14 +113,7 @@ The following Variable naming scheme should be adhered to at all times, in all l
   </tr>
 </table>
 
-While a table like this is nice for referencing back to, also have this fully syntax-highlighted example that contains all relevant cases in a practical way:
-
-{{< highlight Cpp >}}
-
-{{< /highlight >}}
-
-
-Furthermore certain datatypes should be noted in the format of the variable name, somewhat similar to hungarian notation but a lot lighter and less intrusive. The following is an exhaustive list, any other types not noted should not have a suffix like this:
+Adhering to the above naming scheme, some variables should be pre- or postfix depending on their type as such:
 
 <table style="width:100%">
     <tr>
@@ -151,20 +154,43 @@ Furthermore certain datatypes should be noted in the format of the variable name
   </tr>
   
   <tr><
-    <td>typedef, typename or u>sing declaration name</td>
-    <td>Foo_t</td>
+    <td>typename or using/typedef declaration name</td>
+    <td>
+        Foo_t
+    </td>
   </tr>
 </table>
 
+<h2 id="VARIABLES_DECLARATION">Declaration</h2>
 
-<h3 id="VARIABLES_DECLARATION"> Declaration </h3>
+The order of variable specifiers should always be kept as following (in descending priority from left to right)
+{{< highlight Cpp >}}
+0: static 
+1: inline
+2: mutable
+3: extern  
+4: volatile 
+5: constexpr = consteval = const
+6: Type of the variable
+<no space>
+7: & or * or &&
+<space>
+8: Name of the variable
 
-When declaring variables, any variable that explicitely calls a constructor should be declared as <code>auto</code>:
+// for example
+static inline const foo* foo_ptr const = //...
+mutable extern volatile const foo* = //...
+
+{{< /highlight >}}
+
+So always put <code>static</code> fist, always group const as right as possible but before the variable type and name.
+ 
+Any variable that explicitely calls a constructor or other function on the right hand-side of the declaration should have the type <code>auto</code>. 
+
 {{< highlight Cpp >}}
 // wrong:
 Vector2f vec = Vector2f(20, 50);
 Vector2f vec = create_vector(20, 50);
-Vector2f vec{20, 50};
 Vector2f vec(20, 50);
 
 // correct:
@@ -176,38 +202,32 @@ This is to avoid confusion with C++20s new aggregate initialization with round b
 
 {{< highlight Cpp >}} Vector2f foo();{{< /highlight >}}
 
-I could be either calling the default constructor of Vector2f with c++20 aggregrate initialization with round brackets and no arguments or declaring a function with return type Vector2f and no arguments. Using 
+I could be either calling the default constructor of Vector2f with c++20 aggregrate initialization with round brackets and no arguments or forward declaring a function with return type Vector2f and no arguments. Using 
 
 {{< highlight Cpp >}} auto foo = Vector2f();{{< /highlight >}}
 
 makes it immediatly obvious.
 
-An exception to this form is when the variable is of an integral or floating point type. This is to avoid situations like:
+For trivial numeric types, always use <code>float</code> for floating points. 64-bit numbers like <code>double</code> should be a conscious decision on the developers part when they recognize that they need the extra precision, not the default. This is to avoid unnecessary overhead in bleeding-edge performance and big-data environments. 
 
-{{< highlight Cpp >}}
-auto first_f = 1.0;  // resolves to double
-auto second_f = 1;   // resolves to signed int
-auto third_f = 1.;   // resolves to double
-auto fourth_f = 1.f; // resolves to float
-{{< /highlight >}} 
+Be aware of potential overhead this may cause by casting up or down the precision hirarchy when interacting with other libraries. clang-tidy usually issues a warning for this and it should not be ignored. 
 
-While the compiler or an experience user will never be confused by this I think it is much more clearer to just declare the type explicitely and maybe force an implicit conversion which since it's only an numeric type will cause very little overhead.
-
-On the topic of casting, <code>static_cast<foo></code> should always be preferred, even if foo is a trivial numeric type:
+On the topic of casting, <code>static_cast<foo></code> should always be preferred over c-style casts, even if foo is a trivial numeric type:
 
 {{< highlight Cpp >}}
 double high_precision = 2.21531652318625317;
 
 // wrong
 float low_precision = float(high_precision);
+float low_precision = (float) high_precision;
 auto low_precision = float(high_precision);
-float low_precision = static_cast&ltfloat>(high_precision);
+float low_precision = static_cast<float>(high_precision);
 
 // correct
-auto low_precision = static_cast&ltfloat>(high_precision);
+auto low_precision = static_cast<float>(high_precision);
 {{< /highlight >}}
 
-If multiple variables of the same type are declared one after another, this form should be used at all times including in class definitions for member declaration:
+If multiple variables of the same type and type-qualifier are declared one after another, always use the <a href="https://en.cppreference.com/w/cpp/language/declarations#Declarators" target="_empty">init-declarator form</a> as such:
 
 {{< highlight Cpp >}}
 std::string first_name, 
@@ -219,19 +239,17 @@ Foo *ptr_one,
     
 Bar &ref_one;
 Bar not_ref_two;
+
 {{< /highlight >}}
 
-There should always be a newline after the first declaration. If one of the variables is a pointer, reference, r-value, etc. then all of them should. if this is not the case, the type should be redeclared;
-    
-    
-
+There should always be a newline after the first declaration. If one of the variables is a pointer, reference, r-value, etc. then all of them should. if this is not the case, the type should be explicitely redeclared
 
 <h1 id ="OPERATORS">Operators</h1>
 
-So I think in this chapter I will ruffle some feathers so I would like to explicitely state that a styleguide is not an objective answer to a problem, it is a preference and it's only purpose is to make code look <i>consistent</i>. Over my admittedly relatively short career I grew to like this form of doing things best and I feel like as long as I and any collaborator do it this way, every time it's a valid choice.
+I think this chapter will ruffle some feathers but I also like to think that I have a well-funded opinion on why I do it this way, however I also have to admit that if anything in this guide is subject to change as I grow as a developer, it's this section. Anyway, let's get to it:
 
-<h3 id="OPERATORS_PTR">Reference, Pointer, lref, etc.</h3>
-In function declarations, loops, etc., there should be a space following the &, *, && operators but not preceding it:
+<h2 id="OPERATORS_PTR">Reference, Pointer, RValue-Reference, etc.</h2>
+In function arguments and any other variable delcaration there should be a space following the &, *, && operators but <b>not</b> preceding it:
 {{< highlight Cpp >}}
 Foo& wrap_foo(const Foo* const foo_ptr, Foo&& foo_rvalue, const Foo& foo_ref) 
 {
@@ -245,7 +263,10 @@ for (auto& foo : *foo_vec_ptr)
 }
 {{< /highlight >}}
 
-I've been doing this since I started and I know it's an unpopular choice so let me justify it a little. When we read out code irl, when someone asks us: "What is the type of <code>const Foo* bar</code>?" we answer "constant foo pointer" or "a pointer to a constant foo". Similarly with with references and rvalues, lvalues, and even c-style arrays. Thus I consider wether or not something is a pointer part of it's type in my head and this is reflected in this notation. I have to admit that this breaks apart when using the following declaration syntax:
+I am aware this is an onpupolar choice so let me explain: When we read out code irl, like actually read it out loud to someone in the same room, when someone asks us: "What is the type of <code>const Foo* bar</code>?" we answer "constant foo pointer" or "a pointer to a constant foo". It's the same the same with references, r-values, etc.. I consider the type qualifier to be part of the type and it should thus be grouped with the type declaration.
+
+
+I will admit this falls apart when using the above mentioned init-declarator-list:
 
 {{< highlight Cpp >}}
 
@@ -256,75 +277,49 @@ const Foo& first,           // type Reference to a const Foo
 
 {{< /highlight >}} 
 
-This is incredibly confusing and putting the & next to "first" would be a lot more clearer however I would argue that writing it like this is confusing to begin with, earlier I stated that if one of the variables in a declaration chain like this is a different pointer/reference, a new chain should be opened. This avoids this situation and other than this case I am not aware of a C++ feature that makes my no-preceding-space operators not make sense. I am however willing to have my mind changed and just the fact I once spent an hour trying to track down a bug because I didn't know the multi-declaration work like that would make a good argument to at least make it preceding- and following- spaces instead. Anyway lets get to another very spicy take of mine:
+which is why I stated that when using this form, all variables should have the same type and type qualifier.
 
 <h3 id="OPERATORS_LOGIC"> Logical Operators </h3>
 
 Always use <code>and, or, not</code> instead of <code>&&, ||, !</code> for boolean operands.<br>
-Always use <code>&, |, ^, ~</code> for numerical operands as bit operations.
+Always use <code>&, |, ^, ~</code> instead of <code>bitand, bitor, xor, compl</code> for numerical operands in a bit operation. Similarly always use <code>&=, |=, !=, ^=</code> over <code>and_eq, or_eq, not_eq, xor_eq</code> for these operands.
 
-Always use <code>and, or, not, bitand, bitor, xor, compl</code> instead of <code>&&, ||, !, &, |, ^, ~</code>.
-
-Obviously <code>and/not/or</code> are also bit-operations but what I mean is that if <code>!</code> is used, it should be read as flipping that operands byte rather than negating a boolean expression. I have to admit that I like lua a lot and while I'm neutral on the if-then-else syntax the "and" and "not" really do increase readiblity, especially for someone who is less knowledgable in "hard" languages like C++ and is more used to something like matlab or VBS. Let's look at a real example from my game:
-
-{{< highlight Cpp >}}
-std::vector<BattleID> BattleMove::get_valid_targets(BattleID user_id, const BattleScene *scene) const
-{
-    std::vector<BattleID> out;
-    for (auto& id : scene->get_entities())
-    {
-        bool is_enemy = scene->get_handler()->is_enemy(id);
-    
-        if (id == user_id and can_target_self() or 
-            not id == user_id and not is_enemy and can_target_ally() or
-            is_enemy and can_target_enemy())
-        {
-            out.push_back(id);
-        }
-    }
-    return out;
-}
-{{< /highlight >}}
-
-You're missing a lot of context yet when I would ask you in what case a target is considered "valid" you could simply read out the if clause without thinking twice about it because the and, or, not combined with the above mention question-format of boolean variables make the code very close to human language, much close I would argue than using the traditional logical operators. Furthermore <code>and/or</code> are equivalent to && and || meaning the shortcut. Often a beginner will introduce performance issues into their code by not knowing what that means and using the bit-and and or that do not shortcut. Using <code>and/or</code> makes this effortless. In summary I would say this: if <code>and/or/not</code> where not in some way better than the traditional operators, why would they have been added if they weren't better in some way.
-
-I am currently still undecided on <code>not_eq, and_eq, or_eq</code>, I have to admit I don't use them which is probably inconsistent I don't really have a valid reason for that, once again this is just my preference and subject to change, especially if a good argument is brought against my way of doing things.
+It may be my lua background but I'm fond of the <code>and, or, not</code> in boolean expressions, many people from non-cs fields that primarily work in matlab or another very high level scripting language will have an easier time reading complex boolean expressions.
 
 <h3 id="OPERATORS_NUMERIC">Numerical Operators</h3>
 
-There should be a space precedeing and following the binary operators <code>+, -, /, %</code>. The unary <code>-</code> should be used on variables as well as number constants.
-
-If the left operand of <code>*</code> is a number constant, the following space can be ommited (c.f. below)
+There should be a space preceding and following the binary operators <code>+, -, /, %</code>. The unary <code>-</code> should be used on variables as well as number constants in favor of <code>-1 * </code>
 
 {{< highlight Cpp >}}
 int a, b;
 
 // wrong:
-c = 2*(a*b);
+c = 2*(a+b);
 c = a*b;
 c = -1*a;
+c = std::modulus(a, a%b);
 
 // correct:
-c = 2 * (a*b);
-c = 2*a * 2*b;
-c = 2 * a * 2 * b;
+c = 2 * (a + b);
 c = a * b;
-c = -a; // always use unary instead of -1*
-
-// all other operators should have a space before and after:
+c = -a;
+c = a % (a % b)
 {{< /highlight >}}
 
-Unless in performance critical code where every operation counts, it is sometimes preferable to use the non-simplified formular for something if it aids in clarity, this is up to personal preference and the whim of whoever is in charge of okay-ing pull requests.
+Unless in performance critical code conditions where every operation counts, it is sometimes preferable to use the non-simplified formula for something if it aids in clarity.
 
-<h3 id="OPERATORS_PREFIX">Pre- and Postfix Increment</h3>
+<h2 id="OPERATORS_PREFIX">Pre- and Postfix Increment</h2>
 
-Prefix incremenet / decrement should always be preferred over the other options unless specifically necessary to produce the desired behavior:
+Prefix incremenet / decrement should always be preferred over the postfix option unless specifically necessary to produce desired behavior:
 
 {{< highlight Cpp >}}
 size_t n = 0;
 
 // wrong:
 for (auto it = vec.begin(); it != vec.end() or n < 15; it += 1, n++)
+    // ...
+
+for (auto it = vec.begin(); it != vec.end() or n < 15; it.operator++(1), n++)
     // ...
     
 // correct:
@@ -333,31 +328,33 @@ for (auto it = vec.begin(); it != vec.end() or n < 15; ++it, ++n)
     
 {{< /highlight >}}
 
-This is to avoid hard-to-catch bugs where the execution order is important to the routines result in a way that impacts stability. Usually in those situations prefix increment will always work well while postfix increment would cause the bug. 
+TIn many scenarios, post- and prefix operators are functionally equivalent but if they aren't in that 1% of cases, this may cause hard-to-catch bugs. Always defaulting to prefix avoids this as much as possible.
 
 <h1 id="FUNCTIONS">Functions</h1>
-All functions are lower-case snake_case. This includes lambdas however Functors should be named according to the class naming specification (c.f. below). On declaration function argument should be unnamed unless specifically necessary to give context or if there are multiple arguments of the same type:<br>
+All function names should be lower-case snake_case. This includes lambdas however functors should be named according to the class naming specification (c.f. below). On declaration, function arguments should be unnamed unless specifically necessary to give context or if there are multiple arguments of the same type:<br>
 {{< highlight Cpp >}}
+// wrong
+void set_position(Vector2f position);
+void add_percentage(float); // expects [0, 1]
+void set_name(std::string, std::string);
+
+// correct
 void set_position(Vector2f);
 void add_percentage(float zero_to_one);
 void set_name(std::string first_name, std::string last_name);
 {{< /highlight >}}
 
-Here, the name for the argument in <code>add_percentage</code> is needed so the user knows to specify a float in range [0, 1] rather than [0, 100] as "percent" might imply.
-
 <h3 id="FUNCTIONS_MEMBER">Member Functions</h3>
 
-Members functions that set one or more member variables should always be named <code>set_*</code> where <code>*</code> is the name of the member variable, even if that variable is private:
+Members functions that set one or more member variables should always be named <code>set_*</code> where <code>*</code> is the same name used when declaring the member in the .hpp.
 
 {{< highlight Cpp >}}
 class Color
 {
     public:
-        void set_r();
-        float get_r() const;
-
+        void set_r(float);
+        void set_rgb(float, float, float);
         void set_alpha();
-        float get_alpha() const;
 
     private:
         float _r, 
@@ -367,48 +364,66 @@ class Color
 }
 {{< /highlight >}}
 
-If the function returns a single bool, if that bool is a member variable named <code>_is_foo</code> it's getter should be named <code>get_is_foo()</code>, however if 
+
+
+Similarly, getters should always be named <code>get_*</code>, however if the function returns a single bool, if that bool is a member variable named <code>_is_foo</code> it's getter should be named <code>get_is_foo()</code>, however if 
 that value is not a member it's getter should be phrased like a yes-no question, for example:
 
 {{< highlight Cpp >}}
 class OsWindowHandler;
 class RenderWindow
 {
+    private:
+        std::string _id;
+        bool _is_closed = false;
+
     public:
         void set_closed(bool b) 
         {
             _closed = b;
         }
 
-        bool get_is_closed() const
+        bool get_is_closed() const  // member bool
         {
             return _closed;
         }
 
-        bool is_focused() const
+        bool is_focused() const // non-member bool
         {
             return OsWindowHandler::is_window_focused(_id);
         }
 
-        bool should_notify_on_close() const
+        bool should_notify_on_close() const // non-member bool
         {
             return OsWindowHandler::get_context_settings(__id).should_notify_on_close;
         }
-
-    private:
-        std::string _id;
-        bool _is_closed = false;
 }
+
 {{< /highlight >}}
 
-Lambdas are very powerful however it can be very attractive to not add a new member function and instead just open a local lambda function inside another function. Lambdas should be used only where necessary, if you would call the potential member function from 2 or more places, it's almost never worth it to not just create the new function.
-If the lambda function itself is only called once inside it's scope, consider making it anonymous, the most common place would be inside a set or sorting algorithm with a custom comparison. If more than 1 routine needs it, consider making it either a member or just creating a functor.
-Another place I like to employ lambdas is for inline static initialization. Sometimes you need to call functions that do not return the object you're trying to initialize like so:
+<h2 id="LAMBDAS">Lambdas</h2>
+
+Lambdas are very powerful in modern C++ and it can be very attractive to not add a new member function and instead just open a local lambda function inside another function. Lambdas should be used only where necessary, if you would call the potential member function from 2 or more places it's almost never worth it to not just create the new function.
+
+If you do have to use a lambda, if the lambda function itself is only called once inside it's scope, consider making it anonymous, the most common place would be inside a set or sorting algorithm with a custom comparison. If more than 1 routine needs it and it needs to be a lambda, consider making it a member and binding it to an std::function;
+
+A place I like to employ lambdas is for inline static initialization. Sometimes you need to call functions that do not return the object you're trying to initialize like so:
 
 {{< highlight Cpp >}}
 
 class TexturedFoo : public Drawable 
 {        
+    private:
+        const Texture _texture;
+        
+        static inline const _window_resolution = []() {
+        
+            if (not RenderWindow::is_initialized())
+                RenderWindow::initialize_from_config();
+                
+            return RenderWindow::get_resolution();
+        }();
+        
     public:
         TexturedFoo(std::string texture_id)
             : _texture([&]() -> Texture&& {
@@ -421,22 +436,17 @@ class TexturedFoo : public Drawable
                 return std::move(texture);
             }())
         {}
-        
-      private:
-        const Texture _texture;
-        
-        static inline const _window_resolution = []() {
-        
-            if (not RenderWindow::is_initialized())
-                RenderWindow::initialize_from_config();
-                
-            return RenderWindow::get_resolution();
-        }();
 }
 {{< /highlight >}}
 
-I think this can be a very elegant way to initiate things that need a more complex routine than just calling it's constructor yet do not justify opening their own initialize() function somewhere else. You may have also notice my way of formatting lambda, unlike regular functions the first { should be in line with declaration, followed my an empty newline and then followed by the function body. Doing it all in one line can feel elegant because you did something really complex in just one line but the ego boost is rarely worth it. Lambdas are already somewhat hard to read and using formatting of the same quality as you would use for regular functions is advisable. When using lambdas it's almost alway best if you just specify <code>[&](auto arg_1, auto arg_2){}</code> nowadays, this automatically captures all things the lambda needs by reference and it auto deduces both the argument and return type. I'm not positive if this impacts performance but the convenience is worth it, maybe in 2011 you needed to do things manually but in 2021 using auto as much as possible is almost always the best option. I do however have one case where I do not think it is:
+I think this can be a very elegant way to initiate things that need a more complex routine than just calling it's constructor however thought should be put into wether it really is necessary to make this a lambda. For example for the above example both initialization functions could should be a static member function of <code>RenderWindow</code> and <code>Texture</code> respectively and I would again argue that the lambda is only justified if that function is called exactly once in the entirety of the library.
+When using lambdas it's almost always best to delcare them as <code>[&](auto arg1, auto arg2) { /... }</code> nowadays. This was the compiler will decide which variables to capture themself and the argument type is also automatically deduced. The capture should only be manually specificed if for example the invocation of a copy constructor is necessary. Similarly the trailing-return-type <code> [&](auto arg1, auto arg2){} -> foo</code> should be ommitted unless specifically necessary. 
 
+I would advise you to check on the <a href="https://en.cppreference.com/w/cpp/language/lambda">lambda docs page</a> every year or so, it feels like the new C++ versions, C++20 just recently and C++23 recently, are very impactful on what is possible with lambdas and I would encourange everyone to try to stay up to date with the most recent way of doing things. 
+
+<h2 id="RETURN_AUTO"> Auto-deducing return types </h2>
+
+It's tempting to always return auto if possible, even if it's not strictly necessary. I often see devs being lazy and not wanting to type out a long template expression but I woudl advise caution. If documentation isn't done yet it can send potential collborators on the hunt through your function definition to find out what exactly your function returns. In my opinion, if auto is possible the following form should be used:
 
 {{< highlight Cpp >}}
 // wrong:
@@ -454,6 +464,7 @@ std::function<Return_t()>&& create_function
 }
 
 // best:
+// @brief creates dummy function, used for style guide only
 // @returns rvalue of function<Return_t()>
 template<typename Return_t>
 auto create_function() 
@@ -463,226 +474,622 @@ auto create_function()
 
 {{< /highlight >}}
 
-Sometimes setting the return type is absolutely necessary however it isn't always. I often see devs being lazy and not wanting to type out a long templated expression and while the code will compile if it's complex enough it can be very hard to use. The user is not sure what type the function actually returns, if they should std::forward the result, what could possibly trigger implicit conversion, etc.. The best compromise here is to explicitely state the return type along with the description in the @return tag. This way a user doesn't have to understand the function body to know whats going on and you get to put auto which, as I said before, should nowadays be used as often as possible. 
+By employing good in-code documentation, the original dev gets to use auto and the collaborators only have to take one look at the function declaration to know what type the function returns. If for some reason in-line documentation is impossible, always prefer explicitely stating return types unless auto is absolutely necessary.
 
-<h1 id="CLASSES">Classes</h1>
+<h1 id="CLASSES_ENUMS">Classes & Enums</h1>
 
-Classes and other class-like entities are always upper-case CamelCase. This includes structs, unions, enums, typenames and typedefs or using-declarations for class-like entities.
-On the topic of enums, as all Enum members are inherently scoped static constants, they should be in all-caps SNAKE_CASE. Enums should be specific as enum-class when they are outside of the namespace scope, such as inside class or maybe also in <code>namespace detail</code>. If one or more Enum members are explicitely declared, the enum should also specify the underlying integral type explicitely;
+<h2 id="CLASSES_NAMING">Naming</h2>
+Classes, Enums and other class-like entities are always named upper-case CamelCase. This includes structs, unions, enums, typenames and typedefs as well as using-declarations for class-like entities.<br>
+
+<h2>Enums</h2>
+As all Enum "members" are inherently scoped static constexpr constants, they should be in all-caps SNAKE_CASE. When each enumerator is manually defined with an expression, the enums type should also be manually defined as such:
 
 {{< highlight Cpp >}}
 // wrong:
-template<class returns, typename... args>
-class Foonctor
-{
-    public:
-        returns operator()(args... args);
-        
-    private:
-        enum state { STATE_A = -1, STATE_b };
-} 
-// correct:
-template<typename Return_t, typename... Args_t> // always use typename, _t suffix 
-class Foonctor 
-{
-    public:
-        Return_t operator()(Args_t...);
-        
-    private:
-        enum class State : int      // enum class because it is not global
-        {                           // manually specifiy int because STATE_A is hardtyped to -1
-            STATE_A = -1,           
-            STATE_B
-        }
-}
+enum Manual : int {ZERO, ONE, TWO}
+enum Manual {FIRST = 1, SECOND = 2, THIRD = -2}
 
+// correct:
+enum Manual {ZERO, ONE, TWO}    // auto deduces int
+enum Manual : int {FIRST = 1, SECOND = 2, THIRD = -2}
 {{< /highlight >}}
+
+An enum that's inside the global namespace should be declared a scope enum <code>enum class Foo</code>. This is to avoid name-collisions as using all-caps letters reduces the set of enumerator names.
+
+
+<h2 id="CLASS_VS_STRUCT">Class vs. Struct</h2> 
+
+If all member variables and functions of a user-defined type are public, <code>struct</code> should be used an no access specifiers should be user. 
+
+In all other cases, <code>class</code> should be used and all members should be manually access specified with <code>public, protected, private</code>
 
 <code>class</code> shold be preferred over struct unless every member and memberfunction of the object is public. <code>public, protected, private</code> should always be explicitely declared for every member, unless <code>struct</code> is used in which case neither should be specified.
 
 {{< highlight Cpp >}}
 
 // wrong:
-struct RGB 
+struct HSV 
 {
     public:
-        float _r, _g, _b;
+        float _h, _s, _v;
 }
 
 struct Color 
 {
-    RGB to_rgb() const;
+    HSV to_hsv() const;
     
     private:
-        float _alpha;
+        float _r, _g, _b, _alpha;
 }
 
 // correct:
-struct RGB 
+struct HSV 
 {
-    float _r, _g, _b;   // no "public:" if struct
+    float h, s, v;  // no _ because members are public
 }
 
-class Color // use class because there is a private member
-{
-    public:     // always manually specify
-        RGB to_rgb() const;
-        
-    private:
-        float _alpha;
-}
-{{< /highlight >}}
-
-Lastly I would like to talk about the order members should be written in. All classes should follow this template:
-{{< highlight Cpp >}}
-// foo.hpp
-class Foo 
-{
-    // friend declarations
-    friend class FriendFoo;
-    
-    public:    
-        // ctor, dtor, copy/move constructors, rule of five, etc.
-        Foo(...);
-        
-        void setter_1(int);
-        int getter_1() const;
-        
-        void setter_2(float);
-        float getter_2() const;
-        
-        static const size_t PUBLIC_FOO_MEMBER_CONSTANT;
-        Vector2f PUBLIC_FOO_MEMBER;
-        
-    protected:
-        void protected_foo_function();
-        
-        size_t _protected_foo_member;
-        
-    private:
-        class InternalFooClass {};
-        enum InternalFooEnum {};
-        
-        void private_foo_function();
-        std::any _private_foo_member();
-}
-
-// foo.cpp
-
-// foo functions in the same order as in class declaration
-Foo::Foo() {...
-
-void Foo::setter_1(int) ...      
-int Foo::getter_1() const ...;
-        
-}
-{{< /highlight >}}
-
-For all scopes it's CTOR/DTOR first, then functions (setter before getter), then member variables. Public first, then protected then private. However this only applies if you are implementing the class in a .cpp. If everything is defined inline, you instead invert the order, so first private member vars, then private function, the protected member vars, then protected function, the public member vars, then public functions. This is because when someone is reading that header they would not understand the functions since they have no idea what any of the members are or do. With a .cpp this isn't a problem because all declarations including the members are read during the first pass of the .hpp so by the time a colleague goes to the .cpp they have all the context they need. 
-
-Lastly I would like to briefly talk about internal classes. C++ is very powerful because it not only lets you nest classes inside each one but these classes themself can inherit from multiple others (and even from each other within a super class). This is very, very rarely necessary. I used to just put classes inside others to "hide" them from the user. This class functionality is only necessary in it's outer class so you put it in there so it's invisible, however this should only be done if the internal class actually needs to be there, for example because it needs access to the outer classes members and even then it's sometimes best to instead move the internal class into <code>namespace detail</code> and just have it befriend the formerly outer class. Nesting classes is really useful but it should only be done if absolutely necessary as it can make code very hard to follow, especially if all definitions are inline in the same .hpp. Lastly if multiple different classes are declared inside the same .hpp, be it because they are internal or because they make sense to be together, each class should have it's own .cpp. This way they can be accessed by just including and working with the same header but on your end it doesn't become cluttered and you have to scroll through and then recompile 5000 lines of unrelated code so you can work on the the outer class. Always try to compartmentalize as much as possible, that compared with good software design will make it so once a file is done and working you can just leave it alone and never have to look at it again. 
-
-<h1 id="COMMENTS">Comments & Documentation</h1>
-
-For comments, always have a space following <code>//</code>. The following might be contentious but do not use multi-line comments at all. My rational for this is the follow: a) every multiline comment can be replace by single-line comments and the only difference is that you save a single character per line (<code>*</code> instead of <code>//</code>) and b) When debugging I like to comment out huge parts of code sometimes. When the regular comments also have multi-line comments this breaks-apart my commenting-out so I will have to do another multi-line comment after the regular comment and it's really annoying. Admittedly this is a very petty issue so if you really do want to use multi-line comments, format them as such:
-
-{{< highlight Cpp >}}
-// wrong:
-/* 
-    @author: Clem
-    @param A: some random param
-    @returns: void*/
-    
-// correct:
-/* 
- * @author: Clem
- * @param A: some random param
- * @return: void
- */ 
- 
-{{< /highlight >}}
-
-In general think about wether a person who has no idea what your code does needs the comment to understand it. If that's the case, think about wether that's because the code does something really complicated or wether the code itself is really complicated. In the latter case it is better to refactor things, rename variables and make the layout cleaner rather than using the easy out and writing what it does in a comment. 
-This does not apply to comments that are needed for documentation systems like doxygen, however often those only need comments outside of the function/class. For comments inside the nitty-gritty of your code, try to have as few as humanly possible without sacrificing clarity (this does not apply to <code>// sic</code);
-
-If no documentation system is in place (such as during development before release), the following comments should be added to every user-facing (i.e. not internal or inside namespace detail) class and every public function:
-
-{{< highlight Cpp >}}
-// wrong:
-
-template<typename Number_t> 
-// vector
-class Vector : private std::array<Number_t, 2>
+class Color
 {
     public:
-        Vector2(Number_t, Number_t);
-        normalize();
+        HSV to_hsv() const;
         
-    protected:
-        template<typename Other_t>
-        operator Vector2<Other_t>();
-}
-
-// correct:
-
-// @brief n-Element Vector, intended for numeric types
-// @param Number_t: type of element
-// @param n: number of elements
-// @author Clementine // optional
-template<typename Number_t, size_t n> 
-class Vector : private std::array<Number_t, n>
-{
-    public:
-        // @brief CTOR
-        // @param fist: First element          // use name or 1, 2, ... if no name in declaration
-        // @param 2: Second element
-        Vector2(Number_t first, Number_t);
-        
-        // @brief Normalize this vector
-        // @return Reference to itself after normilization
-        Vector2& normalize();
-        
-    protected:
-        // cast to other type, needed for implicit conversion
-        template<typename Other_t>
-        auto operator Vector2<Other_t>();
+    private:
+        float _r, _g, _b, _alpha;
 }
 {{< /highlight >}}
 
-It's always nice to give credit but it can make your code cluttered to give the @author tag to every function and use @return even if the function is void so it is important to keep that in mind. In a more collaborative setting or a crowd-sourcing project however, @author for every function can be appropriate. I think as a beginner it's easy to fall into the thinking that commenting isn't coding so you're not getting any work done but look at it this way: You commenting will save someone else or even you in the future to take time and reread everything to understand whats going on. It's always worth it to spend the 30s typing out the documentation, always always, no exceptions.
+<h2 id="HPP_VS_CPP">Order of Access Specified members: .cpp vs .hpp</h2>
 
-<h1 id="PROJECT_FOLDER">Filenames, Ressources and Project Folder</h1>
+<h3 id="FILENAMES"> Filenames </h3>
 
-<h2>File Names</h2>
+All programming language files should be lower-case snake_case. If a header holds a class named FooClass, the header should be named foo_class.hpp and similarly the source file should be foo_class.cpp. .h should not be used unless the entire header is exclusively written in C, not C++. For files in other programming languages the most common programming language file-extension should be used, for example if your data representation for a video-setting file is in lua and you agreed on a .cfg file extension for configs, the file should be name <code>video_settings.cfg.lua</code>. Many programming and data representation languages do not care what their file is name but you should still take care to make it immediatly obvious what a file is written in to collaborators, they should not have to have to open the file in notepad and try to figure out the language. Here is a non-exhaustive list of languages and file extensions I personally used:
 
-Text files should always be lower-case snake_case. This includes files such as *.hpp, *.cpp, *.h, *.lua, *.py, *.txt, *.md, *.html. Excluded are c-make related files or similar files where the library in questions needs to you to confirm to their naming model. 
+<table style="width:100%">
+  <tr>
+    <th>Language</th>
+    <th>Extension</th>
+  </tr>
+  <tr>
+    <td>C++</td>
+    <td>
+        .hpp for headers<br>
+        .cpp for source files
+    </td>
+  </tr>
+  <tr>
+    <td>Python</td>
+    <td>
+        .py
+    </td>
+  </tr>
+  <tr>
+    <td>Java</td>
+    <td>
+        .java
+    </td>
+  </tr>
+  <tr>
+    <td>JavaScript</td>
+    <td>
+        .js
+    </td>
+  </tr>
+  <tr>
+    <td>Lua</td>
+    <td>
+        .lua
+    </td>
+  </tr>
+  <tr>
+    <td>Ruby</td>
+    <td>
+        .rb
+    </td>
+  </tr>
+  <tr>
+    <td>Perl</td>
+    <td>
+        .pl
+    </td>
+  </tr>
+  <tr>
+    <td>Go / Golang</td>
+    <td>
+        .go
+    </td>
+  </tr>
+  <tr>
+    <td>R</td>
+    <td>
+        .R
+    </td>
+  </tr>
+  <tr>
+    <td>GLSL</td>
+    <td>
+        .glsl<br>
+        .frag for Fragment Shaders<br>
+        .vert for Vertex Shaders<br>
+    </td>
+  </tr>
+  <tr>
+    <td>Data Representation: CSV</td>
+    <td>
+        .csv
+    </td>
+  </tr>
+  <tr>
+    <td>Data Representation: XML</td>
+    <td>
+        .xml
+    </td>
+  </tr>
+  <tr>
+    <td>Data Representation: Lua</td>
+    <td>
+        .sav.lua for savefiles<br>
+        .cfg.lua for config<br>
+        etc.<br>
+    </td>
+  </tr>
+  <tr>
+    <td>Data Representation: JSON</td>
+    <td>
+        .json
+    </td>
+  </tr>
+  <tr>
+    <td>Data Representation: Matlab</td>
+    <td>
+        .MAT
+    </td>
+  </tr>
+</table>
 
-Resource files such as music, sprites, dialogue-trees, logs, etc. should be all-caps SNAKE_CASE. This is because inside your engine these files will have a non-human-readable ID at some point anyway and I think it's a lot easier to debug to give these an ID that's limited to all capital letters, numbers and _ instead of a size_t or something like that. That way in your debugger you can immediately identify ressources without having to cross-reference the map they are stored in. The all-caps will furthermore make it easy to tell-apart resources needed for your application and tertiary files, for examples you may have a .png that is the graphic for something you need which should have an all-caps name and in the same folder have the .ps file that stores all the information relevant to photoshop. That file should have the same name but not all-caps so when programming there will never be an error of accidentally loading a malformatted file, yet you can still keep them together to make exporting and version control easier. 
+I think a lot of these are standard and there's surely many I've missed like all the html-related things like .md and .css but the point of this list was more to instill in you a point of consistent flexibility. If it doesn't matter to the computer the extension is technically arbitrary, but the human part of your company should decide one exactly one answer anyway and stick to that at all times. If that answer overrides the script languages default extension like I do with .lua, it should be .yourextension.lua to allowed people to easily classify your files without having to open them. 
 
-<h2>.hpp vs .cpp</h2>
+<h2 id="CLASSES">Classes and .hpp vs .cpp</h2>
 
-*.hpp should always be preferred over *.h . *.h should exclusviely be used for projects that use specifically C and not C++. 
+I might be wrong on this but afaik in modern C++ the only reason to use the .hpp for declaration and .cpp for definition for a non-templated class is to reduce compile time. I've asked this question to multiple people and nobody was able to give me a solid answer, for cyclic linkage and multiple definition errors you can <code>inline</code> functions in the .hpp and static members you can also <code>inline</code> to allocate them without a .cpp. Furthermore templated classes require the definition to be in a .hpp or to manually declare the functions as <code>extern</code> so it's very confusing. This is how I've been doing it so far
 
-A less easy to answer question is wether or not you need .cpp files at all. When I started I was never sure what the actual reason for off-loading all the definitions is, it's true that back in the day you couldn't have everything in the header or you would get multiple-definition warnings but nowadays that's not true anymore. You can <code>inline</code> any static definition and you can <code>extern</code> any function to avoid things circular dependencies and linker issues. For templated classes you need to also manually specify extern if you want them to not be in the .hpp and it's just a mess. I may be missing some info here but for me it comes down to two questions: Should your project be a header-only library and if not, is compile-time important to you. The first part is obviously, if you don't want your user to have to compile your library make it header-only, that way it's a nice and easy drop-in solution. The only real disadvantage to this I can come up with is compile time. When you change something in a .hpp file the compiler will have to relink and recompile all files that include the header. For a small student project this may result in 0.5s more compile time but for a big project, especially one where very frequent iterating is the name of the game that compile time can add-up fast. If not using .cpp makes it so everytime you change something you have to wait 5s long, after 3 years and multiplied by dozens of employees that's a non-trivial amount of time spend unproductive looking at a screen. It's not that big of an issue but on a purely personal basis I prefer offloading as much as possible into a .cpp. Being used to working in lua and other non-compile languages it can be really annoying to just change the value of a number and having to wait 15s every time you want to see if that still triggers the error again. In summary that's what it comes down to for me. Are you scared of circular dependencies? Do you get annoyed at compile time when you could just be doing this in python right now and not have to wait? If you answer yes to either of those, use .cpps and maybe even <code>extern</code> all functions for templated classes.
+<h3 id="HEADER_ONLY">Header-only library</h3>
 
-<h1 id="EPILOGUE">Git, Miscellaneous Stuff & Closing Remarks</h1>
+If the library is header-only there should not be a single .cpp anywhere. The following form should be used:
 
-Before I thank you for reading I will go over some thoughts that didn't really fit into any of the other chapters:
+Inside the same access-specifier (private, protected, public) region, the declarations should be in the following order:
 
-Write your tests for small portions of code and test frequently. It's important to isolate as many of the variables that could trigger bugs because it helps you track them down faster. If you wrote routine A and B and only then ran them and saw there is a bug, you now don't know if it's A or Bs fault. If you ran A first, tested it, it worked and now after B stuff is breaking you'll have it so much easier
+0. using / friend class declaration
+1. static member variables
+2. non-static member variables
+3. Constructor, Destructor, Copy- and Move-Constructors
+4. Assignment operators
+5. other operators
+6. static member functions
+7. non-static member functions 
 
-<h3 id="EPILOGUE_GIT"> Version Control </h3>
+Inside the class the access-specified regions should be in the following order:
 
-Commit as often as possible. This was a huge thing I've only recently started doing but every file should have their own commit basically, obviously sometimes you need to bundle it but each commit should be the smallest, sensible incremental progress. Having many commits doesn't hurt anybody, it's only on your branch. Once you try to make a pull request you should bundle things to not bog down your team with unnecessary busy work but as long as it's only on your machine make as many commits for the smallest things. That way you will never have to loose unrelated work that didn't have any problems when you have to go back.
+1. private
+2. protected 
+3. public
 
-Establish a consistent commit message format. This will have to be done with your team, a popular thing I've been seeing is either starting each message with a tag like [FIX], [POLISH], [ISSUE#456], etc. Another more modern way is to use unicode emotes, maybe the nailpolish emote for polishing code, a red X for and unstable build, etc.. Either way you start them, write your commit messages in way they say what you did before committing. Like if commit t-1 was fixing a bug, then commit t is polishing that code and commit t+1 is working on something unrelated, the messages should talk about the last step. Don't write at commit t "about to work on something unrelated" and t-1 "will polish now". If you scroll through your commit history to rebase later it will be hard to track which commit to actually go back to. instead write your commit messages in the past, say what you did before committing. The only valid exception to it is "stashing", where you just need to shelf something to work on something else and then go back and pick up where you left off. 
-
-<h3 id="EPILOGUE_FIN">The End</h3>
-Thank you for reading this far, hopefully you at least learned something or if you're reading this but do not actually have to work with me and don't need to standardize on my way of doing things I hope you may have gotten some ideas on how to find your own styleguide. Always remember that there's rarely a best way to do thing, what's most important is to be consistent within your library and to always want to evolve your style, if new features drop you should incorporate them, I see so many old-hats not liking C++20s ranges and using auto everywhere. std::LegacyIterator should not be part of your programs anymore, just because the code works it's not always just about that. I'm very young so maybe this will change in 20 years when I get nostalgic and refuse to change my ways but until then I would actually appreciate if you have any critique on my style. If you think something doesn't make sense, there's a way better way to do something or I'm breaking my own rules I would love to hear about it as that's what this piece was mostly about, to give me the change to sort my thoughts and open an opportunity to make my style and my work better. 
-
-C.
+All functions should be defined inline, for non template files the <code>inline</code> keyboard should be used. Similarly all static members, both in templated and non-templated classes, should be initialized inline. This may cause static initilizations to be sensitive to the order they're declared in a file so be wary of that. If you're not sure you can always use the <a href="https://isocpp.org/wiki/faq/ctors#static-init-order" target="_blank">construct-on-first-use idiom</a>.
 
 
+{{< highlight Cpp >}}
+// template_foo.hpp
+template<typename First_t, typename... Args_t>
+class TemplateFoo : protected ParentFoo 
+{
+    private:    
+        static inline MemberType _static_private_member = //...
+        Function_t _private_member;
+        
+        void private_func(Args_t... members) const 
+        {
+            // full definition here
+        }
+        
+    protected:
+        using Function_t = std::function<First_t(Args_t...)>;
+    
+        static inline protected MemberType _protected_member = //..
+        MemberType2 _protected_member;
+        
+        template<typename T>
+        First_t protected_func(T) 
+        {
+            // full definition here
+        }
+        
+    public:
+        static inline constexpr float PUBLIC_CONST_FOO = 42;
+        float x, y;
+        
+        Foo() = default;
+        Foo(Args_t...) = default;
+        // + dtor, move-assignment, copy-constructor, etc.
 
+        static float static_function() 
+        {
+            // full definition here
+        } 
+        
+        auto get_private_member() const 
+        {
+            return _private_member;
+        }
+}
 
+// non_template_foo.hpp
+class NonTemplateFoo : public TemplateFoo<int, int>
+{
+    private:
+        static inline int member = TemplateFoo<int, int>::static_function();
 
+    public:
+        inline NonTemplateFoo() 
+        {
+            // full definition here
+        }
+}
+{{< /highlight >}}
+
+Advantages of this form include an easier time linking thing, being able to access the source code directly by just following back the header you included and less duplicated elements because you do not have to redeclare the template for every external definition. 
+Disadvantages include far larger compile time and the fact an IDE is needed so collaborators can collabls longer functions or internal classes to rapidly access all declared functions signatures. If that last point doesn't fully make sense, let's compare with the non-header only format:
+
+<h2 id="NON_HEADER_ONLY">Not Header-only Library</h2>
+
+If the library has at least one .cpp it is not header only and the following form should be used for all interal files from your library:
+
+Inside the same access-specifier members should be declared in the following order:
+
+0. using / friend class declaration
+1. static member variables
+2. non-static member variables
+3. Constructor, Destructor, Copy- and Move-Constructors
+4. Assignment operators
+5. other operators
+6. static member functions
+7. non-static member functions 
+
+Inside the class the access-specified regions should be in the following order:
+
+1. public
+2. protected 
+3. private
+
+Note that this is inverted when compared to header-only libraries. This is because in non-header-only libraries the class body should exclusively contain declarations. All functions and static members should be defined in the .cpp or if that is not possible (for example because the class is templated) they should still only be declared in the class definition and then defined later in the .hpp as such:
+
+{{< highlight Cpp >}}
+// template_foo.hpp
+template<typename T>
+class TemplateFoo : public ParentFoo 
+{
+    public:
+        TemplateFoo();
+        float get_member(); 
+        void set_member(float) const;
+        
+    protected:
+        static Type _protected_member;
+        
+    private:
+        void private_function();
+        float _private_member;
+}
+
+// ###################################################################
+
+template<typename T>
+Type TemplateFoo<T>::_protected_member = // ...
+
+template<typename T>
+TemplateFoo<T>::TemplateFoo() 
+{
+    // full definition
+}
+
+template<typename T> 
+TemplateFoo<T>::get_member() const 
+{
+    return _private_member;
+}
+
+template<typename T> 
+void TemplateFoo<T>::set_member(float f)
+{
+    _private_member = f;
+}
+{{< /highlight >}}
+
+{{< highlight Cpp >}}
+// non_template_foo.hpp
+class NonTemplateFoo : public ParentFoo 
+{
+    public:
+        NonTemplateFoo();
+        float get_member(); 
+        void set_member(float) const;
+        
+    protected:
+        static Type _protected_member;
+        
+    private:
+        void private_function();
+        float _private_member;
+}
+
+// non_template_foo.cpp
+Type NonTemplateFoo::_protected_member = // ...
+
+NonTemplateFoo::NonTemplateFoo() 
+{
+    // ...
+}
+
+NonTemplateFoo::get_member() 
+{
+    return _private_member;
+}
+
+NonTemplateFoo::set_member(float f) 
+{
+    _private_member = f;
+}
+
+void NonTemplateFoo::private_function() 
+{   
+    // ..
+}
+{{< /highlight >}}
+
+Advantages with this form include very nice readability. With just one look you get a complete overview of every function protected and public of a class without having an IDE to collpased the definitions and since everything is sorted as detailed above it's very easy to quickly go "what static members has this class again?" and go to the .hpp and find out within seconds. Another advantage is compile time, this is a very subjective thing because it depends both on your personality and what machine and environment your working with, if you're in a 100 person company then you probably only work on a small module that compiles within seconds and you have a machine that your employer gave you so having those compile times be 2s quicker really doesn't matter. If you're like me and your working on your kinda old laptop and have to sometimes recompile tens of thousands of lines of code on it you really notice it. It's the difference between 15s and 1.5 minutes and I'm personally a fan of being able to iterate as fast as possible and not having to stare at my screen twiddling my thumbs while it compiles is part of that.<br>
+The main disadvantage to this is the effort and extra work it takes. Not only do you have to handle twice the amount of files but especially for template functions redeclaring the <code>template<typename T> void Foo<T>::</code> every single definition can get tiring after the ten-thousands time and the fact that it's in the .hpp anyway may make it feel like a sisyphean task but I personally believe that the time spend to split delcaration and definitions like this will be worth it in the end when you back to a header you wrote two years ago and you don't have to scroll through hundreds of lines to know what's going on. <br>
+You may have noticed the deviding line between the template class declarations and their definitions <code>// ## (...) ##</code>. I used to create a seperate file <header_name>.inl and then include that file at the end of the header. This works and especially in projects where the source-code should not be easily user-accessible this may be the better option but I'm not a fan of introducing another arbitrary file-extension that isn't .cpp into my project so I will keep things in the header for now. 
+
+<h1>Comments & Documentation</h1>
+
+<h2 id="DOCUMENTATION">Inline Documentation</h2>
+Unless otherwise fixed by the documentation API your project uses, the following from should be employed for all public or protected functions:
+{{< highlight Cpp >}}
+// @brief : Brief Description of what the functiom does, should only be one sentence
+// @param name_param: First parameter, if it is named the name should come after @param
+// @param 2: Second parameter, if it is unnamend the name should be replaced with an integer
+// @returns: Return type and additional information 
+// @author: Clem (optional)
+Foo& add_to_foo(Foo named_param, int);
+
+// c.f. below for a practical example
+{{< /highlight >}}
+
+For private functions or functions and classes in <code>namespace detail</code> the documentation can be substituted with a single line like this:
+{{< highlight Cpp >}}
+// Add to foo
+// @author: Clem (optional)
+Foo& add_to_foo(Foo named_param, int);
+{{< /highlight >}}
+
+While it would of course be best to document everything it is just a reality of software development that things that only you work on will be documented last and once your at that point you don't see the point anymore so you'll just keep it undocumented. I feel like this one-line solution is a good compromise. Note how the @author notion is still employed, this is so in a collaborate setting if someone else uses the function and the one line did not give enough context to make them understand what the function does they know who to ask which is sometimes faster and easier than trying to understand the code out of context. 
+
+<h2 id="COMMENTS">Comments</h2>
+
+All comments should be inline-comments of the form <code>// This is a comment</code>, notice the space after <code>//</code>. The reason all comments should be inline comment is mostlys a matter of preference, obviously any multi-line comment can be functionally equivalently replaced with many inline comment but if I was put on the spot to give a valid reason to never use multi-line I would argue that when debugging, you often multi-line comment out huge parts of code. If the code itself contains multi-line comments then that region will be interrupted making you have to create another multi-line comment region to truly disable what you wanted to. 
+<br>
+Comments should be short, conscise and in english. When writing a comment always ask yourself: "if another person reads my code, would they understand it clearly without the comment?". If the close to yes than no then delete the comment and maybe refactor the structure or rename some variables. Non-documentation comments should be a last-resort, your code should be easily understandable as is and I often see either beginners or people who learned to code in the 80s and never really evolved past that having non-sensical variable names in complex sections and then having a comment at the very beginning of that section explaining what is happening. This is bad form and is the main reason I encourange overly verbose variable names. Let's look at a practical example.
+
+I would first like you to look at this code completely out of context. I intentionally choose variable names poorly but without malice, maybe I'm new or I really didn't have time to do this so I just submitted my first draft as a pull request
+
+{{< highlight Cpp >}}
+class Base 
+{};
+
+class Wrapper : public WrapperBase
+{
+    // ...
+};
+
+ThreadPool 
+{
+    void start(size_t);
+    
+    std::condition_variable _var;
+    std::mutex _mutex;
+    std::queue<std::unique_ptr<TaskWrapperBase>> _q;
+    
+    std::vector<std::thread> _w;
+    
+    bool _res,
+         _shutdown,
+};
+
+void ThreadPool::start(size_t n)
+{
+    assert(_t.empty());
+
+    for (size_t i = 0; i < n; ++i)
+    {
+        _t.emplace_back([&]()
+        {
+          auto lock = std::unique_lock<std::mutex>(_mutex, std::defer_lock);
+          while (true)
+          {
+              lock.lock();
+
+              _cv.wait(lock, [&]() -> bool {
+                  return _res || !_queue.empty() || _shutdown;
+              });
+
+              if (_res || (_shutdown && _queue.empty()))
+              {
+                  return;
+              }
+              
+              auto t = std::move(_queue.front());
+              _queue.pop();
+
+              lock.unlock();
+              t->operator()();
+          }
+        });
+    }
+}
+{{< /highlight >}}
+
+What happens in this code? I'm sure you will be able to figure it out eventually but this isn't a pop-quiz, it's simply a demonstration. Let's look at the code again but overly commented in a vein effort to explain what is happening:
+
+{{< highlight Cpp >}}
+// empty base needed for unique pointer 
+class Base 
+{};
+
+// Wraps tasks
+class Wrapper : public WrapperBase
+{
+    // ...
+};
+
+ThreadPool 
+{
+    public:
+        // ...
+        
+    private:
+        // initialize threads
+        void start(size_t);
+        
+        std::condition_variable _var;
+        std::mutex _mutex;
+        std::queue<std::unique_ptr<TaskWrapperBase>> _q;    // task queue
+        
+        std::vector<std::thread> _w;    // worked threads
+        
+        bool _res,      // is threapool paused for resizing?
+             _shutdown, // is threapool shutting down?
+};
+
+void ThreadPool::start(size_t n)
+{
+    for (size_t i = 0; i < n; ++i)
+    {
+        // add thread with routine
+        _t.emplace_back([&]()
+        {
+          // create lock for queue
+          auto lock = std::unique_lock<std::mutex>(_mutex, std::defer_lock);
+          
+          // keep checking if new task for taskqueue is ready
+          while (true)
+          {
+              lock.lock();
+              // wait at conditional variable until notified
+              _cv.wait(lock, [&]() -> bool {
+                  return _res || !_queue.empty() || _shutdown;
+              });
+
+              // finish routine when resizing or shutting down
+              if (_res || (_shutdown && _queue.empty()))
+              {
+                  return;
+              }
+              
+              // then get task
+              auto t = std::move(_queue.front());
+              _queue.pop();
+
+              lock.unlock();
+              
+              // and run it
+              t->operator()();
+          }
+        });
+    }
+}
+{{< /highlight >}}
+
+This is prefectly understandable, I think most people will immediately know whats going on and it could be argued that's the only thing that counts but I don't think so. Operating under the paradigm of "only comment when absolutely necessary" we can rewrite the code with no comments without sacrificing clarity like so:
+
+{{< highlight Cpp >}}
+class TaskWrapperBase 
+{};
+
+class TaskWrapper : public TaskeWrapperBase
+{
+    // ...
+};
+
+ThreadPool 
+{
+    public: 
+        // ... 
+        
+    private: 
+        // @brief create worker threads
+        // @param 1: number of threads
+        // @returns: void
+        void initialize_worker_threads(size_t);
+        
+        std::queue<std::unique_ptr<TaskWrapperBase>> _task_queue;
+        std::condition_variable _queue_conditional_variable;
+        std::mutex _queue_mutex;
+        
+        std::vector<std::thread> _worker_threads;
+        
+        bool _is_paused_for_resizing,
+             _is_shutting_down;
+
+};
+
+void ThreadPool::initialize_worker_threads(size_t n_threads)
+{
+    for (size_t i = 0; i < n_threads; ++i)
+    {
+        _worker_threads.emplace_back([&]()
+        {
+          auto queue_lock = std::unique_lock<std::mutex>(_queue_mutex, std::defer_lock);
+          
+          while (true)
+          {
+              queue_lock.lock();
+              _queue_conditional_variable.wait(queue_lock, [&]() -> bool {
+                  return _is_paused_for_resizing || !_task_queue.empty() || _is_shutting_down;
+              });
+
+              if (_is_paused_for_resizing or _is_shutting_down and _task_queue.empty())
+                  return;
+              
+              auto new_task = std::move(_task_queue.front());
+              _task_queue.pop();
+
+              queue_lock.unlock();
+              
+              new_task->operator()();
+          }
+        });
+    }
+}
+{{< /highlight >}}
+
+I think it is appropriate to say that this version is just as clear and easy to understand as the commented version except this time the reader actually looks at the code. Someone trying to debug the first version will ignore the code completely on their first read because they don't need it to understand what's even going on. The only thing I would argue warrants a comment is <code>new_task->operator()();</code> because the operator declaration has been skipped for brevity in <code>task_wrapper</code> so the reader (you) can't besure what exactly that operator does. But because the variable is name <code>new_task</code> and the thread is a worked thread I assume you will get that the worker thread does the task simply from context. That is the power of verbose, well-structured variable names and code in general. You don't need someone to explain how something works to you, you can just open it like a machine and everything is clean and well labeled so it's easy to understand. It respects the readers intelligence and invites them to actually analyze the code as quickly as possible and maybe find bugs or things that could be better. 
+
+<h1 id="EPILOGUE">Closing Comments</h1>
+Here are some things I didn't know where to put structurally but that I still think are important to say
+
+<h2 id="EPILOGUE_GIT">Version Control</h2>
+Commit as often as possible. Anytime you change file and continue to the next one you should create a new commit. The commit message should be what you have just done, past-tense, not what you're about to do. The more granular the commits are the easier it will be to rollback when something goes wrong and similar to documentation well formatted messages will help you understand thing instantly even 2 years later. Consider comming up with a labeling scheme each message begins with, I often see things like <code>[FIX], [POLISH], [TYPO], [ISSUE#1234]</code> etc.. Some teams even uses emotes which I do kinda like but not all shells support this so maybe alphanumerical would be better
+You'd think having a million commits would get hard to manage but that's what pull-requests are for. The collapse all the tiny commits into one big package and by grouping them like this you both get the convenience of having the granularity on your machine but once it goes to the team they don't have to sift through pages and pages of messages to rebase. 
+
+<h2 id="EPILOGUE_BENCHMARK">Test and Profile Frequently</h2>
+Testing modules frequently is non-negotiable. I recommend <a href="https://github.com/google/googletest">google test</a> but an internal testing framework can also be used. Testing assures correctness and it can be used later to see if modules interact properly. Testing is like a stamp that checks if the puzzle pieces properly fit. If you don't do this they may fit but then 2 years later you realize one doesn't and replacing it will mean you have to replace every adjacent one and it's a mess. Always test everything, test small pieces of modules, you don't need to write a test for every function but a test shouldn't take 30mins to finish. That way if you only change on part you don't need to run the giant test again and again to see if it works now.
+
+Profiling and Benchmarking are a more sublte issue because they aren't always necessary. For certain application yes, you should absolutely benchmark and especially if you're currently trying to optimize already existing code the only way you can do that properly is to optimize by eye, then run it to see if it actually got faster. Pretending like you're a pro and you can spot every bottleneck by just reading the code may be true sometimes but we're all human and humans make errors, no matter how good they are at what they do.
+A good middle-ground I found is to have a profiling tool run in the background. For example for my game I have a seperate process that monitors how much time of the 1/60ths of a second the rendering and simulation needs and how much time the engine is just waiting for the monitor to refresh. If nothing happens that index is at 0%, if the engine is so slow that it will lag the screen it's above 100% and constnatly having that number on the side of m y screen will make me aware of stuff going wrong, if I changed something small and suddenly when I open this window it peaks to 80% instead of the usual 15% I know something is up and I need employ a proper profiler to investigate. 
+<br>
+
+<h2 id="EPILOGUE_OPTIMIZATION">When Optimization is Appropriate</h2>
+
+On the topic of optimization, don't always go for the optimal way of doing things unless it's necessary. Again, some for some environments it's true, always do it the fastest way that's what counts but be realistic about it. If you for example want to allocate user made objects and access them later by ID and you expect the user to at most ever make 6 objects then writing a specially-hashed map that objects them in sub-logarithmic time is really not worth it vs just putting them in an array and iterating over all indices everytime you need to access them. 
+Similarly I would always think first before parallelizing something. Anytime that decision is made, the reason should be "we can't make it sequential because x". Sequential should always always be default, parallelization is something that introduce so much complexity and hard-to-catch bugs that I would honestly recommend not doing anything in paralell until you're read to release and then paralellizing thing to make everything snappier though this requires a good softwaredesigner because things have to be designed in a way that would work both sequential and in paralell from the beginning
+
+<h2 id="EPILOGUE_REFACTOR">Refactor at least once</h2>
+When you realize you accomplished your taks or fixed a bug, take some time to go through your code again to pretty it up. I often set myself goals like "today I will implement x" and then at the end of the day when I run my test and it goes through I'll go "done for today" and leave and then I never touch that file again until something goes wrong. This is not good, just because something work doesn't mean it's done. It's not even about adding documentation, sometimes irrelevant stuff will be left over or an if-else branch has duplicate branches or variable names don't really make sense or most commonly <strike>I</strike> you slacked off and didn't 100% keep to the style guide rules detailed above. Always doing at least one refactor will do wonders to keep your code clean and most importantly the more you do this the more you will just do things properly the first time. I'm still learning to do this but I'm already noticing that my mandatory-refactor-time went down from about 15mins everyday to just 5. 

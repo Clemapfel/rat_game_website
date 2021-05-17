@@ -378,4 +378,10 @@ Throughout this article we have not only looked at important games that got us t
 
  <p id="[5]">[5] "personal" in terms of a para-social relationship between the player and their perceived idea of an entity that is either diagetically present inside the game (such as Alphys in Undertale) or their idea of the dev themself (such as the creator of Yume Nikki, LISA, "Temmy" from Undertale) even if that persona has no actual relation to the real-life person that developed the game
  </p>
- will not attribute this quote to anyone directly but a general sentiment about why jRPGs have become niche is that players 
+ will not attribute this quote to anyone directly but a general sentiment about why jRPGs have become niche is that players
+ 
+<hr>
+<h2> Comments <span class="muted">(via Twitter)</span></h2>
+<center>
+ <blockquote class="twitter-tweet" data-lang="en" data-theme="dark"><p lang="en" dir="ltr">I wrote an article about the <a href="https://twitter.com/hashtag/gamedesign?src=hash&amp;ref_src=twsrc%5Etfw">#gamedesign</a> of a seies of games that started with <a href="https://twitter.com/hashtag/EarthBound?src=hash&amp;ref_src=twsrc%5Etfw">#EarthBound</a> and <a href="https://twitter.com/hashtag/yumenikki?src=hash&amp;ref_src=twsrc%5Etfw">#yumenikki</a> and culminated in <a href="https://twitter.com/hashtag/undertale?src=hash&amp;ref_src=twsrc%5Etfw">#undertale</a>. Maybe someone here finds it interesting:<a href="https://t.co/6bRQAlBzlq">https://t.co/6bRQAlBzlq</a><a href="https://twitter.com/hashtag/gamedev?src=hash&amp;ref_src=twsrc%5Etfw">#gamedev</a></p>&mdash; Clems (@not_birb) <a href="https://twitter.com/not_birb/status/1368640608244490247?ref_src=twsrc%5Etfw">March 7, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+ </center>
