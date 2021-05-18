@@ -44,8 +44,10 @@ I would like to quickly break down my philosophy of what makes good practice and
 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp4.3.1 <a href="#FILENAMES">Filenames</a><br>
 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp4.3.2 <a href="#HEADER_ONLY">Template for Header-only Libraries</a><br>
 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp4.3.3 <a href="#NON_HEADER_ONLY">Template for Non-Header-Only</a><br>
-5. <a href="DOCUMENTATION">Comments & Documentation</a><br>
+5. <a href="#DOCUMENTATION">Comments & Documentation</a><br>
 &nbsp&nbsp&nbsp&nbsp5.1 <a href="#DOCUMENTATION">In-File Documentation</a><br>
+&nbsp&nbsp&nbsp&nbsp5.2 <a href="#COMMENTS">Comments</a><br>
+&nbsp&nbsp&nbsp&nbsp5.3 <a href="#VARIABLE_NAMING_CLARITY">Choice of Variable/Function Names</a><br>
 6. <a href="#EPILOGUE">Closing Remarks</a><br>
 &nbsp&nbsp&nbsp&nbsp6.1 <a href="#EPILOGUE_GIT">Version Control</a><br>
 &nbsp&nbsp&nbsp&nbsp6.2 <a href="#EPILOGUE_BENCHMARK">Testing and Profiling</a><br>
@@ -897,132 +899,117 @@ Unless otherwise dictated by the documentation API your project uses, the follow
 <table style="width:100%">
   <tr>
     <th>Tag</th>
+    <th>Is Optional</th>
     <th>Description</th>
   </tr>
   <tr>
-    <td>C++</td>
+    <td>@brief</td>
+    <td>Never Optional</td>
     <td>
-        .hpp for headers<br>
-        .cpp for source files
+        Short description of what the function does. Should be one sentence
     </td>
   </tr>
   <tr>
-    <td>Python</td>
+    <td>@param</td>
+    <td>Optional if function has no parameters or functions exists in private context</td>
     <td>
-        .py
+        Description of function argument follower by <code>&ltname_of_the_parameter>:</code>. If parameter is unnamed in delcaration, the name is ommitted and replaced with a number instead (see example below
     </td>
   </tr>
   <tr>
-    <td>Java</td>
+    <td>@returns  </td>
+    <td>Optional if function returns void or function exists in private context</td>
     <td>
-        .java
+        Description of the returned value. If functions returns auto, explicit mention of the function return type
     </td>
   </tr>
   <tr>
-    <td>JavaScript</td>
+    <td>@author</td>
+    <td>Always Optional</td>
     <td>
-        .js
+        Handle of developer, this may be the real name or for example a github user name. Ask collborators if they are okay with having their full name distributed and always give credit in highly collaborative scenarios such as crowd-sourcing 
     </td>
-  </tr>
+    </tr>
   <tr>
-    <td>Lua</td>
+    <td>(no tag)</td>
+    <td>always optional</td>
     <td>
-        .lua
-    </td>
-  </tr>
-  <tr>
-    <td>Ruby</td>
-    <td>
-        .rb
-    </td>
-  </tr>
-  <tr>
-    <td>Perl</td>
-    <td>
-        .pl
-    </td>
-  </tr>
-  <tr>
-    <td>Go / Golang</td>
-    <td>
-        .go
-    </td>
-  </tr>
-  <tr>
-    <td>R</td>
-    <td>
-        .R
-    </td>
-  </tr>
-  <tr>
-    <td>GLSL</td>
-    <td>
-        .glsl<br>
-        .frag for Fragment Shaders<br>
-        .vert for Vertex Shaders<br>
-    </td>
-  </tr>
-  <tr>
-    <td>Data Representation: CSV</td>
-    <td>
-        .csv
-    </td>
-  </tr>
-  <tr>
-    <td>Data Representation: XML</td>
-    <td>
-        .xml
-    </td>
-  </tr>
-  <tr>
-    <td>Data Representation: Lua</td>
-    <td>
-        .sav.lua for savefiles<br>
-        .cfg.lua for config<br>
-        etc.<br>
-    </td>
-  </tr>
-  <tr>
-    <td>Data Representation: JSON</td>
-    <td>
-        .json
-    </td>
-  </tr>
-  <tr>
-    <td>Data Representation: Matlab</td>
-    <td>
-        .MAT
+        Verbose description of the functions. Always put last after all the tagged content right before the actual function declaration
     </td>
   </tr>
 </table>
 
 {{< highlight Cpp >}}
-// @brief : Brief Description of what the functiom does, should only be one sentence
-// @param name_param: First parameter, if it is named the name should come after @param
-// @param 2: Second parameter, if it is unnamend the name should be replaced with an integer
-// @returns: Return type and additional information 
-// @author: Clem (optional)
-Foo& add_to_foo(Foo named_param, int);
-
-// c.f. below for a practical example
+// @brief mix two foos using the ratio
+// @param 1: First foo to merge
+// @param 2: Second foo to merge
+// @param ratio: ratio of first to second foo, [0, 1]
+// @returns rvalue reference to newly merge foo
+// 
+// Functions takes two foos and applies (...) 
+// (...)
+// (...)
+// returning the now coagulated foos as an rvalue reference 
+Foo&& merge_foos(Foo&, Foo&, float ratio);
 {{< /highlight >}}
 
 For private functions or functions and classes in <code>namespace detail</code> the documentation can be substituted with a single line like this:
 {{< highlight Cpp >}}
-// Add to foo
-// @author: Clem (optional)
-Foo& add_to_foo(Foo named_param, int);
+// @brief merge using ratio
+Foo&& merge_foos(Foo&, Foo&, float ratio);
 {{< /highlight >}}
 
-While it would of course be best to document everything it is just a reality of software development that things that only you work on will be documented last and once your at that point you don't see the point anymore so you'll just keep it undocumented. I feel like this one-line solution is a good compromise. Note how the @author notion is still employed, this is so in a collaborate setting if someone else uses the function and the one line did not give enough context to make them understand what the function does they know who to ask which is sometimes faster and easier than trying to understand the code out of context. 
+While it would of course be best to document everything it's a reality of software development that proper documentation will happen last. That's why some tags are optional, it's an incentive for developers to at least do the one-line version however it is not an excuse to then never extend the one-line version. It's a temporary solution but a better compromise than not documenting anything.
 
 <h2 id="COMMENTS">Comments</h2>
 
-All comments should be inline-comments of the form <code>// This is a comment</code>, notice the space after <code>//</code>. The reason all comments should be inline comment is mostlys a matter of preference, obviously any multi-line comment can be functionally equivalently replaced with many inline comment but if I was put on the spot to give a valid reason to never use multi-line I would argue that when debugging, you often multi-line comment out huge parts of code. If the code itself contains multi-line comments then that region will be interrupted making you have to create another multi-line comment region to truly disable what you wanted to. 
-<br>
-Comments should be short, conscise and in english. When writing a comment always ask yourself: "if another person reads my code, would they understand it clearly without the comment?". If the close to yes than no then delete the comment and maybe refactor the structure or rename some variables. Non-documentation comments should be a last-resort, your code should be easily understandable as is and I often see either beginners or people who learned to code in the 80s and never really evolved past that having non-sensical variable names in complex sections and then having a comment at the very beginning of that section explaining what is happening. This is bad form and is the main reason I encourange overly verbose variable names. Let's look at a practical example.
+In case you haven't noticed so far, comments should be inline-comments of the form
+{{< highlight Cpp >}}
+// this is a comment concerning the next line
+auto next_line = ...
+{{< /highlight >}}
+Notice the space after <code>//</code>. All comments should start at the smallest indent of the block meaning there should never be a piece of code left of the comment and the comment should be appropriately indented as such:
 
-I would first like you to look at this code completely out of context. I intentionally choose variable names poorly but without malice, maybe I'm new or I really didn't have time to do this so I just submitted my first draft as a pull request
+{{< highlight Cpp >}}
+// wrong:
+for (size_t x = 0; x < n_x; ++x)
+{
+    for (size_t y = 0; y < 0.75 * n_x; ++y)    // x:y ratio should be 4:3
+    {
+        doo_foo(x, y);
+        // ...
+    }
+}
+            
+// correct:
+for (size_t x = 0; x < n_x; ++x)
+{
+    // x:y ratio should be 4:3
+    for (size_t y = 0; y < 0.75 * n_x; ++y)
+    {
+        doo_foo(x, y);
+        // ...
+    }
+}
+
+{{< /highlight >}}
+
+All comments should be in-line comments. This is mostly a matter of prefrence but I do have a valid reason: When debugging you often want to disable a piece of the program by "commenting it out", i.e. putting a multi-line comment around it temporarly. If there are already multiline comments in that section this will break the commented-out section up which means you have to add multiple comments just to comment something out for 10mins. An exception to this rule are comments at the very beginning of the file such as copy right disclaimers or similar legal-related things. As they are at the start of the file they can never interrupt multi-line comments. If you do decide to include multi-line comments in the release they should be formatted as such:
+
+{{< highlight Cpp >}}
+
+/* 
+ * There should be an empty line above the first line
+ * An each line should start with an asterisk
+ * (...)
+ * (...)
+ */
+
+{{< /highlight >}}
+
+<h2 id="VARIABLE_NAMING_CLARITY">Choice of Variable/Function Names</h2>
+
+Let's do a little hypothecial, first I'd like you to look at this code completely out of context. I intentionally choose variable names poorly but without malice, maybe I'm new or I really didn't have time to do this so I just submitted my first draft as a pull request
 
 {{< highlight Cpp >}}
 class Base 
@@ -1033,7 +1020,7 @@ class Wrapper : public WrapperBase
     // ...
 };
 
-ThreadPool 
+Pool 
 {
     void start(size_t);
     
@@ -1047,7 +1034,7 @@ ThreadPool
          _shutdown,
 };
 
-void ThreadPool::start(size_t n)
+void Pool::start(size_t n)
 {
     assert(_t.empty());
 
@@ -1080,7 +1067,7 @@ void ThreadPool::start(size_t n)
 }
 {{< /highlight >}}
 
-What happens in this code? I'm sure you will be able to figure it out eventually but this isn't a pop-quiz, it's simply a demonstration. Let's look at the code again but overly commented in a vein effort to explain what is happening:
+What happens in this code? I'm sure many of you will be able to figure it out eventually but this isn't a pop-quiz, it's simply a demonstration of what a difference code-style can make to a third party. Let's look at the same code again but overly commented in a vein effort to explain what is happening:
 
 {{< highlight Cpp >}}
 // empty base needed for unique pointer 
@@ -1093,7 +1080,8 @@ class Wrapper : public WrapperBase
     // ...
 };
 
-ThreadPool 
+// variable size thread pool 
+Pool 
 {
     public:
         // ...
@@ -1106,13 +1094,13 @@ ThreadPool
         std::mutex _mutex;
         std::queue<std::unique_ptr<TaskWrapperBase>> _q;    // task queue
         
-        std::vector<std::thread> _w;    // worked threads
+        std::vector<std::thread> _w;    // worker threads
         
         bool _res,      // is threapool paused for resizing?
              _shutdown, // is threapool shutting down?
 };
 
-void ThreadPool::start(size_t n)
+void Pool::start(size_t n)
 {
     for (size_t i = 0; i < n; ++i)
     {
@@ -1151,13 +1139,13 @@ void ThreadPool::start(size_t n)
 }
 {{< /highlight >}}
 
-This is prefectly understandable, I think most people will immediately know whats going on and it could be argued that's the only thing that counts but I don't think so. Operating under the paradigm of "only comment when absolutely necessary" we can rewrite the code with no comments without sacrificing clarity like so:
+This is prefectly understandable, I think most people will immediately know whats going on and it could be argued that's the only thing that counts but I would like you to remind of one of the goals of this style guide: elegance. Comments are not elegant, because operating under the paradigm of "only comment when absolutely necessary" we can rewrite the code without sacrificing clarity like so:
 
 {{< highlight Cpp >}}
 class TaskWrapperBase 
 {};
 
-class TaskWrapper : public TaskeWrapperBase
+class TaskWrapper : public TaskWrapperBase
 {
     // ...
 };
@@ -1168,9 +1156,6 @@ ThreadPool
         // ... 
         
     private: 
-        // @brief create worker threads
-        // @param 1: number of threads
-        // @returns: void
         void initialize_worker_threads(size_t);
         
         std::queue<std::unique_ptr<TaskWrapperBase>> _task_queue;
@@ -1196,7 +1181,7 @@ void ThreadPool::initialize_worker_threads(size_t n_threads)
           {
               queue_lock.lock();
               _queue_conditional_variable.wait(queue_lock, [&]() -> bool {
-                  return _is_paused_for_resizing || !_task_queue.empty() || _is_shutting_down;
+                  return not _task_queue.empty() or _is_paused_for_resizing or _is_shutting_down;
               });
 
               if (_is_paused_for_resizing or _is_shutting_down and _task_queue.empty())
@@ -1206,7 +1191,6 @@ void ThreadPool::initialize_worker_threads(size_t n_threads)
               _task_queue.pop();
 
               queue_lock.unlock();
-              
               new_task->operator()();
           }
         });
@@ -1214,20 +1198,22 @@ void ThreadPool::initialize_worker_threads(size_t n_threads)
 }
 {{< /highlight >}}
 
-I think it is appropriate to say that this version is just as clear and easy to understand as the commented version except this time the reader actually looks at the code. Someone trying to debug the first version will ignore the code completely on their first read because they don't need it to understand what's even going on. The only thing I would argue warrants a comment is <code>new_task->operator()();</code> because the operator declaration has been skipped for brevity in <code>task_wrapper</code> so the reader (you) can't besure what exactly that operator does. But because the variable is name <code>new_task</code> and the thread is a worked thread I assume you will get that the worker thread does the task simply from context. That is the power of verbose, well-structured variable names and code in general. You don't need someone to explain how something works to you, you can just open it like a machine and everything is clean and well labeled so it's easy to understand. It respects the readers intelligence and invites them to actually analyze the code as quickly as possible and maybe find bugs or things that could be better. 
+I think it is appropriate to say that this version is just as clear and easy to understand as the commented version except this time the reader actually looks at the code. Someone trying to debug the first version will ignore the code completely on their first read because they don't need it to understand what's even going on but when they do they still have to deal with obtuse variable names. Using the more elegant minimally commented version allows for less fluff at no cost of clarity.
 
 <h1 id="EPILOGUE">Closing Comments</h1>
-Here are some things I didn't know where to put structurally but that I still think are important to say
+Here are some things I didn't know where to put structurally but that I still think are important to say:
 
 <h2 id="EPILOGUE_GIT">Version Control</h2>
-Commit as often as possible. Anytime you change file and continue to the next one you should create a new commit. The commit message should be what you have just done, past-tense, not what you're about to do. The more granular the commits are the easier it will be to rollback when something goes wrong and similar to documentation well formatted messages will help you understand thing instantly even 2 years later. Consider comming up with a labeling scheme each message begins with, I often see things like <code>[FIX], [POLISH], [TYPO], [ISSUE#1234]</code> etc.. Some teams even uses emotes which I do kinda like but not all shells support this so maybe alphanumerical would be better
-You'd think having a million commits would get hard to manage but that's what pull-requests are for. The collapse all the tiny commits into one big package and by grouping them like this you both get the convenience of having the granularity on your machine but once it goes to the team they don't have to sift through pages and pages of messages to rebase. 
+Commit as often as possible. Anytime you change file or continue to the next step of implementing/fixing something, create a new commit. The actual commit message should be what was just done, past-tense, not what you're about to do. The more granular the commits are the easier it will be to rollback when something goes wrong and similar to documentation well formatted messages will help you understand things instantly even 2 years later. Consider coming up with a labeling scheme each message begins with, I often see things like <code>[FIX], [POLISH], [TYPO], [ISSUE#1234]</code> etc.. Some teams even uses emotes which I do kinda like but not all shells support this so maybe alphanumerical would be better for now.<br>
+You'd think having a million commits would get hard to manage but that's what pull-requests are for. They collapse all the tiny commits into one big package and by grouping them like this you both get the convenience of having the granularity on your machine but once it goes to the team or users they don't have to sift through pages and pages of messages to rebase. 
 
 <h2 id="EPILOGUE_BENCHMARK">Test and Profile Frequently</h2>
-Testing modules frequently is non-negotiable. I recommend <a href="https://github.com/google/googletest">google test</a> but an internal testing framework can also be used. Testing assures correctness and it can be used later to see if modules interact properly. Testing is like a stamp that checks if the puzzle pieces properly fit. If you don't do this they may fit but then 2 years later you realize one doesn't and replacing it will mean you have to replace every adjacent one and it's a mess. Always test everything, test small pieces of modules, you don't need to write a test for every function but a test shouldn't take 30mins to finish. That way if you only change on part you don't need to run the giant test again and again to see if it works now.
+Testing modules frequently is non-negotiable. I recommend <a href="https://github.com/google/googletest">google test</a> but an internal testing framework can also be used. Testing assures correctness and it can be used later to see if modules would interact properly were this new feature merge with the master.<br>
+Test small pieces of modules, you don't need to write a test for every function but a test should take no more than 5mins to finish. If you do need testing in general to run for 30mins should should create 6 smaller tests and run them sequentially. That way if you only change one part you don't need to run the giant test again to see if it works now.
 
-Profiling and Benchmarking are a more sublte issue because they aren't always necessary. For certain application yes, you should absolutely benchmark and especially if you're currently trying to optimize already existing code the only way you can do that properly is to optimize by eye, then run it to see if it actually got faster. Pretending like you're a pro and you can spot every bottleneck by just reading the code may be true sometimes but we're all human and humans make errors, no matter how good they are at what they do.
-A good middle-ground I found is to have a profiling tool run in the background. For example for my game I have a seperate process that monitors how much time of the 1/60ths of a second the rendering and simulation needs and how much time the engine is just waiting for the monitor to refresh. If nothing happens that index is at 0%, if the engine is so slow that it will lag the screen it's above 100% and constnatly having that number on the side of m y screen will make me aware of stuff going wrong, if I changed something small and suddenly when I open this window it peaks to 80% instead of the usual 15% I know something is up and I need employ a proper profiler to investigate. 
+Profiling and Benchmarking are a more sublte issue because they aren't always necessary in my opinion. For certain application yes, you should absolutely benchmark and especially if you're currently trying to optimize already existing code the only way you can do that properly is to actually benchmark the code by running it to see if it actually got faster. There are best-practice ways for this such as using a steady machine or running benchmarks multiple times and using statistical analysis on the results but I won't go into that here.<br>
+Don't think you can spot performance problems just by re-reading code, always run it even if you have three doctorates and 40 years of experience humans make errors or overlook things no matter how good they are at what they do. Having solid proof of how things are better now in forms of data is also a better way to convince customers or collaborators that what you did was actually successfull.<br>
+I do realize that this can be overkill, you don't need to squeeze out that last 5% performance increase for your app that starts a washing machine in your house. A good middle-ground I found is to have a profiling tool run in the background. For example for my game I have a seperate process that monitors how much time of the 1/60ths of a second (the duration of one frame) the rendering and simulation needs and how much time the engine has just waiting for the monitor to refresh. If nothing happens that index is at 0%, if the engine is so slow that it lags the screen the tool will notify me that the percentage is above 100%. I always have that number on the side of my screen, that way when something doesn't quite break but behaves unexpectedly non-performant I know to investigate. 
 <br>
 
 <h2 id="EPILOGUE_OPTIMIZATION">When Optimization is Appropriate</h2>
@@ -1235,14 +1221,14 @@ A good middle-ground I found is to have a profiling tool run in the background. 
 On the topic of optimization, don't always go for the optimal way of doing things unless it's necessary. Again, some for some environments it's true, always do it the fastest way that's what counts but be realistic about it. If you for example want to allocate user made objects and access them later by ID and you expect the user to at most ever make 6 objects then writing a specially-hashed map that objects them in sub-logarithmic time is really not worth it vs just putting them in an array and iterating over all indices everytime you need to access them. 
 Similarly I would always think first before parallelizing something. Anytime that decision is made, the reason should be "we can't make it sequential because x". Sequential should always always be default, parallelization is something that introduce so much complexity and hard-to-catch bugs that I would honestly recommend not doing anything in paralell until you're read to release and then paralellizing thing to make everything snappier though this requires a good softwaredesigner because things have to be designed in a way that would work both sequential and in paralell from the beginning
 
-<h2 id="EPILOGUE_REFACTOR">Refactor at least once</h2>
-When you realize you accomplished your taks or fixed a bug, take some time to go through your code again to pretty it up. I often set myself goals like "today I will implement x" and then at the end of the day when I run my test and it goes through I'll go "done for today" and leave and then I never touch that file again until something goes wrong. This is not good, just because something work doesn't mean it's done. It's not even about adding documentation, sometimes irrelevant stuff will be left over or an if-else branch has duplicate branches or variable names don't really make sense or most commonly <strike>I</strike> you slacked off and didn't 100% keep to the style guide rules detailed above. Always doing at least one refactor will do wonders to keep your code clean and most importantly the more you do this the more you will just do things properly the first time. I'm still learning to do this but I'm already noticing that my mandatory-refactor-time went down from about 15mins everyday to just 5. 
+<h2 id="EPILOGUE_REFACTOR">Always Refactor at least once</h2>
+When you realize you accomplished your taks or fixed a bug, take some time to go through your code again to pretty it up. I often set myself goals like "today I will implement x" and then at the end of the day when I run my test and it goes through I'll go "done for today" and leave and then I never touch that file again until something goes wrong. This is not good, just because something works doesn't mean it's done. It's not even about adding documentation, sometimes redundant stuff will be left over or an if-else branch has duplicate branches or you forgot to delete a commented out section or <strike>I</strike> you slacked off and didn't 100% keep to the style guide rules detailed above. Always doing at least one refactor will do wonders to keep your code clean and most importantly the more you do this the more you will just do things properly the first time. I'm still in this learning process myself but actually challenging what I do through force of habit will get me closer to doing it right the first time over time.
 
 <h1>Epilogue</h1>
-If you read this far through in one go then I thank you for your time. The main point of this piece was to investigate my own way of doing things, if I have to justify it for an illusionary third person then I actually have to come up with a valid reason instead of just doing things because I feel like it.<br>
-As I evolve and improve I will likely keep this updated. My hope is that someday when I'm in a position where people will have to write code that looks like mine I can just link them this and 1h later they know in detail how replicate what I do and why I choose to do it this way.
+If you read this far through in one go then I would like to thank you for your time. The main point of this piece was less to inform (nobody is reading these anyway) but to investigate my own way of doing things. Writing everything out forces me to argue my points to the imagined reader and it helps me structure and maybe questions my ways of doing things and like I stated at the beginning, adaptability and a willingless to discard tradition in favor of better things are the 3rd most important thing you can do with your coding style.
 
 C.
 
 <hr>
+As I evolve I'll probably change and keep this update so here is a list of edits:
 First published, Mai 18th 2021
