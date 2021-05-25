@@ -1,6 +1,6 @@
 +++
 title = "[WIP] Adaptive AI in jRPGs: A Detailed Guide"
-date = 2021-03-01T22:41:08+01:00
+date = 2021-04-03T22:41:08+01:00
 author = "C. Cords"
 draft = false
 url = "/post/jrpg-ai"
