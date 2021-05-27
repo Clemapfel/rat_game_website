@@ -124,7 +124,7 @@ Ich bin fähig einen Windows-PC zu benutzen auch wenn ich nicht besonders vertra
 <h3 style="float:right; position:relative; top:-1em">3/5 [<span style="color:#F33C72;">▮▮▮▯▯</span>]</h3>
 <h3>Latex</h3>
 <p>
-Seit Universität erstelle ich jede Hausaufgabe, Abschlussarbeit oder Bericht nur noch mit Latex und obwohl ich immernoch oft nach Sachen googlen muss denke ich das ich fähig bin jeden Formatierungsrichtlinien zu genügen.
+Seit Universität erstelle ich jede Hausaufgabe, Abschlussarbeit oder Bericht nur noch mit Latex und obwohl ich immernoch oft nach Sachen googlen muss denke ich das ich fähig bin jeden Formatierungsrichtlinien zu genügen. Natürlich bin ich auch fähig Sachen stattdessen in Google Docs, Word, Pages, etc. zu erstellen wenn das Projekt das erfordert.
 </p>
 
 <h3 style="float:right; position:relative; top:-1em">2/5 [<span style="color:#F33C72;">▮▮▯▯▯</span>]</h3>
