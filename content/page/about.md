@@ -4,7 +4,7 @@ layout = "single"
 url = "/about/"
 +++
 
-<i>(Eine deutsche Version dieses Lebenslaufes ist <a href="/about_german/">hier</a> verfügbar)</i>
+<i>(Eine verkürzte, deutsche Version dieses Lebenslaufes ist <a href="/about_german/">hier</a> verfügbar)</i>
 
 # About
 
@@ -15,11 +15,10 @@ Please navigate to the appropriate section via the following table of contents:
 1. [**General Information**](#general-information)<br>
 1.1 [**Education**](#education)<br>
 1.2 [**Natural Languages**](#natural-languages)<br>
-2. [**Programming Skills**](#programming-skills) <br>
-2.1 [**Programming Languages**](#programming-languages) <br>
-2.2 [**Programming Related Things**](#programming-related-things) <br>
-3. [**Soft Skills & Expectation**](#soft-skills-and-expectations) <br>
-
+2. [**Soft Skills & Expectation**](#soft-skills-and-expectations) <br>
+3. [**Programming Skills**](#programming-skills) <br>
+3.1 [**Programming Languages**](#programming-languages) <br>
+3.2 [**Programming Related Things**](#programming-related-things) <br> 
 ---
 
 ## General Information
@@ -57,6 +56,8 @@ Below you are more detailed explanations of my programming-related expertise. If
 <hr>
 
 ## Programming Languages
+
+Feel free to visit mit <a href="https://github.com/Clemapfel/" target="_blank">github profile contribution activity</a> to verify my years of experience and which languages I use most often.
 
 <h3 style="float:right; position:relative; top:-1em">5/5  [<span style="color:#F33C72;">▮▮▮▮▮</span>]</h3>
 <h3>C++</h3>
@@ -149,7 +150,6 @@ I'm aware of best-practice ways to do version control and I'm fully capable of i
 I've exclusively used Latex for homework, assignments, papers and documentation in both my personal and professional life and while I do have to google things frequently I'm able to format any documenting according to arbitrary templates and styleguides.
 </p>
 
-<p>
 <h3 style="float:right; position:relative; top:-1em">2/5 [<span style="color:#F33C72;">▮▮▯▯▯</span>]</h3>
 <h3>HTML, CSS</h3>hier
 <p>
