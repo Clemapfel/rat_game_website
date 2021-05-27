@@ -24,36 +24,169 @@ I would like to quickly break down my philosophy of what makes good practice and
 4. <b>Elegance</b>: Assuming maximum clarity and correctness the most elegant way to do something is the right way.
 
 <h1 id="TOC">Table of Contents</h1><br>
-0. <a href="#QUICKSTART">Quickstart</a><br>
-1. <a href="#VARIABLES">Variables</a><br>
-&nbsp&nbsp&nbsp&nbsp1.1 <a href="#VARIABLES_NAMING">Naming</a><br>
-&nbsp&nbsp&nbsp&nbsp1.2 <a href="#VARIABLES_DECLARATION">Declaration</a><br>
-2. <a href="#OPERATORS">Operators</a><br>
-&nbsp&nbsp&nbsp&nbsp2.1 <a href="#OPERATORS_PTR">References and Pointers</a><br>
-&nbsp&nbsp&nbsp&nbsp2.2 <a href="#OPERATORS_LOGIC">Logical Operators</a><br>
-&nbsp&nbsp&nbsp&nbsp2.3 <a href="#OPERATORS_NUMERIC">Numerical Operators</a><br>
-&nbsp&nbsp&nbsp&nbsp2.4 <a href="#OPERATORS_PREFIX">Pre- and Postfix Increment</a><br>
-3. <a href="#FUNCTIONS">Functions</a><br>
-&nbsp&nbsp&nbsp&nbsp3.1 <a href="#FUNCTIONS_MEMBER">Member Functions</a><br>
-&nbsp&nbsp&nbsp&nbsp3.2 <a href="#LAMBDAS">Lambdas</a><br>
-&nbsp&nbsp&nbsp&nbsp3.3 <a href="#RETURN_AUTO">Auto-deducing Return Types</a><br>
-4. <a href="#CLASSES_ENUMES">Classes & Enums</a><br>
-&nbsp&nbsp&nbsp&nbsp4.1 <a href="#CLASSES_NAMING">Naming</a><br>
-&nbsp&nbsp&nbsp&nbsp4.2 <a href="#CLASS_VS_STRUCT">Class vs. Struct</a><br>
-&nbsp&nbsp&nbsp&nbsp4.3 <a href="#HPP_VS_CPP">Order of access-specified members: .hpp vs .cpp</a><br>
-&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp4.3.1 <a href="#FILENAMES">Filenames</a><br>
-&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp4.3.2 <a href="#HEADER_ONLY">Template for Header-only Libraries</a><br>
-&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp4.3.3 <a href="#NON_HEADER_ONLY">Template for Non-Header-Only</a><br>
-5. <a href="#DOCUMENTATION">Comments & Documentation</a><br>
-&nbsp&nbsp&nbsp&nbsp5.1 <a href="#DOCUMENTATION">In-File Documentation</a><br>
-&nbsp&nbsp&nbsp&nbsp5.2 <a href="#COMMENTS">Comments</a><br>
-&nbsp&nbsp&nbsp&nbsp5.3 <a href="#VARIABLE_NAMING_CLARITY">Choice of Variable/Function Names</a><br>
-6. <a href="#EPILOGUE">Closing Remarks</a><br>
-&nbsp&nbsp&nbsp&nbsp6.1 <a href="#EPILOGUE_GIT">Version Control</a><br>
-&nbsp&nbsp&nbsp&nbsp6.2 <a href="#EPILOGUE_BENCHMARK">Testing and Profiling</a><br>
-&nbsp&nbsp&nbsp&nbsp6.3 <a href="#EPILOGUE_OPTIMIZATION">When Optimization is not Appropriate</a><br>
-&nbsp&nbsp&nbsp&nbsp6.4 <a href="#EPILOGUE_REFACTOR">The Golden Rule: Always Refactor Once</a><br>
-7. <a href="#THANKS">Thanks and References</a><br>
+0. <a href="#QUICKSTART">Quickstart</a><br> 
+1. <a href="#BRACKETS">Loops & Brackets</a><br>
+2. <a href="#VARIABLES">Variables</a><br>
+&nbsp&nbsp&nbsp&nbsp2.1 <a href="#VARIABLES_NAMING">Naming</a><br>
+&nbsp&nbsp&nbsp&nbsp2.2 <a href="#VARIABLES_DECLARATION">Declaration</a><br>
+3. <a href="#OPERATORS">Operators</a><br>
+&nbsp&nbsp&nbsp&nbsp3.1 <a href="#OPERATORS_PTR">References and Pointers</a><br>
+&nbsp&nbsp&nbsp&nbsp3.2 <a href="#OPERATORS_LOGIC">Logical Operators</a><br>
+&nbsp&nbsp&nbsp&nbsp3.3 <a href="#OPERATORS_NUMERIC">Numerical Operators</a><br>
+&nbsp&nbsp&nbsp&nbsp3.4 <a href="#OPERATORS_PREFIX">Pre- and Postfix Increment</a><br>
+4. <a href="#FUNCTIONS">Functions</a><br>
+&nbsp&nbsp&nbsp&nbsp4.1 <a href="#FUNCTIONS_MEMBER">Member Functions</a><br>
+&nbsp&nbsp&nbsp&nbsp4.2 <a href="#LAMBDAS">Lambdas</a><br>
+&nbsp&nbsp&nbsp&nbsp4.3 <a href="#RETURN_AUTO">Auto-deducing Return Types</a><br>
+5. <a href="#CLASSES_ENUMES">Classes & Enums</a><br>
+&nbsp&nbsp&nbsp&nbsp5.1 <a href="#CLASSES_NAMING">Naming</a><br>
+&nbsp&nbsp&nbsp&nbsp5.2 <a href="#CLASS_VS_STRUCT">Class vs. Struct</a><br>
+&nbsp&nbsp&nbsp&nbsp5.3 <a href="#HPP_VS_CPP">Order of access-specified members: .hpp vs .cpp</a><br>
+&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp5.3.1 <a href="#FILENAMES">Filenames</a><br>
+&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp5.3.2 <a href="#HEADER_ONLY">Template for Header-only Libraries</a><br>
+&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp5.3.3 <a href="#NON_HEADER_ONLY">Template for Non-Header-Only</a><br>
+6. <a href="#DOCUMENTATION">Comments & Documentation</a><br>
+&nbsp&nbsp&nbsp&nbsp6.1 <a href="#DOCUMENTATION">In-File Documentation</a><br>
+&nbsp&nbsp&nbsp&nbsp6.2 <a href="#COMMENTS">Comments</a><br>
+&nbsp&nbsp&nbsp&nbsp6.3 <a href="#VARIABLE_NAMING_CLARITY">Choice of Variable/Function Names</a><br>
+7. <a href="#EPILOGUE">Closing Remarks</a><br>
+&nbsp&nbsp&nbsp&nbsp7.1 <a href="#EPILOGUE_GIT">Version Control</a><br>
+&nbsp&nbsp&nbsp&nbsp7.2 <a href="#EPILOGUE_BENCHMARK">Testing and Profiling</a><br>
+&nbsp&nbsp&nbsp&nbsp7.3 <a href="#EPILOGUE_OPTIMIZATION">When Optimization is not Appropriate</a><br>
+&nbsp&nbsp&nbsp&nbsp7.4 <a href="#EPILOGUE_REFACTOR">The Golden Rule: Always Refactor Once</a><br>
+8. <a href="#THANKS">Thanks and References</a><br>
+
+<h1 id="LOOPS">Loops & Brackets</h1>
+
+Let's get the omnipresent stuff out of the way first:
+
+If present at all, brackets after if-else, while, for, try-catch and similar loops as well as blocks, non-lambda functions, classes, structs and enums should always have a newline before the first bracket as such:
+
+{{< highlight Cpp >}}
+// wrong
+enum { MEMBER_1, MEMBER_2 };
+
+class foo {
+    inline Foo() {
+        for (auto& i : unmentioned_member) {
+            initialize(i);
+        };
+    }
+    
+    inline void bar() {
+        return 1;
+    }
+    
+    inline void empty_function() 
+    {
+    }
+}
+
+// correct
+enum 
+{
+    MEMBER_1, 
+    MEMBER_2
+};
+
+class foo 
+{
+    inline Foo() 
+    {
+        for (auto& i : unmentioned_member) 
+        {
+            initialize(i);
+        };
+    }
+    
+    inline void bar() 
+    {
+        return 1;
+    }
+}
+{{< /highlight
+
+The only exceptions to this are namespaces and lambdas with only one line of code inside of them as empty blocks. These should be opened and closed in the same line:
+
+{{< highlight Cpp >}}
+
+namespace style_guide::inside 
+{
+    Foo::Foo() 
+    {}  // newline before the first bracket but closed in the same line
+    
+    Foo::Foo(ArgumentType arg) 
+        : _member_a(//...),
+          _member_b(//...),
+          _other_member([&]() -> MemberType&&   // newline because lambda body has more than one line of code
+          {  
+            do_something_else();
+            return std::move(MemberType(arg));
+          }()),
+          _member_c(//...)
+    {
+        std::sort(member_a.begin(), member_a.end() [](auto a, auto b) { return a > b; });
+        // no newline because it is one line
+    }
+}
+{{< /highlight }}
+
+Note how the multi-line lambda in the constructor is indented the same as the other _members in the trailing initializer list.
+
+Now this decision is pretty arbitrary and it's kind of a toincoss wether an individual dev will do newline-before or newline-after for curved brackets but I'd still like to give some context: I think the main reason to do after is to force devs to put a basically empty line after the first statement. This helps distinguish between function/class definitions and regular statements and it also makes it easier to find the start of the loop. Basically what I'm trying to say is:
+
+{{< highlight Cpp >}}
+
+// messy
+namespace space {
+    ClassName : public Mother {
+        ClassName() = default;
+        ClassName(ArgType arg) : ClassName() {
+        }
+    }
+}
+
+// clearer
+namespace space 
+{
+    ClassName : public Mother 
+    {
+        ClassName() = default;
+        ClassName(ArgType arg) 
+            : ClassName() 
+        {}
+    }
+}
+
+// equally clear though:
+namespace space {
+
+    ClassName : public Mother {
+    
+        ClassName() = default;
+        ClassName(ArgType arg) 
+            : ClassName() {
+        }
+    }
+}
+{{< /highlight }}
+
+What's important isn't the bracket but the empty or almost empty line after the declaration. The reason I pick newline-before is because for constructors like in the above example I like the opening bracket for the CTOR definition to not be inline with one of the initializer list statements, with normal functions it can't get lost but with CTORs it can in all the brackets of the initializer list:
+
+{{< highlight Cpp >}}
+
+    Foo::Foo()
+        : LambdaMember2([&]() 
+          {
+            auto res = multiline_lambda();
+            res += multiline_lambda();
+            return res;
+          }(),
+          LambdaMember([&](){ return oneline_lambda();}()) {
+    }
+{{< /highlight >}}
+
+Is very hard to parse. With the bracket starting the ctor definition preceded by a newline it is much easier and if you're doing the newline-before in one situation you should do it always because as I said, consistency is the most important thing. 
 
 <h1 id="VARIABLES">Variables</h1>
 
@@ -1232,3 +1365,4 @@ C.
 <hr>
 As I evolve I'll probably change and keep this update so here is a list of edits:
 First published, Mai 18th 2021
+Added Bracket Chapter, Mai 28th 2021
