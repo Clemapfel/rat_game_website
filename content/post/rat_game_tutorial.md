@@ -14,6 +14,25 @@ Things to do tutorials about (in order):
 ## Only one party: knock out won't quit until death
 ## One enemy has to die, other only knocked out
 
+Nurse: 
+    Nurse is weird cat from monster hunter in kezu clothing
+    Always priority 1, inflict nurse-status on all allies
+    Nurse Status: when entity gets knocked out, cure and instantly heal 50% health
+    that way nurse needs to be killed first
+    
+    Attacks: Protect other
+    
+Syringe Bird:
+    Special Status: refill syringe. Try to refill every turn, only works if not already refilled. While refilled counter at 0, attacks poison 
+    
+    
+1 nurse, 1 normal
+1 nurse, 2 normal
+
+2 nurse no normal: nurse need to be knocked out at the same time. Right before bossfight to teach
+2 nurse + boss
+
+
 # Targeting type
 ## targeting type: single enemy
 ## targeting type: all
@@ -52,7 +71,6 @@ Things to do tutorials about (in order):
 
 
 ## Chill + Burn or Frozen + Burn
-
 ENEMY:
     Ice Cream x2
     Fire Cream x1
