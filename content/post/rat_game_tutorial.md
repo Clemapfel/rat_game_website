@@ -7,44 +7,105 @@ layout = "post/single"
 categories = ["game design", "rat_game"]
 +++
 
-Things to do tutorials about:
+Things to do tutorials about (in order):
 
-- death/knocked out
-- asleep
-- chill vs burn
-- chill + chill = frozen
-- stunned, asleep, at risk count
-    - only have one ally and the enemy does not attack 
+# Death/Knocked out
+## Only one enemy: knock out to win
+## Only one party: knock out won't quit until death
+## One enemy has to die, other only knocked out
 
-- Status: AT_RISK
-    - directly fater death/knocked out
+# Targeting type
+## targeting type: single enemy
+## targeting type: all
+## targeting type: only ally | only enemy
+## targeting type: only self
+## targeting type: only ally and enemy not self
 
-- targeting type
-    - only enemy
-    - only ally
-    - only self
-    - self & ally
-    - ally and enemy but not self
+# Ressources
+## no ap cost, inf stacks
+## ap cost, inf stacks
+## limited stacks, no ap cost
+## ap cost + limited stacks
+## consumables
 
-- Move stacks
-    - infinite vs finite
-    - no ap vs ap cost
+# Priming
+## prime, no detonation
+## prime goes away after 2 turns
+## prime & detonate, only Type A
+## cure prime by reseting to neutral
+## switch prime with Type B
+
+# Speed
+## Queue Order
+## Speed boost: single
+## Speed decrease: single
+## Speed boost + decrease in one move
+## priority without speed modification
+## priority with speed modification
+
+# Status
+## Asleep: Cure by waiting & cure by damage
+## Stun
+## Chill effect on speed
+## Chill + Chill = Frozen
+## Burn effect on defense
+
+
+## Chill + Burn or Frozen + Burn
+
+ENEMY:
+    Ice Cream x2
+    Fire Cream x1
     
-- priming
-    - prime & detonate
-    - prime override
-    - reset to neutral to unprime
-    - prime goes away after 2 turns
-        -> stun 
-    
-- consumable stacks
+    spawns: 
+        IceIce Cream
+        FireFire Cream
+        IceFire Cream
 
-- attack and defense boost
-    - blind/burn effect on attack/defense
+ATTACKS:
+Ai should make it so only one of them can pick one of the elemental attacks in the same turn
+Ai always protects first turn
+
+Ice:
+    protect: inflict ice soul on self, stack 1
+    freeze: low damage to single target, inflict chill on all enemies automatically
     
-- speed boost
-    - priority
-    - chills effect on speed
+Fire:
+    protect: inflict fire soul on self, stack 1
+    attack: serious damage (so it is focused to trick palyer into)
+    fire: deal damage to single target, infclit burn on all enemies automatically
+    
+IceIce:
+    protect: regular protect
+    attack: low-damage
+    double-freeze: mid-damage, instantly freeze target and chill all others
+    
+FireFire:
+    protect: regular protect
+    attack: extreme damage
+    double-fire: inflict burn on all enemies
+    
+IceFire:
+    protect: regular protect
+    attack: mid-damage
+    Ice-fire: Inflict chill, then inflict burn, burn always last, 0 damage for joke
+    
+SPECIAL STATUS:
+    Ice soul: 
+        on death inflict ice soul on all allies
+        if ally already has fire: spawn ice-fire, cure all
+        if ally already has ice: spawn ice-ice, cure all
+        
+    Fire soul: on death inflict fire soul on the ally with the least health
+        on death inflict fire soul on all allies
+        if ally already has fire: spawn fire-fire, cure all
+        if ally already has ice: spawn ice-fire, cure all
+
+## Blind effect on Attacke
+## At risk: only for enemy
+## At risk: for player
+
+
     
 
     
