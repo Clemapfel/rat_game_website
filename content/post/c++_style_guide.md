@@ -104,7 +104,7 @@ class foo
         return 1;
     }
 }
-{{< /highlight
+{{< /highlight >}}
 
 The only exceptions to this are namespaces and lambdas with only one line of code inside of them as empty blocks. These should be opened and closed in the same line:
 
@@ -129,7 +129,7 @@ namespace style_guide::inside
         // no newline because it is one line
     }
 }
-{{< /highlight }}
+{{< /highlight >}}
 
 Note how the multi-line lambda in the constructor is indented the same as the other _members in the trailing initializer list.
 
@@ -169,7 +169,7 @@ namespace space {
         }
     }
 }
-{{< /highlight }}
+{{< /highlight >}}
 
 What's important isn't the bracket but the empty or almost empty line after the declaration. The reason I pick newline-before is because for constructors like in the above example I like the opening bracket for the CTOR definition to not be inline with one of the initializer list statements, with normal functions it can't get lost but with CTORs it can in all the brackets of the initializer list:
 
@@ -1366,3 +1366,4 @@ C.
 As I evolve I'll probably change and keep this update so here is a list of edits:
 First published, Mai 18th 2021
 Added Bracket Chapter, Mai 28th 2021
+Added "don't use else", Mai 30th 2021
