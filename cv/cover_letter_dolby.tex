@@ -1,0 +1,110 @@
+%! Author = clem
+%! Date = 06.07.21
+
+% Preamble
+\documentclass[11pt]{article}
+
+\usepackage{amsmath}
+\usepackage[sfdefault]{roboto}
+\usepackage[T1]{fontenc}
+\usepackage{array, booktabs}
+\usepackage[x11names,table]{xcolor}
+\usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{contour}
+\usepackage{multicol}
+\usepackage{titlesec}
+\usepackage{pifont}
+\usepackage{ragged2e}
+\usepackage[geometry]{ifsym}
+\usepackage[pscoord]{eso-pic}% The zero point of the coordinate systemis the lower left corner of the page (the default).
+\usepackage{calc}
+
+% margin
+
+% color
+\definecolor{muted_grey}{rgb}{0.5, 0.5, 0.5}
+\definecolor{my_pink}{rgb}{0.92, 0.11, 0.475}
+\definecolor{light_mint}{rgb}{0.117, 0.9, 0.5686}
+\definecolor{dark_mint}{rgb}{0, 0.55, 0.1}
+\definecolor{my_aqua}{rgb}{0, 1, 0.982}
+\definecolor{grey_backdrop}{rgb}{1, 1, 1}
+
+%\titlespacing*{\section}{0pt}{0ex}{0ex}
+
+\newcommand{\timeline}{\color{my_pink}\makebox[0pt]{\large---}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\newcommand{\muted}{\color{muted_grey}}
+\newcommand{\emptyline}{\,\newline}
+
+\newcommand\textline[4][t]{%
+  \par\smallskip\noindent\parbox[#1]{0.6\textwidth}{\raggedright#2}%
+  \parbox[#1]{0.5\textwidth}{\raggedleft#4}\par\smallskip%
+}
+
+% margin
+\usepackage[a4paper, total={\paperwidth -120pt, \paperheight}]{geometry}
+\addtolength{\topmargin}{0.2\paperheight}
+
+% Document
+\begin{document}
+
+\begin{textblock*}{\paperwidth}(50pt, 40pt)
+\flushleft
+\:\newline
+{\muted \small to}\linebreak
+Dolby Laboratories\linebreak
+Rheinstrasse 45, Aufgang 1\linebreak
+12161 Berlin\linebreak
+\newline
+\textbf{Regarding}: \href{https://careers.dolby.com/job/Berlin-Staff-Engineer-%28fmd%29/740864600/}{Staff Engineer {\muted(LI-DS1)}}
+\end{textblock*}
+
+\begin{textblock*}{\paperwidth}(-50pt, 40pt)
+\flushright
+{\muted \small from}\linebreak
+{\Large \textbf{Clemens Cords}}\linebreak
+12203 Berlin\linebreak
+\newline
+\href{mailto:mail@clemens-cords.com}{mail@clemens-cords.com}\linebreak
++49 30 239 348 71 \linebreak
+\newline
+\newline
+\end{textblock*}
+
+\begin{flushright}
+Berlin, July 6th 2021
+\end{flushright}
+
+\begin{flushleft}
+Dear Sir or Madam,
+\emptyline
+\emptyline
+\emptyline
+Reviewing your application I am not only excited to see that my skillset and work-history fullfills all of your mandatory requirement but that the position and the field of image/video-processing in general aligns strongly with my passions for visual computing. I not only have an excellent foundation in C++ and general software-design but an already established background in (medical) image processing and real-time rendering, both of whom gave me a deep familiarity with the science, math and algorithmic design behind it.
+
+My medical background instilled into me the importance of assuring correctness at all times and delivering a user-experience that is not only up to budget and specifications but guaruanteed to never go wrong. Similarly, the fundamental paradigm of my years of experience in performance optimization in games development is that all the computation has to be assured to happen within one frame, any longer and the user experience will be severly impacted. This directly transfers to video-processing and I am confident that because of this skill and my desire to always achieve the most fluid, well-optimized and thus enjoyable user experience possible I would be an ideal candidate for a team aiming to provide just this to potential clients.
+
+I have previous personal experience with ffmpeg, a good track-record of quickly understanding and adapting to another teams code-base and an already established knowledge-base on audio-processing which will help me adapt quickly to processing other non-visual signals and the teams workflow with little additional training required.
+
+\emptyline
+\emptyline
+I would kindly ask you to take a look at my attached CV to get a better and more detailed picture of me and my skillset.
+As no relocation or similar life-change is necessary I would be available at the earliest convenience.
+\emptyline
+\emptyline
+\emptyline
+Kind regards,\newline
+\emptyline
+\emptyline
+\emptyline
+\emptyline
+
+\rule[0pt]{30ex}{0.5pt}\newline
+{\muted Clemens Cords}
+\end{flushleft}
+
+\end{document}
