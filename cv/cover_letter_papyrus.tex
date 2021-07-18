@@ -23,10 +23,12 @@
 \usepackage[geometry]{ifsym}
 \usepackage[pscoord]{eso-pic}% The zero point of the coordinate systemis the lower left corner of the page (the default).
 \usepackage{calc}
+\usepackage{listings}
 
 % margin
 
 % color
+\definecolor{light_grey}{rgb}{0.9, 0.9, 0.9}
 \definecolor{muted_grey}{rgb}{0.5, 0.5, 0.5}
 \definecolor{my_pink}{rgb}{0.92, 0.11, 0.475}
 \definecolor{light_mint}{rgb}{0.117, 0.9, 0.5686}
@@ -63,11 +65,12 @@
 \flushleft
 \:\newline
 {\muted \small to}\linebreak
-Dolby Laboratories\linebreak
-Rheinstrasse 45, Aufgang 1\linebreak
-12161 Berlin\linebreak
+Hendrik Ramps\linebreak
+Papyrus Author Team\linebreak
+Pettenkoferstra{\ss}e 16-18\linebreak
+10247 Berlin\linebreak
 \newline
-\textbf{Regarding}: \href{https://careers.dolby.com/job/Berlin-Staff-Engineer-%28fmd%29/740864600/}{Staff Engineer {\muted(LI-DS1)}}
+\textbf{Regarding}: \href{https://papyrus.join.com/jobs/2575350-c-c-software-developer-for-creative-writing-suite?pid=ddb0f7f50cdf3fec0579&utm_source=xingBasicXml&utm_medium=free&utm_campaign=xing&utm_content=c%2Bc%2Bsoftware%2Bdeveloper%2Bfor%2Bcreative%2Bwriting%2Bsuite#apply-window}{C/C++ Software Developer for Creative Writing Suite}
 \end{textblock*}
 
 \begin{textblock*}{\paperwidth}(-50pt, 40pt)
@@ -83,29 +86,26 @@ Rheinstrasse 45, Aufgang 1\linebreak
 \end{textblock*}
 
 \begin{flushright}
-Berlin, July 6th 2021
+Berlin, July 18th 2021
 \end{flushright}
 
 \begin{flushleft}
-Dear Sir or Madam,
+Dear Mr. Ramps
 \emptyline
 \emptyline
+I am applying for the position of C/C++ software developer.\linebreak
 \emptyline
-I am applying for the position of Staff Engineer (LI-DS1) at your Berlin Rheinstra{\ss}e site.\linebreak
-
-Reviewing your application, I am not only excited to see that my skill set and work history fulfills all of your mandatory requirements, but that the position and the field of image/video-processing, in general, aligns strongly with my passions for visual computing.\linebreak
-I not only have an excellent foundation in C++ and general software-design, but I also have an established background in (medical) image processing and real-time rendering, both of which gave me a deep familiarity with the science, math, and algorithmic design behind it. \linebreak
-
-My medical background instilled into me the importance of assuring correctness at all times, and delivering a user-experience that is not only up to budget and specifications but guaranteed to always work exactly as intended.\linebreak
-%Similarly, the fundamental paradigm of my years of experience in performance optimization in games development taught me that all the computation has to be assured to happen within one frame, any longer and the user experience will be severely impacted.
-Similarly the fundamental paradigm of performance optimization in game development is to always make sure all computation happens within one frame, any longer and the user experience will be severely impacted.
-This directly transfers to video-processing, and I am confident that because of this skill and my desire to always achieve the most fluid, well-optimized, and thus enjoyable user experience possible, I would be an great candidate for a team already aiming to provide this to potential clients.
+Reviewing your application, I am not only excited to see that my skill set and work experience matches your stated job description, but that the position and the field of word processing and UI design in general aligns strongly with my passions.\linebreak
+I not only have an excellent foundation in C/C++ and general software-design both in procedural and object-oriented environments but am very familiar with large-volume high performance text and image processing from my bioinformatics background.
+While not seeming immediately related processing an entire genome is fundamentally a problem of processing text,
+similarly there is little practical difference between enhancing or otherwise processing a medical image compared to any other image or illustration and as I already learned in previous work experience my theoretical background and optimization experience in both of these applications transfers directly.\linebreak
 \emptyline
+I've worked as an indie video game dev these past 3 years and in the process gathered experience designing and implementing intuive, well-optimized and asthetically pleasing UIs and user experience in general.
+I have already had brief experience with QT and am confident that I will be able to readjust to it in very short time.
+Similarly I tend to adjust quickly to another teams code base{\muted\textasteriskcentered} and workflow
 \emptyline
-As no relocation or similar life-change is necessary, I would be available at the earliest convenience.
-Please, take a look at my attached CV to get a better and more detailed picture of me and my skill set.\linebreak
+Please take a look at my attached CV to get a better and more detailed picture of me and my skill set.\linebreak
 \emptyline
-Please feel free to reach out to me via the contact data at the top of this letter or on my CV,
 
 Kind regards,\newline
 \emptyline
@@ -120,5 +120,12 @@ Kind regards,\newline
 \rule[0pt]{30ex}{0.5pt}\newline
 {\muted Clemens Cords}
 \end{flushleft}
+
+\begin{flushright}
+\emptyline
+\emptyline
+{\small\color{light_grey}\textasteriskcentered \:even if \lstinline{goto}s are present}
+\end{flushright}
+
 
 \end{document}
