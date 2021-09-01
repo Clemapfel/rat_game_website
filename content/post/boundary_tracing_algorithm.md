@@ -3,7 +3,7 @@ title = "A fast, robust Boundary Tracing and Enumeration Algorithm"
 author = "C. Cords"
 date = 2021-07-30
 draft = false
-url = "/post/k-means_heuristic"
+url = "/post/boundary_tracing_algorithm"
 layout = "post/single"
 categories = ["programming", "crisp"]
 images = [""]
@@ -11,7 +11,7 @@ images = [""]
 
 # Abstract
 
-Boundaries are very important in image feature description and having a way to numerically represent them in a consistent manner is the only way to build libraries of them for later feature detection. Here I present the algorithm used by ``crisp::ImageRegion`` that transform a set of 4 (8)-connected pixel coordinates into the regions boundary with no further constraints. The algorithm runs in amortized o(x + k) where x is the number of pixels in the region and k are the number of boundary pixels. The advantage of the method presented here is that not only is the boundary traced but it allows easy conversion to both freeman chain codes minimal-vertices polygon representation in amortized o(1) in both cases.
+Boundaries are central to many field in image processing and having a way to numerically represent them is the only way to build libraries of them for later feature detection. Here I present the algorithm used by ``crisp::ImageRegion`` that extracts from a region consisting of a set of 4 (8)-connected pixel coordinates all it's outer boundary points and enumerates them in a deterministic manner. The region has to fullfill no further constraints. The algorithm runs in amortized o(x + k) where x is the number of pixels in the region and k are the number of boundary pixels. The advantage of the method presented here is not only a robustness to common edge cases making user-input minimal but that both the freeman-chain codes and the minimum-vertex boundary polygon can be extracted at the end of the algorithm in o(1).
 
 [(skip to source code)](#The Algorithm)
 
@@ -19,13 +19,13 @@ Boundaries are very important in image feature description and having a way to n
 
 Boundary tracing it such an elemental task in image processing because boundaries are one of the best features to classify and many other features descriptors work as a function of boundary. Crisp for example uses the fourier transform of a boundary converted onto the complex plane (such that each vertices x position is the real, y position the complex part respectively) for boundary simplification and when I went to consult the literature I was frustrated that many of the common algorithms don't fullfill the following two demands I somewhat arbitrarily set myself:
 
-+ i) **the algorithm should work on all closed regions, no exceptions**
-  Common assumptions algorithms make are "let the region be simply connected" or "let the region boundary be non-overlapping". I want crisps algorithm to be able to handle all of these with not further user action, indeed the only assertion ``crisp`` makes is that the region is *closed* which for image-processing purposes is an assumption that's made for all common segmentation algorithms anyway
++ **i) the algorithm should work on all closed regions, no exceptions**
+  Common assumptions algorithms make are "let the region be simply connected" or "let the region boundary be non-overlapping". I want crisps algorithm to be able to handle all of these with not further user interaction, indeed the only assertion ``crisp`` makes is that the region is closed and connected which for image-processing purposes is an assumption that's made for all common segmentation algorithms anyway. If the region is not connected you can simply decompose them into connected segments, then the boundary of the original non-connected region is the union of the boundary of all segments
   
-+ ii) **the resulting boundary should have the minimum number of points necessary to represent the region with no loss of detail**
++ **ii) the resulting boundary should have the minimum number of points necessary to represent the region with no loss of detail**
   To build a library of boundaries you need to transform them and that transformation should be as computationally as possible and ``crisp`` achieves this by returning the boundary polygon, a set of ordeted vertices that when connected are *identical* to the set of boundary points. 
   
-+ iii) **the resulting order of boundary points should be circular, consistent and predictable**
++ **iii) the resulting order of boundary points should be circular, consistent and predictable**
 it is not difficult to isolate the set of boundary points from a region, however we want those points to have a strong order that makes sense to both humans and computers. ``crisp`` wants the vertex to orderd in the counter-clockwise with the position x-axis advancing to the east and the positive y-axis advancing south in 2d space. This order being consistent means for two sets such that the intersection of the two is empty, the algorithm should return two boundary point sequences that are identical. Circularity means that if we index the points with i = 0 ... N then point p_0 needs to be connected to p_1 and p_N, more on this constraint below
   
 These three conditions need to be fullfilled at the same time of course. I've used quite a few terms without properly defining them so far so let's get that out of the way
@@ -36,22 +36,20 @@ A image region M of an Image I is defined as a finite set of pixels that is a su
 + for any two pixel x in M there is a different pixel x_n such that x and x_n are 8-connected. 
 + M is a subset of I
 
-A boundary can be intuitively described as the outer most pixels of the region that are still a subset of it. Each pixel in the boundary can be approached both from inside M and from the space around M. Formally a boundary K is a set of pixels such that
+A boundary can be intuitively described as the outer most pixels of the region that are still a subset of it. Each pixel in the boundary can be approached both from inside M and from the space around M. Formally a boundary K = {p_0, p_1, ..., p_n} is a set of pixels such that
 
-+ K is a subset of M, this makes M a closed region
-+ for any pixel y in K there exists exactly two different pixels y_n1, y_n2 such that y_n1 is 8-connected to y and y_n2 is 8-connected to y but y_n1 is not 8-connected to y_n2
-+ any pixel y in K has less than 8 neighbors in M, this means in image space y has at least 1 pixel that is not part of the region
-+ K is not the boundary of a hole (TODO: define hole)
++ A: K is a subset of M, this makes M a closed region
++ B: for any pixel p_i in K it holds that p_i-1 is 8-connected to p_i and p_i is 8-connected to p_i+1. p_0 is 8-connected to p_n, this makes the boundary *circular*
++ C: any pixel y in K has less than 8 neighbors in M, this means in image space y has at least 1 pixel that is not part of the region
++ D: K is not the boundary of a hole (TODO: define hole)
 
-The latter condition is used to enforce that minimum number of pixels needed to fully represent the boundary, every pixel only needs exactly two neighbors for the ordering to be possible
+A boundary K is minimal if there exists **no** pixel p_i such that K - p_i (the set difference) is still 8-connected and fullfills condition B, see above
 
-A boundary K = {p_0, p_1, ..., p_n} is circular iff p_0 is 8-connected to p_1 and p_n and no other points in K
-
-A boundary polygon P = {v_0, v_1, ..., v_n} is a set of vertices such that if you draw a line from v_0 to v_1, v_1 to v_2, ..., v_m-1 to v_m then the set of pixels covered by these lines is identical to the boundary K. 
+A boundary polygon P = {v_0, v_1, ..., v_n} is a set of vertices such that if you draw a 1-pixel thick line from v_0 to v_1, v_1 to v_2, ..., v_m-1 to v_m in image space then the set of pixels covered by these lines is identical to the boundary K.
 
 # The Algorithm
 
-(explanation will follow below)
+Now that we know what we're trying to do let's first get the actual algorithm out of the way. An step-by-step explanation will follow below
 
 ```cpp
 // in
