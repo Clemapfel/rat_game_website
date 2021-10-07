@@ -494,7 +494,232 @@ for (auto& px : segment)
 
 <center>
 <img src="tracing_fig_4.png" alt="Fig04">
-<br><b>Figure 4:</b> Region with strong boundary candidates highlighted in mint-green, weak candidates in red. On the left is region from step 3 is shown again for convenience.
+<br><b>Figure 4:</b> Left: Region from step 3, Right: Region with strong boundary candidates highlighted in green, weak candidates highlighted in red.
+</center>
+
+# Step 5: Define the direction function
+
+One more thing before we can finally start tracing the boundary, we need to define a function that defines the direction of two pixels in the boundary. Let p_i, p_i+1 be two pixels in K, then we can visualize the following directions as "to travel from p_i to p_i+1 we need to go one pixel x" where x is the direction. So for x = "south west", we need to travel one pixel to the bottom and one pixel to the right in image space. We get 8 direction like this and we assign each direction a number: 0 = west, 1 = south west, 2 = south and so on in *clockwise* direction (the boundary is traced in counterclockwise direction while this direction mapping function assigns values clockwise). We then end up with 7 = north west after which we loop back to 0 = west. To do ths looping we take the modulo of the direction before returning the appropriate next pixel.
+
+```cpp
+auto translate_in_direction = [&](Vector2ui point, uint8_t direction) -> Vector2ui
+{
+    direction = direction % 8;
+    int x_offset, y_offset;
+    switch (direction)
+    {
+        case 0: // WEST: p_i+1 is right of p_i
+            x_offset = -1;
+            y_offset = 0;
+            break;
+
+        case 1: // SOUTH WEST: p_i is 
+            x_offset = -1;
+            y_offset = +1;
+            break;
+
+        case 2: // SOUTH
+            x_offset = 0;
+            y_offset = +1;
+            break;
+
+        case 3: // SOUTH EAST
+            x_offset = +1;
+            y_offset = +1;
+            break;
+
+        case 4: // EAST
+            x_offset = +1;
+            y_offset = 0;
+            break;
+
+        case 5: // NORTH EAST
+            x_offset = +1;
+            y_offset = -1;
+            break;
+
+        case 6: // NORTH
+            x_offset = 0;
+            y_offset = -1;
+            break;
+
+        case 7: // NORTH_WEST
+            x_offset = -1;
+            y_offset = -1;
+            break;
+    }
+
+    return Vector2ui(point.x() + x_offset, point.y() + y_offset);
+};
+```
+
+It is important to really understand this function, for tracing to work properly we need to know what direction we just went to get from p_i-1 to p_i, let's say "south" (which is the value 2) then when looking for the next pixel around p_i we need to start looking first at ``south - 1 = south west``, if no match was found look south next, south east afterwards, etc.. Doing it like this will assure that our tracing can't get stuck in loops. 
+
+# Step 6: Tracing
+
+We first need to initialize the algorithm, we open a vector that holds confirmed boundary points and a vector of directions that holds the corresponding direction. So when the boundary point is at position j in the vector then the direction vector will have the direction travele from p_j-1 to p_j at position j.
+
+(the following algorithm is missing certain parts of the full algorithm above, this is for ease of explaining, we will get to what other things we need to do later). 
+
+```cpp
+  auto& boundary = std::vector<Vector2ui>();
+  auto& direction = std::vector<uin8_t>();
+
+  auto top_left = *strong_pixels.begin();
+  boundary.push_back(top_left);
+  strong_pixels.erase(top_left);
+  direction.push_back(0);
+``` 
+We also initialize the first boundary point which is the top-most left-most strong pixel. Because our custom ``PixelSet`` orders points in just this way, the first pixel in the set is also the top-most, left-most one. We then initialize the directions with 0 (west). We can now start tracing.
+
+```cpp
+
+size_t current_i = 0;
+do
+{
+    // current pixel and direction
+    auto current = boundary.at(current_i);
+    auto current_direction = direction.at(current_i);
+
+    // boolean to track if a proper candidate was found yet
+    bool found = false;
+
+    // check strong candidates
+    // we start at the last direction -1 (counterclockwise before the other) 
+    // and go through all possible directions, here counted with n
+    for (int dir = current_direction - 1, n = 0; n < 8; ++dir, ++n)
+    {
+        // we check the next pixel as directed by the direction function mentioned above
+        auto to_check = translate_in_direction(current, dir);
+
+        // skip if out of bounds
+        if (to_check.x() < _x_bounds.x() or to_check.x() > _x_bounds.y() or
+            to_check.y() < _y_bounds.x() or to_check.y() > _y_bounds.y())
+            continue;
+
+        // this will be important for convergene, ignore it for now
+        //if (to_check == top_left)
+          //  finished_maybe = true;
+
+        //if a strong pixel was found
+        if (strong_pixels.find(to_check) != strong_pixels.end())
+        {
+            // add it to confirmed boundary points
+            boundary.push_back(to_check);
+            
+            // add it corresponding direction
+            direction.push_back(dir);
+            
+            // scrub it from the set of possible boundary points 
+            strong_pixels.erase(to_check);
+            
+            // say that we found a candidate
+            found = true;
+            break;
+        }
+    }
+
+    // if we already found a strong candidate we can just jump to the next    
+    if (found)
+    {
+        // reset current_i to the pixel last pushed
+        current_i = boundary.size() - 1;
+        // and skip the rest of the loop
+        continue;
+    } 
+    
+    (...)
+``` 
+
+Again, some of the loop was left out for clarity for now. We start at the top left and then check if any of the pixels in it's 8-connected neighborhood are also in M. If yes, we found a boundary pixel and can push it and now search the 8-connected neighborhood around it. As mentioned above keeping track of the direction is important to enforce a strong order, if we arrived via direction d at pixel p_i (from p_i-1) then we should start checking pixels at direction d-1 next. d-1 is left of d because the directions are numerate clockwise. If we don't find a pixel there, try the next direction and so on.
+
+Now you might think we are done. We just go through all the pixels and since all strong pixels are linked, it'll just finish, right? Well not quite. Consider our region from earlier:
+
+![](tracing_fig_6.png)
+
+<center>
+<img src="tracing_fig_4.png" alt="Fig04">
+<br><b>Figure 6:</b> State of the tracing algorithm after 44 iterations. The compass wheel on the top shows the directions where ``mint = east``, ``red = west``, ``pink = north``, ``cyan = south``, etc.. The corresponding direction for each point p_i is shown in color. The yellow point is the starting point. On the right the boundary so far is highlighted in white.
+</center>
+
+We're stuck! We've only been using strong pixels so far and we've gotten to a point where there's no other strong pixel in the 8-neighborhood. We kept track of the weak pixels for just this occassion, because:
+
+(the previous code is reposts here for convenience)
+
+```cpp
+do
+{
+    auto current = boundary.at(current_i);
+    auto current_direction = direction.at(current_i);
+
+    bool found = false;
+
+    // check strong candidates
+    for (int dir = current_direction - 1, n = 0; n < 8; ++dir, ++n)
+    {
+        auto to_check = translate_in_direction(current, dir);
+
+        if (to_check.x() < _x_bounds.x() or to_check.x() > _x_bounds.y() or
+            to_check.y() < _y_bounds.x() or to_check.y() > _y_bounds.y())
+            continue;
+
+        // check for convergence by looping back to the starting pixel
+        if (to_check == top_left)
+            finished_maybe = true;
+
+        if (strong_pixels.find(to_check) != strong_pixels.end())
+        {
+            // push new pixel from set to boundary
+            boundary.push_back(to_check);
+            direction.push_back(dir);
+            strong_pixels.erase(to_check);
+            found = true;
+            break;
+        }
+    }
+
+    // if we already found a strong candidate we can just jump to the next    
+    if (found)
+    {
+        current_i = boundary.size() - 1;
+        continue;
+    }
+
+    // if no strong candidate was found, check weak candidates
+    for (int dir = current_direction - 1, n = 0; n < 8; ++dir, ++n)
+    {
+        // same thing as with strong candidates, just with the weak_pixels set
+        auto to_check = translate_in_direction(current, dir);
+
+        if (to_check.x() < _x_bounds.x() or to_check.x() > _x_bounds.y() or
+            to_check.y() < _y_bounds.x() or to_check.y() > _y_bounds.y())
+            continue;
+
+        if (weak_pixels.find(to_check) != weak_pixels.end())
+        {
+            boundary.push_back(to_check);
+            direction.push_back(dir);
+            weak_pixels.erase(to_check);
+            found = true;
+            break;
+        }
+    }
+
+    // if we found a weak pixel we can continue
+    if (found)
+    {
+        current_i = boundary.size() - 1;
+        continue;
+    }
+    
+} while (current_i != 0);
+```
+We now do just the same thing for weak pixels but we want to prioritize the strong ones always but now that we would be stuck without them we fall back and add 1 weak pixel:
+
+![](tracing_fig_6.png)
+<center>
+<img src="tracing_fig_6.png" alt="Fig06">
+<br><b>Figure 6:</b> State of the tracing algorithm after 44 iterations. The compass wheel on the top shows the directions where ``mint = east``, ``red = west``, ``pink = north``, ``cyan = south``, etc.. The corresponding direction for each point p_i is shown in color. The yellow point is the starting point. On the right the boundary so far is highlighted in white.
 </center>
 
 

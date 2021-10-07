@@ -14,5 +14,3 @@ url = "/contact/"
 ### Personal
 **Discord**: Not Nyopal#0219 <br>
 **Twitter**: @not_birb <br>
-**Tumblr**: rat-game.tumblr.com <br>
-
