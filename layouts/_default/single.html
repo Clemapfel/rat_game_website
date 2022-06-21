@@ -1,0 +1,9 @@
+{{ partial "style.html" . }}
+
+{{ partial "link_bar.html" . }}
+
+{{ define "main" }}
+    {{ .Content }}
+{{ end }}
+
+{{ partial "footer.html" . }}

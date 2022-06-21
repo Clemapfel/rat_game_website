@@ -1,5 +1,5 @@
 {{/*
-Copyright (C) 2019  Josh Habdas <jhabdas@protonmail.com>
+Copyright (C) 2019  VHS <vhsdev@tutanota.com>
 
 This file is part of After Dark.
 
@@ -17,7 +17,9 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */}}
 
-
+{{ define "title" -}}
+  {{ .Site.Title }}
+{{- end }}
 {{ define "header" }}
   {{ partial "masthead.html" . }}
 {{ end }}
@@ -28,7 +30,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   {{ with .Site.Params.layout.home.section }}
     {{ if ne $.Site.Params.hackcss.disabled true }}
       {{ with resources.Get "css/conditional/layouts/partials/page-thumbs.css" | minify }}
-        <<style>{{ .Content | safeCSS }}</style>
+        <style>{{ .Content | safeCSS }}</style>
       {{ end }}
     {{ end }}
     {{ range sort . "weight" "asc" }}

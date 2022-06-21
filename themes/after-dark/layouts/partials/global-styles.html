@@ -1,5 +1,5 @@
 {{/*
-Copyright (C) 2019  Josh Habdas <jhabdas@protonmail.com>
+Copyright (C) 2019  VHS <vhsdev@tutanota.com>
 
 This file is part of After Dark.
 
