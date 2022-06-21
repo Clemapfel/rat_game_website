@@ -1,49 +1,14 @@
-<style>
-    #link_bar a {
-        padding-left:0em;
-        padding-right:0.5em;
-        padding-top:1em;
-        padding-bottom:0.5em;
-        font-weight:bold;
-        font-size:20px;
-        border: 0px transparent;
-        text-align:center;
-    }
-    #link_bar a:link { color:#00f7c6;}
-    #link_bar a:visited { color:#00f7c6;}
-    #link_bar a:hover { color:#ffffff; background-color:transparent; }
-    #link_bar a:active { color:#ffffff; background-color:#00f7c6; }
-
-    selected {color:#ffffff;}
-
-    header {
-        padding-left: 4em;
-        margin-left: -4em;
-        padding-right: 4em;
-        margin-right: -4em;
-
-        padding-top: 3em;
-        margin-top: -3em;
-        padding-bottom: 2em;
-        margin-bottom: -3em;
-
-        min-height: 10vh;
-        background-color: #1d1d1d;
-    }
-</style>
-
 <div>
-    <div id="link_bar">
-        <a href="./welcome">[welcome]</a>
-        <a href="./about">[about]</a>
-        <a href="./gallery">[gallery]</a>
-        <a href="./contact">[contact]</a>
-        <a href="./jluna">[jluna]</a>
-        <a href="./crisp">[crisp]</a>
-        <a href="./telescope">[telescope]</a>
+    <div id="link_bar" style="position:relative; top: 0.5em">
+        <a href="./welcome" title="go to landing page">[welcome]</a>
+        <a href="./about" title="curriculum vitae">[about]</a>
+        <a href="./github" title="past programming projects">[past work]</a>
+        <a href="./contact" title="how to contact me">[contact]</a>
     </div>
-    <a href="./TODO">
+    <div id="gallery_button">
+    <a href="./gallery" title="go to gallery">
         <img src="./rat_icon.png" max-height="5%" width="12%" height="12%" style="float:right; position:relative; z-index:1000; top:-2em;">
     </a>
-    <hr style="border:1px solid #e92d7d"> </hr>
+    </div>
+    <hr style="border:1px solid #e92d7d; width:88.75% "> </hr>
 </div>
