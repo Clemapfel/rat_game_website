@@ -1,0 +1,999 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    
+
+
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; worker-src 'self' blob:; connect-src 'self' wss: data:; font-src 'self' https: data:; img-src 'self' https: data:; object-src 'none'">
+
+
+    <meta name="generator" content="After Dark Hugo">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title style="color:#00f7c6">[WIP] A fast, robust Boundary Tracing and Enumeration Algorithm | Clemens Cords&#39; Homepage</title>
+    <meta name="description" content="Abstract Boundaries are central to many field in image processing and having a way to numerically represent them is the only way to build libraries of them for later feature detection. Here I present the algorithm used by crisp::ImageRegion that extracts from a region consisting of a set of 4 (8)-connected pixel coordinates all it&rsquo;s outer boundary points and enumerates them in a deterministic manner. The region has to fullfill no further constraints.">
+    <meta name="keywords" content="crisp, deep learning, game design, programming, ">
+    
+    
+    
+    
+    <meta property="og:title" content="[WIP] A fast, robust Boundary Tracing and Enumeration Algorithm" />
+<meta property="og:description" content="Abstract Boundaries are central to many field in image processing and having a way to numerically represent them is the only way to build libraries of them for later feature detection. Here I present the algorithm used by crisp::ImageRegion that extracts from a region consisting of a set of 4 (8)-connected pixel coordinates all it&rsquo;s outer boundary points and enumerates them in a deterministic manner. The region has to fullfill no further constraints." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://clemens-cords.com/post/boundary_tracing_algorithm/" />
+<meta property="og:image" content="http://clemens-cords.com" />
+<meta property="article:published_time" content="2021-07-30T00:00:00+02:00" />
+<meta property="article:modified_time" content="2021-07-30T00:00:00+02:00" />
+
+    <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://clemens-cords.com"/>
+
+<meta name="twitter:title" content="[WIP] A fast, robust Boundary Tracing and Enumeration Algorithm"/>
+<meta name="twitter:description" content="Abstract Boundaries are central to many field in image processing and having a way to numerically represent them is the only way to build libraries of them for later feature detection. Here I present the algorithm used by crisp::ImageRegion that extracts from a region consisting of a set of 4 (8)-connected pixel coordinates all it&rsquo;s outer boundary points and enumerates them in a deterministic manner. The region has to fullfill no further constraints."/>
+
+    
+
+
+
+
+
+    
+
+    
+    
+  <meta name="referrer" content="same-origin">
+
+
+    
+    
+    <script integrity="sha512-2t0yyNrUdtn9WGIoBVxq5vtoJQYfoDQDbqRPpOb75f1hiL39DGLdJKDrGP60fBhXfrFeKyVhzWJvHvLgln/ElA==">/*! Fetch Inject v2.0.4 | Copyright (C) Josh Habdas <jhabdas@protonmail.com> (https://habd.as) | @license Zlib */
+var fetchInject=function(){"use strict";const e=function(e,t,r,n,o,c,i){c=t.createElement(r),i=t.getElementsByTagName(r)[0],c.appendChild(t.createTextNode(n.text)),c.onload=o(n),i?i.parentNode.insertBefore(c,i):t.head.appendChild(c)};return function(t,r){if(!arguments.length)return Promise.reject(new ReferenceError("Failed to execute 'fetchInject': 1 argument required but only 0 present."));if(arguments[0]&&arguments[0].constructor!==Array)return Promise.reject(new TypeError("Failed to execute 'fetchInject': argument 1 must be of type 'Array'."));if(arguments[1]&&arguments[1].constructor!==Promise)return Promise.reject(new TypeError("Failed to execute 'fetchInject': argument 2 must be of type 'Promise'."));const n=[],o=r?[].concat(r):[],c=[];return t.forEach(e=>o.push(window.fetch(e).then(e=>[e.clone().text(),e.blob()]).then(e=>Promise.all(e).then(e=>{n.push({text:e[0],blob:e[1]})})))),Promise.all(o).then(()=>(n.forEach(t=>{c.push({then:r=>{t.blob.type.includes("text/css")?e(window,document,"style",t,r):e(window,document,"script",t,r)}})}),Promise.all(c)))}}();
+</script>
+    <script integrity="sha512-2XlvnxweZhaHgBdCoOK0PoCUWiSfKibb&#43;RCRZNgqLdvbnx0ZH67FDGKQqmpqCerjMJbZFv6fsXgbmJOOA9K&#43;qA==">/*!
+ * Copyright (C) 2019  Josh Habdas <jhabdas@protonmail.com>
+ *
+ * This file is part of After Dark.
+ *
+ * After Dark is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * After Dark is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+fetchInject(["/js/lazysizes.min.js"]);
+</script>
+    
+
+
+  
+    
+
+  <meta title="mod:fractal-forest" content="status:enabled">
+  
+    <script async src=../../js/bpgdec8a.js integrity=sha384-8PG0go3BW8hLm63KbTxk/hNcehaoSbrAhKzsmy2Jhs/KY8QdiKKkjhdeyHY/Q/0I&#10;></script>
+  
+
+
+  
+  
+  
+  
+
+
+    
+    <link rel="canonical" href="http://clemens-cords.com/post/boundary_tracing_algorithm/">
+    
+    
+    <link rel="icon" href="../../favicon.png" sizes="any">
+
+    
+
+  
+  
+  
+  
+  
+  
+  
+    
+      
+        <style>html{font-size:12px}*{box-sizing:border-box;text-rendering:geometricPrecision}body{font-size:1rem;line-height:1.5rem;margin:0;font-family:Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;word-wrap:break-word}h1,h2,h3,h4,h5,h6{line-height:1.3em}fieldset{border:none;padding:0;margin:0}pre{padding:2rem;margin:1.75rem 0;background-color:#fff;border:1px solid #ccc;overflow:auto}code[class*=language-],pre[class*=language-],pre code{font-weight:100;text-shadow:none;margin:1.75rem 0}a{cursor:pointer;color:#eb1c79;text-decoration:none;border-bottom:1px solid #eb1c79}a:hover{background-color:#eb1c79;color:#fff}.grid{display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap}.grid.\-top{-ms-flex-align:start;align-items:flex-start}.grid.\-middle{-ms-flex-align:center;align-items:center}.grid.\-bottom{-ms-flex-align:end;align-items:flex-end}.grid.\-stretch{-ms-flex-align:stretch;align-items:stretch}.grid.\-baseline{-ms-flex-align:baseline;align-items:baseline}.grid.\-left{-ms-flex-pack:start;justify-content:flex-start}.grid.\-center{-ms-flex-pack:center;justify-content:center}.grid.\-right{-ms-flex-pack:end;justify-content:flex-end}.grid.\-between{-ms-flex-pack:justify;justify-content:space-between}.grid.\-around{-ms-flex-pack:distribute;justify-content:space-around}.cell{-ms-flex:1;flex:1;box-sizing:border-box}@media screen and (min-width:768px){.cell.\-1of12{-ms-flex:0 0 8.33333%;flex:0 0 8.33333%}.cell.\-2of12{-ms-flex:0 0 16.66667%;flex:0 0 16.66667%}.cell.\-3of12{-ms-flex:0 0 25%;flex:0 0 25%}.cell.\-4of12{-ms-flex:0 0 33.33333%;flex:0 0 33.33333%}.cell.\-5of12{-ms-flex:0 0 41.66667%;flex:0 0 41.66667%}.cell.\-6of12{-ms-flex:0 0 50%;flex:0 0 50%}.cell.\-7of12{-ms-flex:0 0 58.33333%;flex:0 0 58.33333%}.cell.\-8of12{-ms-flex:0 0 66.66667%;flex:0 0 66.66667%}.cell.\-9of12{-ms-flex:0 0 75%;flex:0 0 75%}.cell.\-10of12{-ms-flex:0 0 83.33333%;flex:0 0 83.33333%}.cell.\-11of12{-ms-flex:0 0 91.66667%;flex:0 0 91.66667%}}@media screen and (max-width:768px){.grid{-ms-flex-direction:column;flex-direction:column}.cell{-ms-flex:0 0 auto;flex:0 0 auto}}.hack,.hack blockquote,.hack code,.hack em,.hack h1,.hack h2,.hack h3,.hack h4,.hack h5,.hack h6,.hack strong{font-size:1rem;font-style:normal;font-family:Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif}.hack blockquote,.hack code,.hack em,.hack strong{line-height:20px}.hack blockquote,.hack code,.hack footer,.hack h1,.hack h2,.hack h3,.hack h4,.hack h5,.hack h6,.hack header,.hack li,.hack ol,.hack p,.hack section,.hack ul{float:none;margin:0;padding:0}.hack blockquote,.hack h1,.hack ol,.hack p,.hack ul{margin-top:20px;margin-bottom:20px}.hack h1{position:relative;display:inline-block;display:table-cell;padding:20px 0 30px;margin:0;overflow:hidden}.hack h1:after{content:"====================================================================================================";position:absolute;bottom:10px;left:0}.hack h1+*{margin-top:0}.hack h2,.hack h3,.hack h4,.hack h5,.hack h6{position:relative;margin-bottom:1.75rem}.hack h2:before,.hack h3:before,.hack h4:before,.hack h5:before,.hack h6:before{display:inline}.hack h2:before{content:"## "}.hack h3:before{content:"### "}.hack h4:before{content:"#### "}.hack h5:before{content:"##### "}.hack h6:before{content:"###### "}.hack li{position:relative;display:block;padding-left:20px}.hack li:after{position:absolute;top:0;left:0}.hack ul>li:after{content:"-"}.hack ol{counter-reset:a}.hack ol>li:after{content:counter(a) ".";counter-increment:a}.hack ol li:nth-child(n+10):after{left:-7px}.hack blockquote{position:relative;padding-left:17px;padding-left:2ch;overflow:hidden}.hack blockquote:after{content:">\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>";white-space:pre;position:absolute;top:0;left:0;line-height:20px}.hack em:after,.hack em:before{content:"*";display:inline}.hack pre code:after,.hack pre code:before{content:""}.hack code{font-weight:700}.hack code:after,.hack code:before{content:"`";display:inline}.hack hr{position:relative;height:20px;overflow:hidden;border:0;margin:20px 0}.hack hr:after{content:"----------------------------------------------------------------------------------------------------";position:absolute;top:0;left:0;line-height:20px;width:100%;word-wrap:break-word}@-moz-document url-prefix(){.hack h1{display:block}}.hack-ones ol>li:after{content:"1."}p{margin:0 0 1.75rem}.container{max-width:70rem}.container,.container-fluid{margin:0 auto;padding:0 1rem}.inner{padding:1rem}.inner2x{padding:2rem}.pull-left{float:left}.pull-right{float:right}.progress-bar{height:8px;opacity:.8;background-color:#ccc;margin-top:12px}.progress-bar.progress-bar-show-percent{margin-top:38px}.progress-bar-filled{background-color:gray;height:100%;transition:width .3s ease;position:relative;width:0}.progress-bar-filled:before{content:"";border:6px solid transparent;border-top-color:gray;position:absolute;top:-12px;right:-6px}.progress-bar-filled:after{color:gray;content:attr(data-filled);display:block;font-size:12px;white-space:nowrap;position:absolute;border:6px solid transparent;top:-38px;right:0;-ms-transform:translateX(50%);transform:translateX(50%)}table{width:100%;border-collapse:collapse;margin:1.75rem 0;color:#778087}table td,table th{vertical-align:top;border:1px solid #ccc;line-height:15px;padding:10px}table thead th{font-size:10px}table tbody td:first-child{font-weight:700;color:#333}.form{width:30rem}.form-group{margin-bottom:1.75rem;overflow:auto}.form-group label{border-bottom:2px solid #ccc;color:#333;width:10rem;display:inline-block;height:38px;line-height:38px;padding:0;float:left;position:relative}.form-group.form-success label{color:#4caf50!important;border-color:#4caf50!important}.form-group.form-warning label{color:#ff9800!important;border-color:#ff9800!important}.form-group.form-error label{color:#f44336!important;border-color:#f44336!important}.form-control{outline:none;border:none;border-bottom:2px solid #ccc;padding:.5rem 0;width:20rem;height:38px;background-color:transparent}.form-control:focus{border-color:#555}.form-group.form-textarea label:after{position:absolute;content:"";width:2px;background-color:#fff;right:-2px;top:0;bottom:0}textarea.form-control{height:auto;resize:none;padding:1rem 0;border-bottom:2px solid #ccc;border-left:2px solid #ccc;padding:.5rem}select.form-control{border-radius:0;background-color:transparent;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none}.help-block{color:#999;margin-top:.5rem}.form-actions{margin-bottom:1.75rem}.btn{display:-ms-inline-flexbox;display:inline-flex;-ms-flex-align:center;align-items:center;-ms-flex-pack:center;justify-content:center;cursor:pointer;outline:none;padding:.65rem 2rem;font-size:1rem;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;position:relative;z-index:1}.btn:active{box-shadow:inset 0 1px 3px rgba(0,0,0,.12)}.btn.btn-ghost{border-color:#757575;color:#757575;background-color:transparent}.btn.btn-ghost:focus,.btn.btn-ghost:hover{border-color:#424242;color:#424242;z-index:2}.btn.btn-ghost:hover{background-color:transparent}.btn-block{width:100%;display:-ms-flexbox;display:flex}.btn-default{color:#fff;background-color:#e0e0e0;border:1px solid #e0e0e0;color:#333}.btn-default:focus:not(.btn-ghost),.btn-default:hover{background-color:#dcdcdc;border-color:#dcdcdc}.btn-success{color:#fff;background-color:#4caf50;border:1px solid #4caf50}.btn-success:focus:not(.btn-ghost),.btn-success:hover{background-color:#43a047;border-color:#43a047}.btn-success.btn-ghost{border-color:#4caf50;color:#4caf50}.btn-success.btn-ghost:focus,.btn-success.btn-ghost:hover{border-color:#388e3c;color:#388e3c;z-index:2}.btn-error{color:#fff;background-color:#f44336;border:1px solid #f44336}.btn-error:focus:not(.btn-ghost),.btn-error:hover{background-color:#e53935;border-color:#e53935}.btn-error.btn-ghost{border-color:#f44336;color:#f44336}.btn-error.btn-ghost:focus,.btn-error.btn-ghost:hover{border-color:#d32f2f;color:#d32f2f;z-index:2}.btn-warning{color:#fff;background-color:#ff9800;border:1px solid #ff9800}.btn-warning:focus:not(.btn-ghost),.btn-warning:hover{background-color:#fb8c00;border-color:#fb8c00}.btn-warning.btn-ghost{border-color:#ff9800;color:#ff9800}.btn-warning.btn-ghost:focus,.btn-warning.btn-ghost:hover{border-color:#f57c00;color:#f57c00;z-index:2}.btn-info{color:#fff;background-color:#00bcd4;border:1px solid #00bcd4}.btn-info:focus:not(.btn-ghost),.btn-info:hover{background-color:#00acc1;border-color:#00acc1}.btn-info.btn-ghost{border-color:#00bcd4;color:#00bcd4}.btn-info.btn-ghost:focus,.btn-info.btn-ghost:hover{border-color:#0097a7;color:#0097a7;z-index:2}.btn-primary{color:#fff;background-color:#2196f3;border:1px solid #2196f3}.btn-primary:focus:not(.btn-ghost),.btn-primary:hover{background-color:#1e88e5;border-color:#1e88e5}.btn-primary.btn-ghost{border-color:#2196f3;color:#2196f3}.btn-primary.btn-ghost:focus,.btn-primary.btn-ghost:hover{border-color:#1976d2;color:#1976d2;z-index:2}.btn-group{overflow:auto}.btn-group .btn{float:left}.btn-group .btn-ghost:not(:first-child){margin-left:-1px}.card{border:1px solid #ccc}.card .card-header{color:#333;text-align:center;background-color:#ddd;padding:.5rem 0}.alert{color:#ccc;padding:1rem;border:1px solid #ccc;margin-bottom:1.75rem}.alert-success{color:#4caf50;border-color:#4caf50}.alert-error{color:#f44336;border-color:#f44336}.alert-info{color:#00bcd4;border-color:#00bcd4}.alert-warning{color:#ff9800;border-color:#ff9800}.media:not(:last-child){margin-bottom:1.25rem}.media-left{padding-right:1rem}.media-left,.media-right{display:table-cell;vertical-align:top}.media-right{padding-left:1rem}.media-body{display:table-cell;vertical-align:top}.media-heading{font-size:1.16667rem;font-weight:700}.media-content{margin-top:.3rem}.avatarholder,.placeholder{background-color:#f0f0f0;text-align:center;color:#b9b9b9;font-size:1rem;border:1px solid #f0f0f0}.avatarholder{width:48px;height:48px;line-height:46px;font-size:2rem;background-size:cover;background-position:50%;background-repeat:no-repeat}.avatarholder.rounded{border-radius:33px}.loading{display:inline-block;content:"&nbsp;";height:20px;width:20px;margin:0 .5rem;animation:a .6s infinite linear;border:2px solid #e91e63;border-right-color:transparent;border-radius:50%}.btn .loading{margin-bottom:0;width:14px;height:14px}.btn div.loading{float:left}.alert .loading{margin-bottom:-5px}@keyframes a{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}.menu{width:100%}.menu .menu-item{display:block;color:#616161;border-color:#616161}.menu .menu-item.active,.menu .menu-item:hover{color:#000;border-color:#000;background-color:transparent}@media screen and (max-width:768px){.form-group label{display:block;border-bottom:none;width:100%}.form-group.form-textarea label:after{display:none}.form-control{width:100%}textarea.form-control{border-left:none;padding:.5rem 0}pre::-webkit-scrollbar{height:3px}}@media screen and (max-width:480px){.form{width:100%}}html{font-size:14px}.standard{font-family:-apple-system,BlinkMacSystemFont,avenir next,avenir,helvetica,helvetica neue,Ubuntu,segoe ui,arial,sans-serif}.standard h1{font-size:2em;font-weight:700;margin:.67em 0}.standard h2{font-size:1.5em;font-weight:700;margin:.83em 0}.standard h3{font-size:1.17em;font-weight:700}.standard h3,.standard p{margin:1.75rem 0}.standard ol,.standard ul{display:block;list-style-type:disc;padding-left:20px;margin:1.75rem 0}.standard ol ul,.standard ul ul{margin:.75rem 0;list-style-type:square}.standard ol{list-style-type:decimal}.standard li{display:list-item;padding-left:0}.standard blockquote{margin:1.75rem 0;padding-left:10px;border-left:5px solid #f0f0f0}.standard pre{margin:1.75rem 0;white-space:pre}.standard hr{border:0;height:1px;display:block;background-color:#e2e2e2;margin:1.75rem 0}.dark-grey{background-color:#181818;color:#ccc}.dark-grey pre{background-color:#181818;padding:0;border:none}.dark-grey pre code{color:#00bcd4}.dark-grey h1 a,.dark-grey h2 a,.dark-grey h3 a,.dark-grey h4 a,.dark-grey h5 a{color:#ccc}.dark-grey code,.dark-grey strong{color:#fff}.dark-grey code{font-weight:100}.dark-grey table{color:#ccc}.dark-grey table td,.dark-grey table th{border-color:#444}.dark-grey table tbody td:first-child{color:#fff}.dark-grey .form-group label{color:#ccc;border-color:rgba(95,95,95,.78)}.dark-grey .form-group.form-textarea label:after{background-color:#181818}.dark-grey .form-control{color:#ccc;border-color:rgba(95,95,95,.78)}.dark-grey .form-control:focus{border-color:#ccc;color:#ccc}.dark-grey textarea.form-control{color:#ccc}.dark-grey .card{border-color:rgba(95,95,95,.78)}.dark-grey .card .card-header{background-color:transparent;color:#ccc;border-bottom:1px solid rgba(95,95,95,.78)}.dark-grey .btn.btn-ghost.btn-default{border-color:#ababab;color:#ababab}.dark-grey .btn.btn-ghost.btn-default:focus,.dark-grey .btn.btn-ghost.btn-default:hover{border-color:#9c9c9c;color:#9c9c9c;z-index:1}.dark-grey .btn.btn-ghost.btn-default:focus,.dark-grey .btn.btn-ghost.btn-default:hover{border-color:#e0e0e0;color:#e0e0e0}.dark-grey .btn.btn-ghost.btn-primary:focus,.dark-grey .btn.btn-ghost.btn-primary:hover{border-color:#64b5f6;color:#64b5f6}.dark-grey .btn.btn-ghost.btn-success:focus,.dark-grey .btn.btn-ghost.btn-success:hover{border-color:#81c784;color:#81c784}.dark-grey .btn.btn-ghost.btn-info:focus,.dark-grey .btn.btn-ghost.btn-info:hover{border-color:#4dd0e1;color:#4dd0e1}.dark-grey .btn.btn-ghost.btn-error:focus,.dark-grey .btn.btn-ghost.btn-error:hover{border-color:#e57373;color:#e57373}.dark-grey .btn.btn-ghost.btn-warning:focus,.dark-grey .btn.btn-ghost.btn-warning:hover{border-color:#ffb74d;color:#ffb74d}.dark-grey .avatarholder,.dark-grey .placeholder{background-color:transparent;border-color:#333}.dark-grey .menu .menu-item{color:#ccc;border-color:rgba(95,95,95,.78)}.dark-grey .menu .menu-item.active,.dark-grey .menu .menu-item:hover{color:#fff;border-color:#ccc}/*!* Copyright (C) 2019 Josh Habdas <jhabdas@protonmail.com>
+*
+* This file is part of After Dark.
+*
+* After Dark is free software: you can redistribute it and/or modify
+* it under the terms of the GNU Affero General Public License as published
+* by the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* After Dark is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU Affero General Public License for more details.
+*
+* You should have received a copy of the GNU Affero General Public License
+* along with this program. If not, see <https://www.gnu.org/licenses/>.*/:root{--screen-size-small: 30em}@keyframes intro{0%{opacity:0}100%{opacity:1}}.blur-up.lazyloading{filter:blur(5px);opacity:1;transition:opacity 1s,filter 1.5s}.blur-up.lazyload{opacity:0;filter:blur(10px)}.blur-up.lazyloaded{filter:blur(0);transition:filter 1s}.hack .readmore{margin-bottom:2.2em}.responsive-iframe,.ratio-container{position:relative;padding-bottom:56.25%;padding-top:25px;height:0}.responsive-iframe iframe,.ratio-container>*:not([itemprop=caption]){position:absolute;top:0;left:0;width:100%;height:100%}iframe{border:0}main,footer{animation:intro .3s both;animation-delay:.15s}header:first-of-type+details{margin:20px 0}footer time[datetime$=M]:before{content:"\2013\0020"}body>footer p.muted{margin-bottom:0}@media only screen and (max-width:768px){footer time[datetime$=M]{display:none}}blockquote cite{display:block}blockquote cite::before{content:"\2014\00A0"}:target{filter:brightness(1.2)}:disabled{cursor:not-allowed}.hack li ul{margin:0}.hack ol li{padding-left:27px}.main{padding:20px 10px}input.form-control{border-radius:0;background-color:transparent;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none}input.form-control,textarea.form-control,select.form-control,.help-block{font-size:initial}@media only screen and (max-width:768px){.help-block{font-size:unset}}html{font-size:13px}.hack .form input,.hack .form textarea,.hack .form button,.hack .form label{font-size:1rem}.hack .alert .highlight:first-of-type .chroma,.hack .card .highlight:first-of-type .chroma,.hack .alert pre:first-of-type,.hack .alert p:first-of-type,.hack .card pre:first-of-type,.hack .card p:first-of-type{margin-top:unset}.hack .alert .highlight:last-of-type .chroma,.hack .card .highlight:last-of-type .chroma,.hack .alert pre:last-of-type,.hack .alert p:last-of-type,.hack .card pre:last-of-type,.hack .card p:last-of-type{margin-bottom:unset}.hack blockquote,.hack blockquote:after{line-height:1.5}.hack figure,.standard figure{margin:unset}.hack figure a{border-bottom:none}.hack figure a:hover{background-color:inherit}article header img{width:100%;border-radius:3px}table td,table th{line-height:inherit}table a{border-bottom:unset}img{max-width:100%}@media only screen and (min-width:768px){html{font-size:16px}.container{max-width:50rem}}@media only screen and (min-width:768px),(-ms-high-contrast:active),(-ms-high-contrast:none){html{margin-left:calc(100vw - 100%)}}/*!
+ * Copyright (C) 2019  Josh Habdas <jhabdas@protonmail.com>
+ *
+ * This file is part of After Dark.
+ *
+ * After Dark is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * After Dark is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+a[rel*="external"]::after {
+  content: " " url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20class='i-external'%20viewBox='0%200%2032%2032'%20width='14'%20height='14'%20fill='none'%20stroke='%23ff9800'%20stroke-linecap='round'%20stroke-linejoin='round'%20stroke-width='9.38%'%3E%3Cpath%20d='M14%209%20L3%209%203%2029%2023%2029%2023%2018%20M18%204%20L28%204%2028%2014%20M28%204%20L14%2018'/%3E%3C/svg%3E");
+}
+nav a.active {
+  background-color: inherit;
+  color: #fff;
+}
+a[itemprop="url"] {
+  color: #ff9800;
+}
+a[itemprop="url"]:hover {
+  color: #fff;
+}
+.muted, .help-block {
+  opacity: 0.70;
+}
+.hack .muted,
+.hack .help-block {
+  color: #e0e0e0;
+}
+</style>
+        
+
+
+  
+    <meta name="theme-color" content=#181818>
+  
+
+
+      
+    
+  
+
+
+    
+    
+      <script integrity="sha512-ISTAV0GadOIz/NXXHOS+eCM0ysXVVHhQTlvA6LJxz/DeA5yIxm0Vqf5IE+WH0yuuXkayAKtoZkQ326nch5f/fg==">fetchInject(["/css/syntax.css"]);</script>
+      <noscript>
+        <link href="../../css/syntax.css" rel="stylesheet">
+      </noscript>
+    
+  </head>
+  
+  
+  
+  <body class="standard dark-grey main container">
+    <header>
+  <style>
+body {
+    background-image: url("/background.jpg");
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    min-height: 100vh;
+}
+
+div {
+    background-color: #1d1d1d
+}
+
+canvas {
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:-1;
+     
+    height: 100vh;
+    width: 100vw;
+}
+
+main {
+    padding-left: 4em;
+    margin-left: -4em;
+    padding-right: 4em;
+    margin-right: -4em;
+    padding-bottom: 1em;
+
+    min-height: 80vh;
+
+    background-color: #1d1d1d;
+}
+
+footer {
+    padding-left: 4em;
+    margin-left: -4em;
+    padding-right: 4em;
+    margin-right: -4em;
+
+    min-height: 8vh;
+
+    margin-top: -2em;
+    background-color: #1d1d1d
+}
+</style>
+
+<style>
+main {
+    padding-top: 3em;
+    margin-top:-3em;
+    background-color: #1d1d1d;
+}
+</style>
+
+</header>
+    <main>
+  
+    
+      <style>{{ -}}.hack header figure[itemtype*=ImageObject]{position:relative}.hack header figure[itemtype*=ImageObject] figcaption{position:absolute;bottom:0;right:0;text-align:right;padding:15px;font-style:oblique;font-size:smaller;mix-blend-mode:soft-light}.hack header figure[itemtype*=ImageObject] [itemprop=headline]{font-weight:700}</style>
+    
+  
+  <article itemscope itemtype="https://schema.org/BlogPosting">
+    <meta itemprop="name" content="[WIP] A fast, robust Boundary Tracing and Enumeration Algorithm">
+<meta itemprop="description" content="Abstract Boundaries are central to many field in image processing and having a way to numerically represent them is the only way to build libraries of them for later feature detection. Here I present the algorithm used by crisp::ImageRegion that extracts from a region consisting of a set of 4 (8)-connected pixel coordinates all it&rsquo;s outer boundary points and enumerates them in a deterministic manner. The region has to fullfill no further constraints.">
+<meta itemprop="datePublished" content="2021-07-30T00:00:00&#43;02:00" />
+<meta itemprop="dateModified" content="2021-07-30T00:00:00&#43;02:00" />
+<meta itemprop="wordCount" content="4190">
+<meta itemprop="image" content="http://clemens-cords.com">
+
+
+
+<meta itemprop="keywords" content="" />
+
+    <header>
+      <span class="muted" style="float:inherit; position:relative; top:1em;" id="Title">
+        <a href="../../post" style="color:#00f7c6;"> &lt;&lt; back to index</a>
+      </span>
+      <h1 itemprop="headline name" style="color:#00f7c6">[WIP] A fast, robust Boundary Tracing and Enumeration Algorithm</h1>
+      <hr style="border:1px solid #e92d7d"> </hr>
+      <p class="muted">
+        <svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <circle cx="16" cy="16" r="14" />
+  <path d="M16 8 L16 16 20 20" />
+</svg>
+<span>20 minute read</span>
+<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
+</svg>
+
+  Published: <time datetime="2021-07-30T00:00:00&#43;02:00">30 Jul, 2021</time>
+
+
+
+   <span style="float:right" itemprop="articleSection"> Categories:  [ <a href="../../categories/crisp/">crisp</a> | <a href="../../categories/programming/">programming</a> ]</span>
+
+
+        
+
+
+
+
+      </p>
+      <br>
+
+      
+      
+
+
+
+    </header>
+    <div itemprop="articleBody">
+        <span class="muted" style="float:right; position:relative; top:-1em;">
+          <a href="#Comments" style="color:#00f7c6; ">&#11015; jump to comments</a>
+        </span>
+        <br>
+      <span style="float:none; position:relative; top:-3em">
+      <h1 id="abstract">Abstract</h1>
+<p>Boundaries are central to many field in image processing and having a way to numerically represent them is the only way to build libraries of them for later feature detection. Here I present the algorithm used by <code>crisp::ImageRegion</code> that extracts from a region consisting of a set of 4 (8)-connected pixel coordinates all it&rsquo;s outer boundary points and enumerates them in a deterministic manner. The region has to fullfill no further constraints. The algorithm runs in amortized o(x + k) where x is the number of pixels in the region and k are the number of boundary pixels. The advantage of the method presented here is not only a robustness to common edge cases making user-input minimal but that both the freeman-chain codes and the minimum-vertex boundary polygon can be extracted at the end of the algorithm in o(1).</p>
+<p>[(skip to source code)](#The Algorithm)</p>
+<h1 id="introduction">Introduction</h1>
+<p>Boundary tracing it such an elemental task in image processing because boundaries are one of the best features to classify and many other features descriptors work as a function of boundary. Crisp for example uses the fourier transform of a boundary converted onto the complex plane (such that each vertices x position is the real, y position the complex part respectively) for boundary simplification and when I went to consult the literature I was frustrated that many of the common algorithms don&rsquo;t fullfill the following two demands I somewhat arbitrarily set myself:</p>
+<ul>
+<li>
+<p><strong>i) the algorithm should work on all closed regions, no exceptions</strong>
+Common assumptions algorithms make are &ldquo;let the region be simply connected&rdquo; or &ldquo;let the region boundary be non-overlapping&rdquo;. I want crisps algorithm to be able to handle all of these with not further user interaction, indeed the only assertion <code>crisp</code> makes is that the region is closed and connected which for image-processing purposes is an assumption that&rsquo;s made for all common segmentation algorithms anyway. If the region is not connected you can simply decompose them into connected segments, then the boundary of the original non-connected region is the union of the boundary of all segments</p>
+</li>
+<li>
+<p><strong>ii) the resulting boundary should have the minimum number of points necessary to represent the region with no loss of detail</strong>
+To build a library of boundaries you need to transform them and that transformation should be as computationally as possible and <code>crisp</code> achieves this by returning the boundary polygon, a set of ordeted vertices that when connected are <em>identical</em> to the set of boundary points.</p>
+</li>
+<li>
+<p><strong>iii) the resulting order of boundary points should be circular, consistent and predictable</strong>
+it is not difficult to isolate the set of boundary points from a region, however we want those points to have a strong order that makes sense to both humans and computers. <code>crisp</code> wants the vertex to orderd in the counter-clockwise with the position x-axis advancing to the east and the positive y-axis advancing south in 2d space. This order being consistent means for two sets such that the intersection of the two is empty, the algorithm should return two boundary point sequences that are identical. Circularity means that if we index the points with i = 0 &hellip; N then point p_0 needs to be connected to p_1 and p_N, more on this constraint below</p>
+</li>
+</ul>
+<p>These three conditions need to be fullfilled at the same time of course. I&rsquo;ve used quite a few terms without properly defining them so far so let&rsquo;s get that out of the way</p>
+<h1 id="definitions">Definitions</h1>
+<p>A image region M of an Image I is defined as a finite set of pixels that is a subset of an image of size m*n such that the following conditions hold:</p>
+<ul>
+<li>for any two pixel x in M there is a different pixel x_n such that x and x_n are 8-connected.</li>
+<li>M is a subset of I</li>
+</ul>
+<p>A boundary can be intuitively described as the outer most pixels of the region that are still a subset of it. Each pixel in the boundary can be approached both from inside M and from the space around M. Formally a boundary K = {p_0, p_1, &hellip;, p_n} is a set of pixels such that</p>
+<ul>
+<li>A: K is a subset of M, this makes M a closed region</li>
+<li>B: for any pixel p_i in K it holds that p_i-1 is 8-connected to p_i and p_i is 8-connected to p_i+1. p_0 is 8-connected to p_n, this makes the boundary <em>circular</em></li>
+<li>C: any pixel y in K has less than 8 neighbors in M, this means in image space y has at least 1 pixel that is not part of the region</li>
+<li>D: K is not the boundary of a hole (TODO: define hole)</li>
+</ul>
+<p>A boundary K is minimal if there exists <strong>no</strong> pixel p_i such that K - p_i (the set difference) is still 8-connected and fullfills condition B, see above</p>
+<p>A boundary polygon P = {v_0, v_1, &hellip;, v_n} is a set of vertices such that if you draw a 1-pixel thick line from v_0 to v_1, v_1 to v_2, &hellip;, v_m-1 to v_m in image space then the set of pixels covered by these lines is identical to the boundary K.</p>
+<p>On minimality, it&rsquo;s best to show visually what it means to be minimal, of course we want our set to be as small as possible for performance reason but visually it means that some pixels with only 1 non-M neighbor should be ommitted as such:</p>
+<p><img src="tracing_fig_1.png" alt=""></p>
+<center>
+<img src="tracing_fig_1.png" alt="Fig01">
+<br><b>Figure 1</b> An 8-connected region (A), a boundary (B) and the minimal boundary (C)
+</center>
+<p>As state in the definition if we remove any boundary (white) pixel in C we would either loose detail from the original region or make it so there&rsquo;s an unconnected gap in the sequence of boundary points.</p>
+<h1 id="the-algorithm">The Algorithm</h1>
+<p>Now that we know what we&rsquo;re trying to do let&rsquo;s first get the actual algorithm out of the way. An step-by-step explanation will follow below</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#999;font-style:italic">// in
+</span><span style="color:#999;font-style:italic"></span>BinaryImage image;  
+<span style="color:#999;font-style:italic">// image that is true if the pixel is part of a closed region, false otherwise
+</span><span style="color:#999;font-style:italic"></span>
+<span style="color:#999;font-style:italic">// out
+</span><span style="color:#999;font-style:italic"></span>std::vector&lt;Vector2ui&gt; boundary;
+std::vector&lt;Vector2ui&gt; boundary_polygon;
+size_t n_holes;
+
+<span style="color:#999;font-style:italic">// ### STEP 1: pre-process the image
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">bool</span> segment_color = <span style="color:#24909d">true</span>;  <span style="color:#999;font-style:italic">// white
+</span><span style="color:#999;font-style:italic"></span>
+<span style="color:#999;font-style:italic">// fill all 1-pixel holes
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">long</span> x = <span style="color:#3677a9">0</span>; x &lt; image.get_size().x(); ++x)
+{
+    <span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">long</span> y = <span style="color:#3677a9">0</span>; y &lt; image.get_size().y(); ++y)
+    {
+        <span style="color:#6ab825;font-weight:bold">if</span> (image(x, y) == segment_color)
+            <span style="color:#6ab825;font-weight:bold">continue</span>;
+        
+        <span style="color:#999;font-style:italic">// count 4-connected neighbors that are part of the region
+</span><span style="color:#999;font-style:italic"></span>        size_t n = <span style="color:#3677a9">0</span>;
+        <span style="color:#6ab825;font-weight:bold">for</span> (std::pair&lt;<span style="color:#6ab825;font-weight:bold">int</span>, <span style="color:#6ab825;font-weight:bold">int</span>&gt; i_j : {{-<span style="color:#3677a9">1</span>, <span style="color:#3677a9">0</span>}, {<span style="color:#3677a9">1</span>, <span style="color:#3677a9">0</span>}, {<span style="color:#3677a9">0</span>, -<span style="color:#3677a9">1</span>}, {<span style="color:#3677a9">0</span>, <span style="color:#3677a9">1</span>}})
+        {
+            <span style="color:#6ab825;font-weight:bold">if</span> (image(x + i_j.first, y + i_j.second) == segment_color)
+                n++;
+        }
+        
+        <span style="color:#6ab825;font-weight:bold">if</span> (n &gt;= <span style="color:#3677a9">3</span>)
+            image(x, y) = segment_color;
+    }   
+}
+
+<span style="color:#999;font-style:italic">// prune all 1-pixel lines
+</span><span style="color:#999;font-style:italic"></span>std::vector&lt;Vecto2ui&gt; pruned;
+<span style="color:#6ab825;font-weight:bold">while</span> (<span style="color:#24909d">true</span>)
+{
+    n_changed = <span style="color:#3677a9">0</span>;
+    <span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">long</span> x = <span style="color:#3677a9">0</span>; x &lt; image.get_size().x(); ++x)
+    {
+        <span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">long</span> y = <span style="color:#3677a9">0</span>; y &lt; image.get_size().y(); ++y)
+        {
+            <span style="color:#6ab825;font-weight:bold">if</span> (image(x, y) != segment_color)
+                <span style="color:#6ab825;font-weight:bold">continue</span>;
+            
+            size_t n = <span style="color:#3677a9">0</span>;
+            <span style="color:#6ab825;font-weight:bold">for</span> (std::pair&lt;<span style="color:#6ab825;font-weight:bold">int</span>, <span style="color:#6ab825;font-weight:bold">int</span>&gt; i_j : {{-<span style="color:#3677a9">1</span>, <span style="color:#3677a9">0</span>}, {<span style="color:#3677a9">1</span>, <span style="color:#3677a9">0</span>}, {<span style="color:#3677a9">0</span>, -<span style="color:#3677a9">1</span>}, {<span style="color:#3677a9">0</span>, <span style="color:#3677a9">1</span>}})
+            {
+                <span style="color:#6ab825;font-weight:bold">if</span> (image(x + i_j.first, y + i_j.second) == segment_color)
+                    n++;
+            }
+        
+            <span style="color:#6ab825;font-weight:bold">if</span> (n == <span style="color:#3677a9">1</span>)
+            {
+                image(x, y) = not segment_color;
+                n_changed++;
+            }
+        }
+    }
+    <span style="color:#6ab825;font-weight:bold">if</span> (n_changed == <span style="color:#3677a9">0</span>)
+        <span style="color:#6ab825;font-weight:bold">break</span>;
+}
+
+<span style="color:#999;font-style:italic">// ### STEP 2: extract the segment
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">struct</span> <span style="color:#447fcf;text-decoration:underline">PixelCoordCompare</span>
+{
+    <span style="color:#6ab825;font-weight:bold">bool</span> <span style="color:#447fcf">operator</span>()(<span style="color:#6ab825;font-weight:bold">const</span> Vector2ui&amp; a, <span style="color:#6ab825;font-weight:bold">const</span> Vector2ui&amp; b) <span style="color:#6ab825;font-weight:bold">const</span>
+    {
+        <span style="color:#6ab825;font-weight:bold">return</span> a.y() != b.y() ? a.y() &lt; b.y() : a.x() &lt; b.x();
+    }
+};
+
+<span style="color:#6ab825;font-weight:bold">using</span> PixelSet = std::set&lt;Vector2ui, detail::PixelCoordCompare&gt;;
+
+std::vector&lt;PixelSet&gt; segments = crisp::decompose_into_connected_segments(image, {<span style="color:#24909d">true</span>});
+PixelSet segment = segments.at(<span style="color:#3677a9">0</span>);
+
+<span style="color:#999;font-style:italic">// ### STEP 3: isolate all possible boundary points
+</span><span style="color:#999;font-style:italic"></span>
+PixelSet strong_pixels,     <span style="color:#999;font-style:italic">// 100% part of b oundary
+</span><span style="color:#999;font-style:italic"></span>         weak_pixels;       <span style="color:#999;font-style:italic">// may be needed for continuing in edge cases
+</span><span style="color:#999;font-style:italic"></span>        
+<span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">auto</span>&amp; px : segment)
+{
+    size_t n_unconnected = <span style="color:#3677a9">0</span>;
+    <span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">long</span> i = -<span style="color:#3677a9">1</span>; i &lt;= +<span style="color:#3677a9">1</span>; ++i)
+    {
+        <span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">long</span> j = -<span style="color:#3677a9">1</span>; j &lt;= +<span style="color:#3677a9">1</span>; ++j)
+        {
+            <span style="color:#6ab825;font-weight:bold">if</span> (not (i == <span style="color:#3677a9">0</span> and j == <span style="color:#3677a9">0</span>) and segment.find(Vector2ui(px.x() + i, px.y() + j)) == segment.end())
+                n_unconnected++;
+        }
+    }
+            
+    <span style="color:#6ab825;font-weight:bold">if</span> (n_unconnected &gt; <span style="color:#3677a9">1</span>)
+        strong_pixels.insert(px);
+    <span style="color:#6ab825;font-weight:bold">else</span> <span style="color:#447fcf">if</span> (n_unconnected == <span style="color:#3677a9">1</span>)
+        weak_pixels.insert(px);
+}
+
+<span style="color:#999;font-style:italic">// ### STEP 4: define the direction function
+</span><span style="color:#999;font-style:italic"></span>
+<span style="color:#6ab825;font-weight:bold">auto</span> translate_in_direction = [&amp;](Vector2ui point, <span style="color:#6ab825;font-weight:bold">uint8_t</span> direction) -&gt; Vector2ui
+{
+    direction = direction % <span style="color:#3677a9">8</span>;
+    <span style="color:#6ab825;font-weight:bold">int</span> x_offset, y_offset;
+    <span style="color:#6ab825;font-weight:bold">switch</span> (direction)
+    {
+        <span style="color:#6ab825;font-weight:bold">case</span> <span style="color:#3677a9">0</span>: <span style="color:#999;font-style:italic">// WEST
+</span><span style="color:#999;font-style:italic"></span>            x_offset = -<span style="color:#3677a9">1</span>;
+            y_offset = <span style="color:#3677a9">0</span>;
+            <span style="color:#6ab825;font-weight:bold">break</span>;
+
+        <span style="color:#6ab825;font-weight:bold">case</span> <span style="color:#3677a9">1</span>: <span style="color:#999;font-style:italic">// SOUTH WEST
+</span><span style="color:#999;font-style:italic"></span>            x_offset = -<span style="color:#3677a9">1</span>;
+            y_offset = +<span style="color:#3677a9">1</span>;
+            <span style="color:#6ab825;font-weight:bold">break</span>;
+
+        <span style="color:#6ab825;font-weight:bold">case</span> <span style="color:#3677a9">2</span>: <span style="color:#999;font-style:italic">// SOUTH
+</span><span style="color:#999;font-style:italic"></span>            x_offset = <span style="color:#3677a9">0</span>;
+            y_offset = +<span style="color:#3677a9">1</span>;
+            <span style="color:#6ab825;font-weight:bold">break</span>;
+
+        <span style="color:#6ab825;font-weight:bold">case</span> <span style="color:#3677a9">3</span>: <span style="color:#999;font-style:italic">// SOUTH EAST
+</span><span style="color:#999;font-style:italic"></span>            x_offset = +<span style="color:#3677a9">1</span>;
+            y_offset = +<span style="color:#3677a9">1</span>;
+            <span style="color:#6ab825;font-weight:bold">break</span>;
+
+        <span style="color:#6ab825;font-weight:bold">case</span> <span style="color:#3677a9">4</span>: <span style="color:#999;font-style:italic">// EAST
+</span><span style="color:#999;font-style:italic"></span>            x_offset = +<span style="color:#3677a9">1</span>;
+            y_offset = <span style="color:#3677a9">0</span>;
+            <span style="color:#6ab825;font-weight:bold">break</span>;
+
+        <span style="color:#6ab825;font-weight:bold">case</span> <span style="color:#3677a9">5</span>: <span style="color:#999;font-style:italic">// NORTH EAST
+</span><span style="color:#999;font-style:italic"></span>            x_offset = +<span style="color:#3677a9">1</span>;
+            y_offset = -<span style="color:#3677a9">1</span>;
+            <span style="color:#6ab825;font-weight:bold">break</span>;
+
+        <span style="color:#6ab825;font-weight:bold">case</span> <span style="color:#3677a9">6</span>: <span style="color:#999;font-style:italic">// NORTH
+</span><span style="color:#999;font-style:italic"></span>            x_offset = <span style="color:#3677a9">0</span>;
+            y_offset = -<span style="color:#3677a9">1</span>;
+            <span style="color:#6ab825;font-weight:bold">break</span>;
+
+        <span style="color:#6ab825;font-weight:bold">case</span> <span style="color:#3677a9">7</span>: <span style="color:#999;font-style:italic">// NORTH_WEST
+</span><span style="color:#999;font-style:italic"></span>            x_offset = -<span style="color:#3677a9">1</span>;
+            y_offset = -<span style="color:#3677a9">1</span>;
+            <span style="color:#6ab825;font-weight:bold">break</span>;
+    }
+
+    <span style="color:#6ab825;font-weight:bold">return</span> <span style="color:#447fcf">Vector2ui</span>(point.x() + x_offset, point.y() + y_offset);
+};
+
+<span style="color:#999;font-style:italic">// ### STEP 5: Initialize the Tracing 
+</span><span style="color:#999;font-style:italic"></span>
+<span style="color:#999;font-style:italic">// output, each index holds 1 boundary object where the first one is the outer boundary and every subsequent one is the outline of a hole
+</span><span style="color:#999;font-style:italic"></span>std::vector&lt;std::vector&lt;Vector2ui&gt;&gt; boundaries_out;
+std::vector&lt;std::vector&lt;<span style="color:#6ab825;font-weight:bold">uint8_t</span>&gt;&gt; directions_out;
+
+<span style="color:#6ab825;font-weight:bold">while</span> (strong_pixels.size() &gt; <span style="color:#3677a9">0</span>)
+{
+    boundaries_out.emplace_back();
+    directions_out.emplace_back();
+
+    <span style="color:#6ab825;font-weight:bold">auto</span>&amp; boundary = boundaries_out.back();
+    <span style="color:#6ab825;font-weight:bold">auto</span>&amp; direction = directions_out.back();
+
+    <span style="color:#6ab825;font-weight:bold">auto</span> top_left = *strong_pixels.begin();
+    boundary.push_back(top_left);
+    strong_pixels.erase(top_left);
+    direction.push_back(<span style="color:#3677a9">0</span>);
+    
+    size_t current_i = <span style="color:#3677a9">0</span>;
+            
+    <span style="color:#999;font-style:italic">// ### STEP 6 trace and push once tracing complete
+</span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">do</span>
+    {
+        <span style="color:#999;font-style:italic">// current pixel
+</span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">auto</span> current = boundary.at(current_i);
+        <span style="color:#6ab825;font-weight:bold">auto</span> current_direction = direction.at(current_i);
+
+        <span style="color:#999;font-style:italic">// was a candidate found
+</span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">bool</span> found = <span style="color:#24909d">false</span>;
+
+        <span style="color:#999;font-style:italic">// check strong candidates
+</span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">int</span> dir = current_direction - <span style="color:#3677a9">1</span>, n = <span style="color:#3677a9">0</span>; n &lt; <span style="color:#3677a9">8</span>; ++dir, ++n)
+        {
+            <span style="color:#6ab825;font-weight:bold">auto</span> to_check = translate_in_direction(current, dir);
+
+            <span style="color:#6ab825;font-weight:bold">if</span> (to_check.x() &lt; _x_bounds.x() or to_check.x() &gt; _x_bounds.y() or
+                to_check.y() &lt; _y_bounds.x() or to_check.y() &gt; _y_bounds.y())
+                <span style="color:#6ab825;font-weight:bold">continue</span>;
+
+            <span style="color:#999;font-style:italic">// check for convergence by looping back to the starting pixel
+</span><span style="color:#999;font-style:italic"></span>            <span style="color:#6ab825;font-weight:bold">if</span> (to_check == top_left)
+                finished_maybe = <span style="color:#24909d">true</span>;
+
+            <span style="color:#6ab825;font-weight:bold">if</span> (strong_pixels.find(to_check) != strong_pixels.end())
+            {
+                <span style="color:#999;font-style:italic">// push new pixel from set to boundary
+</span><span style="color:#999;font-style:italic"></span>                boundary.push_back(to_check);
+                direction.push_back(dir);
+                strong_pixels.erase(to_check);
+                found = <span style="color:#24909d">true</span>;
+                <span style="color:#6ab825;font-weight:bold">break</span>;
+            }
+        }
+
+        <span style="color:#999;font-style:italic">// if we already found a strong candidate we can just jump to the next    
+</span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">if</span> (found)
+        {
+            current_i = boundary.size() - <span style="color:#3677a9">1</span>;
+            <span style="color:#6ab825;font-weight:bold">continue</span>;
+        } 
+        <span style="color:#999;font-style:italic">// if no strong candidate was found even though we looped back, we are back at the start
+</span><span style="color:#999;font-style:italic"></span>        <span style="color:#999;font-style:italic">// c.f. explanation below
+</span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">else</span> <span style="color:#447fcf">if</span> (finished_maybe)
+            <span style="color:#6ab825;font-weight:bold">break</span>;
+        
+
+        <span style="color:#999;font-style:italic">// if no strong candidate was found, check weak candidates
+</span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">int</span> dir = current_direction - <span style="color:#3677a9">1</span>, n = <span style="color:#3677a9">0</span>; n &lt; <span style="color:#3677a9">8</span>; ++dir, ++n)
+        {
+            <span style="color:#6ab825;font-weight:bold">auto</span> to_check = translate_in_direction(current, dir);
+
+            <span style="color:#6ab825;font-weight:bold">if</span> (to_check.x() &lt; _x_bounds.x() or to_check.x() &gt; _x_bounds.y() or
+                to_check.y() &lt; _y_bounds.x() or to_check.y() &gt; _y_bounds.y())
+                <span style="color:#6ab825;font-weight:bold">continue</span>;
+
+            <span style="color:#6ab825;font-weight:bold">if</span> (weak_pixels.find(to_check) != weak_pixels.end())
+            {
+                boundary.push_back(to_check);
+                direction.push_back(dir);
+                weak_pixels.erase(to_check);
+                found = <span style="color:#24909d">true</span>;
+                <span style="color:#6ab825;font-weight:bold">break</span>;
+            }
+        }
+
+        <span style="color:#6ab825;font-weight:bold">if</span> (found)
+        {
+            current_i = boundary.size() - <span style="color:#3677a9">1</span>;
+            <span style="color:#6ab825;font-weight:bold">continue</span>;
+        }
+        <span style="color:#999;font-style:italic">// if neither weak nor strong candidate found, start traceback
+</span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">else</span>
+            current_i--;
+        
+    } <span style="color:#6ab825;font-weight:bold">while</span> (current_i != <span style="color:#3677a9">0</span>);
+    
+<span style="color:#999;font-style:italic">// ### STEP 7: reduce to non-redundant polygon vertices
+</span><span style="color:#999;font-style:italic"></span>outer_boundary = boundaries_out.at(<span style="color:#3677a9">0</span>);
+outer_boundary_directions = directions_out.at(<span style="color:#3677a9">0</span>);
+
+size_t n_holes = boundaries_out.size() - <span style="color:#3677a9">1</span>; <span style="color:#999;font-style:italic">// all boundary at position &gt; 0 are those of holes
+</span><span style="color:#999;font-style:italic"></span>
+<span style="color:#999;font-style:italic">// define function to detect if two vertices in a sequence are colinear
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">auto</span> turn_type = [&amp;](size_t i_a, size_t i_b) -&gt; <span style="color:#6ab825;font-weight:bold">int</span>
+{
+    <span style="color:#6ab825;font-weight:bold">auto</span> point_a = outer_boundary.at(i_a),
+         point_b = outer_boundary.at(i_b);
+
+    <span style="color:#999;font-style:italic">// warp point from traceback
+</span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">if</span> (abs(<span style="color:#6ab825;font-weight:bold">int</span>(point_a.x()) - <span style="color:#6ab825;font-weight:bold">int</span>(point_b.x())) &gt; <span style="color:#3677a9">1</span> or
+        abs(<span style="color:#6ab825;font-weight:bold">int</span>(point_a.y()) - <span style="color:#6ab825;font-weight:bold">int</span>(point_b.y())) &gt; <span style="color:#3677a9">1</span>)
+        <span style="color:#6ab825;font-weight:bold">return</span> <span style="color:#3677a9">0</span>;
+
+    <span style="color:#6ab825;font-weight:bold">auto</span> dir_a = outer_boundary_directions.at(i_a),
+         dir_b = outer_boundary_directions.at(i_b);
+
+    <span style="color:#6ab825;font-weight:bold">if</span> (dir_b &gt; dir_a or (dir_a == <span style="color:#3677a9">7</span> and dir_b == <span style="color:#3677a9">0</span>))
+        <span style="color:#6ab825;font-weight:bold">return</span> -<span style="color:#3677a9">1</span>; <span style="color:#999;font-style:italic">// left-hand turn
+</span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">else</span> <span style="color:#447fcf">if</span> (dir_b &lt; dir_a or (dir_a == <span style="color:#3677a9">0</span> and dir_b == <span style="color:#3677a9">7</span>))
+        <span style="color:#6ab825;font-weight:bold">return</span> +<span style="color:#3677a9">1</span>; <span style="color:#999;font-style:italic">// right-hand turn
+</span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">else</span>
+        <span style="color:#6ab825;font-weight:bold">return</span> <span style="color:#3677a9">0</span>; <span style="color:#999;font-style:italic">// colinear
+</span><span style="color:#999;font-style:italic"></span>};
+
+<span style="color:#6ab825;font-weight:bold">auto</span> boundary_polygon_out = std::vector&lt;Vector2ui&gt;();
+
+Vector2f mean_pos = Vector2f(<span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>);
+
+<span style="color:#999;font-style:italic">// discard all colinear vertices but preserve order
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">for</span> (size_t i = <span style="color:#3677a9">0</span>; i &lt; _boundary.size() - <span style="color:#3677a9">1</span>; ++i)
+    <span style="color:#6ab825;font-weight:bold">if</span> (turn_type(i, i+<span style="color:#3677a9">1</span>) != <span style="color:#3677a9">0</span>)
+        boundary_polygon_out.push_back(_boundary.at(i));
+        
+<span style="color:#6ab825;font-weight:bold">return</span> boundary_polygon_out;
+</code></pre></div><h2 id="step-1-pre-processing">Step 1: Pre Processing</h2>
+<p>We first need to pre-process the image, 1-pixel holes and gaps and 1-pixel thick lines will cause problems later on so we need to remove them. Often these features happen purely because of noise and even if you would need them to be part of the actual region because you&rsquo;re working on that small a resolution you can simply scale the image by a factor of 2 and the automated pre-processing step will leave them untouched.</p>
+<p>To fill all 1-pixel holes we iterate through the region M (here represented as a binary image) and for each pixel count the number of 4-connected neighboring pixels that are also in M. If at least 3 of them are we found a hole or gap that needs to be patch</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#999;font-style:italic">// fill all 1-pixel holes
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">long</span> x = <span style="color:#3677a9">0</span>; x &lt; image.get_size().x(); ++x)
+{
+    <span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">long</span> y = <span style="color:#3677a9">0</span>; y &lt; image.get_size().y(); ++y)
+    {
+        <span style="color:#999;font-style:italic">// only iterate through region
+</span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">if</span> (image(x, y) == segment_color)
+            <span style="color:#6ab825;font-weight:bold">continue</span>;
+        
+        size_t n = <span style="color:#3677a9">0</span>;
+        <span style="color:#999;font-style:italic">// count for connected neighbors
+</span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">for</span> (std::pair&lt;<span style="color:#6ab825;font-weight:bold">int</span>, <span style="color:#6ab825;font-weight:bold">int</span>&gt; i_j : {{-<span style="color:#3677a9">1</span>, <span style="color:#3677a9">0</span>}, {<span style="color:#3677a9">1</span>, <span style="color:#3677a9">0</span>}, {<span style="color:#3677a9">0</span>, -<span style="color:#3677a9">1</span>}, {<span style="color:#3677a9">0</span>, <span style="color:#3677a9">1</span>}})
+        {
+            <span style="color:#6ab825;font-weight:bold">if</span> (image(x + i_j.first, y + i_j.second) == segment_color)
+                n++;
+        }
+        
+        <span style="color:#999;font-style:italic">// make that pixel part of the region by setting it to the specified color (black)
+</span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">if</span> (n &gt;= <span style="color:#3677a9">3</span>)
+            image(x, y) = segment_color;
+    }   
+}
+</code></pre></div><p><img src="tracing_fig_2.png" alt=""></p>
+<center>
+<img src="tracing_fig_2.png" alt="Fig02">
+<br><b>Figure 2:</b> Left: Segmented region corrupted by noise, Right: Region after filling all 1-pixel holes (newly assigned pixels shown in purple)
+</center>
+<p>We now need to prune all 1-pixel thick lines. We do this recursively (there&rsquo;s more optimal ways to do this that have a far less performance overhead but for the sake of simplicity I will demonstrate the recursive method here. Optimally you would use a subtract a morphological hit-or-miss-transform that detects the lines from the original image) by &ldquo;eating away&rdquo; at the end of each line and repeat until no more lines are left:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#999;font-style:italic">// prune all 1-pixel lines
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">while</span> (<span style="color:#24909d">true</span>)
+{
+    <span style="color:#999;font-style:italic">// count number of changed pixels
+</span><span style="color:#999;font-style:italic"></span>    n_changed = <span style="color:#3677a9">0</span>;
+    <span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">long</span> x = <span style="color:#3677a9">0</span>; x &lt; image.get_size().x(); ++x)
+    {
+        <span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">long</span> y = <span style="color:#3677a9">0</span>; y &lt; image.get_size().y(); ++y)
+        {
+            <span style="color:#6ab825;font-weight:bold">if</span> (image(x, y) != segment_color)
+                <span style="color:#6ab825;font-weight:bold">continue</span>;
+            
+            <span style="color:#999;font-style:italic">// count number of 4-connected neighbors in M
+</span><span style="color:#999;font-style:italic"></span>            size_t n = <span style="color:#3677a9">0</span>;
+            <span style="color:#6ab825;font-weight:bold">for</span> (std::pair&lt;<span style="color:#6ab825;font-weight:bold">int</span>, <span style="color:#6ab825;font-weight:bold">int</span>&gt; i_j : {{-<span style="color:#3677a9">1</span>, <span style="color:#3677a9">0</span>}, {<span style="color:#3677a9">1</span>, <span style="color:#3677a9">0</span>}, {<span style="color:#3677a9">0</span>, -<span style="color:#3677a9">1</span>}, {<span style="color:#3677a9">0</span>, <span style="color:#3677a9">1</span>}})
+            {
+                <span style="color:#6ab825;font-weight:bold">if</span> (image(x + i_j.first, y + i_j.second) == segment_color)
+                    n++;
+            }
+        
+            <span style="color:#999;font-style:italic">// if it only has 1 neighbor it is the end of a line, prune it
+</span><span style="color:#999;font-style:italic"></span>            <span style="color:#6ab825;font-weight:bold">if</span> (n == <span style="color:#3677a9">1</span>)
+            {
+                image(x, y) = not segment_color;
+                n_changed++;
+            }
+        }
+    }
+    
+    <span style="color:#999;font-style:italic">// if no lines changed, we converged
+</span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">if</span> (n_changed == <span style="color:#3677a9">0</span>)
+        <span style="color:#6ab825;font-weight:bold">break</span>;
+}
+</code></pre></div><p><img src="tracing_fig_3.png" alt=""></p>
+<center>
+<img src="tracing_fig_3.png" alt="Fig03">
+<br><b>Figure 3:</b> Left: Region after filling all 1-pixel holes, Right: Pruned region, removed pixels shown in purple with increased lightness as the number of iterations increases
+</center>
+<p>Note that we leave a &ldquo;stump&rdquo; of size 1-pixel, if this throws of later processing feels free to first erode then dilate the area with a 2x2 structuring element. Morphological processing in general can make this process faster and cleaner but for now we will do it recursively like this.</p>
+<p>Now that our region as an image is primed we can transform it into a region as a mathematical set of coordinates.</p>
+<h2 id="step-2-extract-the-region">Step 2: Extract the Region</h2>
+<p>We first define a new typedef <code>PixelSet</code>, this is a set that takes a custom comparator such that the pixel coordinates in the set are ordered left-to-right, top-to-bottom which means the first pixel is the pixel with the smalle x- and y- coordinate, if two pixels share a x-coordinate, the pixel with the lower y-coordinate comes first. Remember that our coordinate systems x-axis extends to right of the image, the y-axis to the bottom so a higher y-value means the pixel is lower down.</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">struct</span> <span style="color:#447fcf;text-decoration:underline">PixelCoordCompare</span>
+{
+    <span style="color:#6ab825;font-weight:bold">bool</span> <span style="color:#447fcf">operator</span>()(<span style="color:#6ab825;font-weight:bold">const</span> Vector2ui&amp; a, <span style="color:#6ab825;font-weight:bold">const</span> Vector2ui&amp; b) <span style="color:#6ab825;font-weight:bold">const</span>
+    {
+        <span style="color:#6ab825;font-weight:bold">return</span> a.y() != b.y() ? a.y() &lt; b.y() : a.x() &lt; b.x();
+    }
+};
+
+<span style="color:#6ab825;font-weight:bold">using</span> PixelSet = std::set&lt;Vector2ui, detail::PixelCoordCompare&gt;;
+
+std::vector&lt;PixelSet&gt; segments = crisp::decompose_into_connected_segments(image, {<span style="color:#24909d">true</span>});
+PixelSet segment = segments.at(<span style="color:#3677a9">0</span>);
+</code></pre></div><p>The actual extraction of the set is left to another crisp function, to learn more about it you can check the documentation HERE TODO. It extracts all 4-connected segments, let&rsquo;s assume our segment is the only one in the image so the only set in the vector is the set of all pixel coordinates M.</p>
+<h2 id="step-3-isolate-all-boundary-pixels">Step 3: Isolate all Boundary Pixels</h2>
+<p>A boundary pixel by definition is a pixel that has a neighbor in image space that is not part of M. Much like in our pre-processing steps we can simply iterate through the set and count the number of pixels with less than 8 neighbors. We furthermore devide these into <code>weak</code> and <code>strong</code> boundary candidates. A weak candidate is a pixel with exactly 1 non-M neighbour, a strong candidate is a pixel with 2 or more non-M neighbours. The reason for this seperation will come into play shortly</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">PixelSet strong_pixels,
+         weak_pixels;
+        
+<span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">auto</span>&amp; px : segment)
+{
+    <span style="color:#999;font-style:italic">// count non-M neighbours
+</span><span style="color:#999;font-style:italic"></span>    size_t n_unconnected = <span style="color:#3677a9">0</span>;
+    <span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">long</span> i = -<span style="color:#3677a9">1</span>; i &lt;= +<span style="color:#3677a9">1</span>; ++i)
+    {
+        <span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">long</span> j = -<span style="color:#3677a9">1</span>; j &lt;= +<span style="color:#3677a9">1</span>; ++j)
+        {
+            <span style="color:#6ab825;font-weight:bold">if</span> (not (i == <span style="color:#3677a9">0</span> and j == <span style="color:#3677a9">0</span>) and segment.find(Vector2ui(px.x() + i, px.y() + j)) == segment.end())
+                n_unconnected++;
+        }
+    }
+            
+    <span style="color:#999;font-style:italic">// 2 or more -&gt; strong
+</span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">if</span> (n_unconnected &gt; <span style="color:#3677a9">1</span>)
+        strong_pixels.insert(px);
+    
+    <span style="color:#999;font-style:italic">// exactly 1 -&gt; weak
+</span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">else</span> <span style="color:#447fcf">if</span> (n_unconnected == <span style="color:#3677a9">1</span>)
+        weak_pixels.insert(px);
+}
+</code></pre></div><p><img src="tracing_fig_4.png" alt=""></p>
+<center>
+<img src="tracing_fig_4.png" alt="Fig04">
+<br><b>Figure 4:</b> Left: Region from step 3, Right: Region with strong boundary candidates highlighted in green, weak candidates highlighted in red.
+</center>
+<h1 id="step-5-define-the-direction-function">Step 5: Define the direction function</h1>
+<p>One more thing before we can finally start tracing the boundary, we need to define a function that defines the direction of two pixels in the boundary. Let p_i, p_i+1 be two pixels in K, then we can visualize the following directions as &ldquo;to travel from p_i to p_i+1 we need to go one pixel x&rdquo; where x is the direction. So for x = &ldquo;south west&rdquo;, we need to travel one pixel to the bottom and one pixel to the right in image space. We get 8 direction like this and we assign each direction a number: 0 = west, 1 = south west, 2 = south and so on in <em>clockwise</em> direction (the boundary is traced in counterclockwise direction while this direction mapping function assigns values clockwise). We then end up with 7 = north west after which we loop back to 0 = west. To do ths looping we take the modulo of the direction before returning the appropriate next pixel.</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">auto</span> translate_in_direction = [&amp;](Vector2ui point, <span style="color:#6ab825;font-weight:bold">uint8_t</span> direction) -&gt; Vector2ui
+{
+    direction = direction % <span style="color:#3677a9">8</span>;
+    <span style="color:#6ab825;font-weight:bold">int</span> x_offset, y_offset;
+    <span style="color:#6ab825;font-weight:bold">switch</span> (direction)
+    {
+        <span style="color:#6ab825;font-weight:bold">case</span> <span style="color:#3677a9">0</span>: <span style="color:#999;font-style:italic">// WEST: p_i+1 is right of p_i
+</span><span style="color:#999;font-style:italic"></span>            x_offset = -<span style="color:#3677a9">1</span>;
+            y_offset = <span style="color:#3677a9">0</span>;
+            <span style="color:#6ab825;font-weight:bold">break</span>;
+
+        <span style="color:#6ab825;font-weight:bold">case</span> <span style="color:#3677a9">1</span>: <span style="color:#999;font-style:italic">// SOUTH WEST: p_i is 
+</span><span style="color:#999;font-style:italic"></span>            x_offset = -<span style="color:#3677a9">1</span>;
+            y_offset = +<span style="color:#3677a9">1</span>;
+            <span style="color:#6ab825;font-weight:bold">break</span>;
+
+        <span style="color:#6ab825;font-weight:bold">case</span> <span style="color:#3677a9">2</span>: <span style="color:#999;font-style:italic">// SOUTH
+</span><span style="color:#999;font-style:italic"></span>            x_offset = <span style="color:#3677a9">0</span>;
+            y_offset = +<span style="color:#3677a9">1</span>;
+            <span style="color:#6ab825;font-weight:bold">break</span>;
+
+        <span style="color:#6ab825;font-weight:bold">case</span> <span style="color:#3677a9">3</span>: <span style="color:#999;font-style:italic">// SOUTH EAST
+</span><span style="color:#999;font-style:italic"></span>            x_offset = +<span style="color:#3677a9">1</span>;
+            y_offset = +<span style="color:#3677a9">1</span>;
+            <span style="color:#6ab825;font-weight:bold">break</span>;
+
+        <span style="color:#6ab825;font-weight:bold">case</span> <span style="color:#3677a9">4</span>: <span style="color:#999;font-style:italic">// EAST
+</span><span style="color:#999;font-style:italic"></span>            x_offset = +<span style="color:#3677a9">1</span>;
+            y_offset = <span style="color:#3677a9">0</span>;
+            <span style="color:#6ab825;font-weight:bold">break</span>;
+
+        <span style="color:#6ab825;font-weight:bold">case</span> <span style="color:#3677a9">5</span>: <span style="color:#999;font-style:italic">// NORTH EAST
+</span><span style="color:#999;font-style:italic"></span>            x_offset = +<span style="color:#3677a9">1</span>;
+            y_offset = -<span style="color:#3677a9">1</span>;
+            <span style="color:#6ab825;font-weight:bold">break</span>;
+
+        <span style="color:#6ab825;font-weight:bold">case</span> <span style="color:#3677a9">6</span>: <span style="color:#999;font-style:italic">// NORTH
+</span><span style="color:#999;font-style:italic"></span>            x_offset = <span style="color:#3677a9">0</span>;
+            y_offset = -<span style="color:#3677a9">1</span>;
+            <span style="color:#6ab825;font-weight:bold">break</span>;
+
+        <span style="color:#6ab825;font-weight:bold">case</span> <span style="color:#3677a9">7</span>: <span style="color:#999;font-style:italic">// NORTH_WEST
+</span><span style="color:#999;font-style:italic"></span>            x_offset = -<span style="color:#3677a9">1</span>;
+            y_offset = -<span style="color:#3677a9">1</span>;
+            <span style="color:#6ab825;font-weight:bold">break</span>;
+    }
+
+    <span style="color:#6ab825;font-weight:bold">return</span> <span style="color:#447fcf">Vector2ui</span>(point.x() + x_offset, point.y() + y_offset);
+};
+</code></pre></div><p>It is important to really understand this function, for tracing to work properly we need to know what direction we just went to get from p_i-1 to p_i, let&rsquo;s say &ldquo;south&rdquo; (which is the value 2) then when looking for the next pixel around p_i we need to start looking first at <code>south - 1 = south west</code>, if no match was found look south next, south east afterwards, etc.. Doing it like this will assure that our tracing can&rsquo;t get stuck in loops.</p>
+<h1 id="step-6-tracing">Step 6: Tracing</h1>
+<p>We first need to initialize the algorithm, we open a vector that holds confirmed boundary points and a vector of directions that holds the corresponding direction. So when the boundary point is at position j in the vector then the direction vector will have the direction travele from p_j-1 to p_j at position j.</p>
+<p>(the following algorithm is missing certain parts of the full algorithm above, this is for ease of explaining, we will get to what other things we need to do later).</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">  <span style="color:#6ab825;font-weight:bold">auto</span>&amp; boundary = std::vector&lt;Vector2ui&gt;();
+  <span style="color:#6ab825;font-weight:bold">auto</span>&amp; direction = std::vector&lt;uin8_t&gt;();
+
+  <span style="color:#6ab825;font-weight:bold">auto</span> top_left = *strong_pixels.begin();
+  boundary.push_back(top_left);
+  strong_pixels.erase(top_left);
+  direction.push_back(<span style="color:#3677a9">0</span>);
+</code></pre></div><p>We also initialize the first boundary point which is the top-most left-most strong pixel. Because our custom <code>PixelSet</code> orders points in just this way, the first pixel in the set is also the top-most, left-most one. We then initialize the directions with 0 (west). We can now start tracing.</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">
+size_t current_i = <span style="color:#3677a9">0</span>;
+<span style="color:#6ab825;font-weight:bold">do</span>
+{
+    <span style="color:#999;font-style:italic">// current pixel and direction
+</span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">auto</span> current = boundary.at(current_i);
+    <span style="color:#6ab825;font-weight:bold">auto</span> current_direction = direction.at(current_i);
+
+    <span style="color:#999;font-style:italic">// boolean to track if a proper candidate was found yet
+</span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">bool</span> found = <span style="color:#24909d">false</span>;
+
+    <span style="color:#999;font-style:italic">// check strong candidates
+</span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// we start at the last direction -1 (counterclockwise before the other) 
+</span><span style="color:#999;font-style:italic"></span>    <span style="color:#999;font-style:italic">// and go through all possible directions, here counted with n
+</span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">int</span> dir = current_direction - <span style="color:#3677a9">1</span>, n = <span style="color:#3677a9">0</span>; n &lt; <span style="color:#3677a9">8</span>; ++dir, ++n)
+    {
+        <span style="color:#999;font-style:italic">// we check the next pixel as directed by the direction function mentioned above
+</span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">auto</span> to_check = translate_in_direction(current, dir);
+
+        <span style="color:#999;font-style:italic">// skip if out of bounds
+</span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">if</span> (to_check.x() &lt; _x_bounds.x() or to_check.x() &gt; _x_bounds.y() or
+            to_check.y() &lt; _y_bounds.x() or to_check.y() &gt; _y_bounds.y())
+            <span style="color:#6ab825;font-weight:bold">continue</span>;
+
+        <span style="color:#999;font-style:italic">// this will be important for convergene, ignore it for now
+</span><span style="color:#999;font-style:italic"></span>        <span style="color:#999;font-style:italic">//if (to_check == top_left)
+</span><span style="color:#999;font-style:italic"></span>          <span style="color:#999;font-style:italic">//  finished_maybe = true;
+</span><span style="color:#999;font-style:italic"></span>
+        <span style="color:#999;font-style:italic">//if a strong pixel was found
+</span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">if</span> (strong_pixels.find(to_check) != strong_pixels.end())
+        {
+            <span style="color:#999;font-style:italic">// add it to confirmed boundary points
+</span><span style="color:#999;font-style:italic"></span>            boundary.push_back(to_check);
+            
+            <span style="color:#999;font-style:italic">// add it corresponding direction
+</span><span style="color:#999;font-style:italic"></span>            direction.push_back(dir);
+            
+            <span style="color:#999;font-style:italic">// scrub it from the set of possible boundary points 
+</span><span style="color:#999;font-style:italic"></span>            strong_pixels.erase(to_check);
+            
+            <span style="color:#999;font-style:italic">// say that we found a candidate
+</span><span style="color:#999;font-style:italic"></span>            found = <span style="color:#24909d">true</span>;
+            <span style="color:#6ab825;font-weight:bold">break</span>;
+        }
+    }
+
+    <span style="color:#999;font-style:italic">// if we already found a strong candidate we can just jump to the next    
+</span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">if</span> (found)
+    {
+        <span style="color:#999;font-style:italic">// reset current_i to the pixel last pushed
+</span><span style="color:#999;font-style:italic"></span>        current_i = boundary.size() - <span style="color:#3677a9">1</span>;
+        <span style="color:#999;font-style:italic">// and skip the rest of the loop
+</span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">continue</span>;
+    } 
+    
+    (...)
+</code></pre></div><p>Again, some of the loop was left out for clarity for now. We start at the top left and then check if any of the pixels in it&rsquo;s 8-connected neighborhood are also in M. If yes, we found a boundary pixel and can push it and now search the 8-connected neighborhood around it. As mentioned above keeping track of the direction is important to enforce a strong order, if we arrived via direction d at pixel p_i (from p_i-1) then we should start checking pixels at direction d-1 next. d-1 is left of d because the directions are numerate clockwise. If we don&rsquo;t find a pixel there, try the next direction and so on.</p>
+<p>Now you might think we are done. We just go through all the pixels and since all strong pixels are linked, it&rsquo;ll just finish, right? Well not quite. Consider our region from earlier:</p>
+<p><img src="tracing_fig_6.png" alt=""></p>
+<center>
+<img src="tracing_fig_4.png" alt="Fig04">
+<br><b>Figure 6:</b> State of the tracing algorithm after 44 iterations. The compass wheel on the top shows the directions where ``mint = east``, ``red = west``, ``pink = north``, ``cyan = south``, etc.. The corresponding direction for each point p_i is shown in color. The yellow point is the starting point. On the right the boundary so far is highlighted in white.
+</center>
+<p>We&rsquo;re stuck! We&rsquo;ve only been using strong pixels so far and we&rsquo;ve gotten to a point where there&rsquo;s no other strong pixel in the 8-neighborhood. We kept track of the weak pixels for just this occassion, because:</p>
+<p>(the previous code is reposts here for convenience)</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">do</span>
+{
+    <span style="color:#6ab825;font-weight:bold">auto</span> current = boundary.at(current_i);
+    <span style="color:#6ab825;font-weight:bold">auto</span> current_direction = direction.at(current_i);
+
+    <span style="color:#6ab825;font-weight:bold">bool</span> found = <span style="color:#24909d">false</span>;
+
+    <span style="color:#999;font-style:italic">// check strong candidates
+</span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">int</span> dir = current_direction - <span style="color:#3677a9">1</span>, n = <span style="color:#3677a9">0</span>; n &lt; <span style="color:#3677a9">8</span>; ++dir, ++n)
+    {
+        <span style="color:#6ab825;font-weight:bold">auto</span> to_check = translate_in_direction(current, dir);
+
+        <span style="color:#6ab825;font-weight:bold">if</span> (to_check.x() &lt; _x_bounds.x() or to_check.x() &gt; _x_bounds.y() or
+            to_check.y() &lt; _y_bounds.x() or to_check.y() &gt; _y_bounds.y())
+            <span style="color:#6ab825;font-weight:bold">continue</span>;
+
+        <span style="color:#999;font-style:italic">// check for convergence by looping back to the starting pixel
+</span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">if</span> (to_check == top_left)
+            finished_maybe = <span style="color:#24909d">true</span>;
+
+        <span style="color:#6ab825;font-weight:bold">if</span> (strong_pixels.find(to_check) != strong_pixels.end())
+        {
+            <span style="color:#999;font-style:italic">// push new pixel from set to boundary
+</span><span style="color:#999;font-style:italic"></span>            boundary.push_back(to_check);
+            direction.push_back(dir);
+            strong_pixels.erase(to_check);
+            found = <span style="color:#24909d">true</span>;
+            <span style="color:#6ab825;font-weight:bold">break</span>;
+        }
+    }
+
+    <span style="color:#999;font-style:italic">// if we already found a strong candidate we can just jump to the next    
+</span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">if</span> (found)
+    {
+        current_i = boundary.size() - <span style="color:#3677a9">1</span>;
+        <span style="color:#6ab825;font-weight:bold">continue</span>;
+    }
+
+    <span style="color:#999;font-style:italic">// if no strong candidate was found, check weak candidates
+</span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">int</span> dir = current_direction - <span style="color:#3677a9">1</span>, n = <span style="color:#3677a9">0</span>; n &lt; <span style="color:#3677a9">8</span>; ++dir, ++n)
+    {
+        <span style="color:#999;font-style:italic">// same thing as with strong candidates, just with the weak_pixels set
+</span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">auto</span> to_check = translate_in_direction(current, dir);
+
+        <span style="color:#6ab825;font-weight:bold">if</span> (to_check.x() &lt; _x_bounds.x() or to_check.x() &gt; _x_bounds.y() or
+            to_check.y() &lt; _y_bounds.x() or to_check.y() &gt; _y_bounds.y())
+            <span style="color:#6ab825;font-weight:bold">continue</span>;
+
+        <span style="color:#6ab825;font-weight:bold">if</span> (weak_pixels.find(to_check) != weak_pixels.end())
+        {
+            boundary.push_back(to_check);
+            direction.push_back(dir);
+            weak_pixels.erase(to_check);
+            found = <span style="color:#24909d">true</span>;
+            <span style="color:#6ab825;font-weight:bold">break</span>;
+        }
+    }
+
+    <span style="color:#999;font-style:italic">// if we found a weak pixel we can continue
+</span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">if</span> (found)
+    {
+        current_i = boundary.size() - <span style="color:#3677a9">1</span>;
+        <span style="color:#6ab825;font-weight:bold">continue</span>;
+    }
+    
+} <span style="color:#6ab825;font-weight:bold">while</span> (current_i != <span style="color:#3677a9">0</span>);
+</code></pre></div><p>We now do just the same thing for weak pixels but we want to prioritize the strong ones always but now that we would be stuck without them we fall back and add 1 weak pixel:</p>
+<p><img src="tracing_fig_6.png" alt=""></p>
+<center>
+<img src="tracing_fig_6.png" alt="Fig06">
+<br><b>Figure 6:</b> State of the tracing algorithm after 44 iterations. The compass wheel on the top shows the directions where ``mint = east``, ``red = west``, ``pink = north``, ``cyan = south``, etc.. The corresponding direction for each point p_i is shown in color. The yellow point is the starting point. On the right the boundary so far is highlighted in white.
+</center>
+
+      </span>
+      <span class="muted" style="float:right; position:relative; top:5em;">
+        <a href="#Title" style="color:#00f7c6;">&#11014; jump to beginning</a>
+      </span>
+      <br>
+<hr style="border:1px solid #999999"> </hr>
+<h2> Comments <span class="muted">(via GitHub)</span></h2>
+
+
+
+<div id="Comments">
+<script src="https://utteranc.es/client.js"
+        repo="Clemapfel/rat_game_website"
+        issue-term="og:title"
+        label="[comment]"
+        theme="github-dark"
+        crossorigin="anonymous"
+        async>
+</script>
+</div>
+<hr style="border:1px solid #999999"> </hr>
+
+    </div>
+
+  </article>
+</main>
+    <footer>
+  <div>
+<center>
+<p style="font-size:11px" class="muted">
+&copy 2021 C. Cords | all images, code and writing are original and subject to copyright, unless otherwise specified.<br>
+Hosted by <a href="https://in-berlin.de/"> Individual Network Berlin e.V</a>, styled with <a href="https://after-dark.habd.as/"> After Dark </a>
+</p>
+</center>
+</div>
+
+</footer>
+    
+    
+    
+      
+    
+  </body>
+</html>

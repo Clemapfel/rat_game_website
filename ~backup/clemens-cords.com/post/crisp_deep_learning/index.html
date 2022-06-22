@@ -1,0 +1,924 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    
+
+
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; worker-src 'self' blob:; connect-src 'self' wss: data:; font-src 'self' https: data:; img-src 'self' https: data:; object-src 'none'">
+
+
+    <meta name="generator" content="After Dark Hugo">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title style="color:#00f7c6">Deep Learning Aided Differentiating of Chicken from Duck Eggs using Simulated Data | Clemens Cords&#39; Homepage</title>
+    <meta name="description" content="(This is a mirror of the documentation of crisps deep learning module that is also available here. The examples used for illustrating crisps functionality also illustrate general usage and design of both the Fully Connected Neural Networks and Bayes Classification which is why the post has been reposted here.)
+  Feature Classification &amp; Deep Learning Bayes Classifier, Fully Connected Neural Networks, Convolutional Neural Networks, SIFT
+#include &lt;classification/bayes_classifier.hpp&gt;#include &lt;classification/sift.">
+    <meta name="keywords" content="crisp, deep learning, game design, programming, ">
+    
+    
+    
+    
+    <meta property="og:title" content="Deep Learning Aided Differentiating of Chicken from Duck Eggs using Simulated Data" />
+<meta property="og:description" content="(This is a mirror of the documentation of crisps deep learning module that is also available here. The examples used for illustrating crisps functionality also illustrate general usage and design of both the Fully Connected Neural Networks and Bayes Classification which is why the post has been reposted here.)
+  Feature Classification &amp; Deep Learning Bayes Classifier, Fully Connected Neural Networks, Convolutional Neural Networks, SIFT
+#include &lt;classification/bayes_classifier.hpp&gt;#include &lt;classification/sift." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://clemens-cords.com/post/crisp_deep_learning/" />
+<meta property="og:image" content="http://clemens-cords.com" />
+<meta property="article:published_time" content="2021-10-06T00:00:00+02:00" />
+<meta property="article:modified_time" content="2021-10-06T00:00:00+02:00" />
+
+    <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://clemens-cords.com"/>
+
+<meta name="twitter:title" content="Deep Learning Aided Differentiating of Chicken from Duck Eggs using Simulated Data"/>
+<meta name="twitter:description" content="(This is a mirror of the documentation of crisps deep learning module that is also available here. The examples used for illustrating crisps functionality also illustrate general usage and design of both the Fully Connected Neural Networks and Bayes Classification which is why the post has been reposted here.)
+  Feature Classification &amp; Deep Learning Bayes Classifier, Fully Connected Neural Networks, Convolutional Neural Networks, SIFT
+#include &lt;classification/bayes_classifier.hpp&gt;#include &lt;classification/sift."/>
+
+    
+
+
+
+
+
+    
+
+    
+    
+  <meta name="referrer" content="same-origin">
+
+
+    
+    
+    <script integrity="sha512-2t0yyNrUdtn9WGIoBVxq5vtoJQYfoDQDbqRPpOb75f1hiL39DGLdJKDrGP60fBhXfrFeKyVhzWJvHvLgln/ElA==">/*! Fetch Inject v2.0.4 | Copyright (C) Josh Habdas <jhabdas@protonmail.com> (https://habd.as) | @license Zlib */
+var fetchInject=function(){"use strict";const e=function(e,t,r,n,o,c,i){c=t.createElement(r),i=t.getElementsByTagName(r)[0],c.appendChild(t.createTextNode(n.text)),c.onload=o(n),i?i.parentNode.insertBefore(c,i):t.head.appendChild(c)};return function(t,r){if(!arguments.length)return Promise.reject(new ReferenceError("Failed to execute 'fetchInject': 1 argument required but only 0 present."));if(arguments[0]&&arguments[0].constructor!==Array)return Promise.reject(new TypeError("Failed to execute 'fetchInject': argument 1 must be of type 'Array'."));if(arguments[1]&&arguments[1].constructor!==Promise)return Promise.reject(new TypeError("Failed to execute 'fetchInject': argument 2 must be of type 'Promise'."));const n=[],o=r?[].concat(r):[],c=[];return t.forEach(e=>o.push(window.fetch(e).then(e=>[e.clone().text(),e.blob()]).then(e=>Promise.all(e).then(e=>{n.push({text:e[0],blob:e[1]})})))),Promise.all(o).then(()=>(n.forEach(t=>{c.push({then:r=>{t.blob.type.includes("text/css")?e(window,document,"style",t,r):e(window,document,"script",t,r)}})}),Promise.all(c)))}}();
+</script>
+    <script integrity="sha512-2XlvnxweZhaHgBdCoOK0PoCUWiSfKibb&#43;RCRZNgqLdvbnx0ZH67FDGKQqmpqCerjMJbZFv6fsXgbmJOOA9K&#43;qA==">/*!
+ * Copyright (C) 2019  Josh Habdas <jhabdas@protonmail.com>
+ *
+ * This file is part of After Dark.
+ *
+ * After Dark is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * After Dark is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+fetchInject(["/js/lazysizes.min.js"]);
+</script>
+    
+
+
+  
+    
+
+  <meta title="mod:fractal-forest" content="status:enabled">
+  
+    <script async src=../../js/bpgdec8a.js integrity=sha384-8PG0go3BW8hLm63KbTxk/hNcehaoSbrAhKzsmy2Jhs/KY8QdiKKkjhdeyHY/Q/0I&#10;></script>
+  
+
+
+  
+  
+  
+  
+
+
+    
+    <link rel="canonical" href="http://clemens-cords.com/post/crisp_deep_learning/">
+    
+    
+    <link rel="icon" href="../../favicon.png" sizes="any">
+
+    
+
+  
+  
+  
+  
+  
+  
+  
+    
+      
+        <style>html{font-size:12px}*{box-sizing:border-box;text-rendering:geometricPrecision}body{font-size:1rem;line-height:1.5rem;margin:0;font-family:Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;word-wrap:break-word}h1,h2,h3,h4,h5,h6{line-height:1.3em}fieldset{border:none;padding:0;margin:0}pre{padding:2rem;margin:1.75rem 0;background-color:#fff;border:1px solid #ccc;overflow:auto}code[class*=language-],pre[class*=language-],pre code{font-weight:100;text-shadow:none;margin:1.75rem 0}a{cursor:pointer;color:#eb1c79;text-decoration:none;border-bottom:1px solid #eb1c79}a:hover{background-color:#eb1c79;color:#fff}.grid{display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap}.grid.\-top{-ms-flex-align:start;align-items:flex-start}.grid.\-middle{-ms-flex-align:center;align-items:center}.grid.\-bottom{-ms-flex-align:end;align-items:flex-end}.grid.\-stretch{-ms-flex-align:stretch;align-items:stretch}.grid.\-baseline{-ms-flex-align:baseline;align-items:baseline}.grid.\-left{-ms-flex-pack:start;justify-content:flex-start}.grid.\-center{-ms-flex-pack:center;justify-content:center}.grid.\-right{-ms-flex-pack:end;justify-content:flex-end}.grid.\-between{-ms-flex-pack:justify;justify-content:space-between}.grid.\-around{-ms-flex-pack:distribute;justify-content:space-around}.cell{-ms-flex:1;flex:1;box-sizing:border-box}@media screen and (min-width:768px){.cell.\-1of12{-ms-flex:0 0 8.33333%;flex:0 0 8.33333%}.cell.\-2of12{-ms-flex:0 0 16.66667%;flex:0 0 16.66667%}.cell.\-3of12{-ms-flex:0 0 25%;flex:0 0 25%}.cell.\-4of12{-ms-flex:0 0 33.33333%;flex:0 0 33.33333%}.cell.\-5of12{-ms-flex:0 0 41.66667%;flex:0 0 41.66667%}.cell.\-6of12{-ms-flex:0 0 50%;flex:0 0 50%}.cell.\-7of12{-ms-flex:0 0 58.33333%;flex:0 0 58.33333%}.cell.\-8of12{-ms-flex:0 0 66.66667%;flex:0 0 66.66667%}.cell.\-9of12{-ms-flex:0 0 75%;flex:0 0 75%}.cell.\-10of12{-ms-flex:0 0 83.33333%;flex:0 0 83.33333%}.cell.\-11of12{-ms-flex:0 0 91.66667%;flex:0 0 91.66667%}}@media screen and (max-width:768px){.grid{-ms-flex-direction:column;flex-direction:column}.cell{-ms-flex:0 0 auto;flex:0 0 auto}}.hack,.hack blockquote,.hack code,.hack em,.hack h1,.hack h2,.hack h3,.hack h4,.hack h5,.hack h6,.hack strong{font-size:1rem;font-style:normal;font-family:Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif}.hack blockquote,.hack code,.hack em,.hack strong{line-height:20px}.hack blockquote,.hack code,.hack footer,.hack h1,.hack h2,.hack h3,.hack h4,.hack h5,.hack h6,.hack header,.hack li,.hack ol,.hack p,.hack section,.hack ul{float:none;margin:0;padding:0}.hack blockquote,.hack h1,.hack ol,.hack p,.hack ul{margin-top:20px;margin-bottom:20px}.hack h1{position:relative;display:inline-block;display:table-cell;padding:20px 0 30px;margin:0;overflow:hidden}.hack h1:after{content:"====================================================================================================";position:absolute;bottom:10px;left:0}.hack h1+*{margin-top:0}.hack h2,.hack h3,.hack h4,.hack h5,.hack h6{position:relative;margin-bottom:1.75rem}.hack h2:before,.hack h3:before,.hack h4:before,.hack h5:before,.hack h6:before{display:inline}.hack h2:before{content:"## "}.hack h3:before{content:"### "}.hack h4:before{content:"#### "}.hack h5:before{content:"##### "}.hack h6:before{content:"###### "}.hack li{position:relative;display:block;padding-left:20px}.hack li:after{position:absolute;top:0;left:0}.hack ul>li:after{content:"-"}.hack ol{counter-reset:a}.hack ol>li:after{content:counter(a) ".";counter-increment:a}.hack ol li:nth-child(n+10):after{left:-7px}.hack blockquote{position:relative;padding-left:17px;padding-left:2ch;overflow:hidden}.hack blockquote:after{content:">\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>";white-space:pre;position:absolute;top:0;left:0;line-height:20px}.hack em:after,.hack em:before{content:"*";display:inline}.hack pre code:after,.hack pre code:before{content:""}.hack code{font-weight:700}.hack code:after,.hack code:before{content:"`";display:inline}.hack hr{position:relative;height:20px;overflow:hidden;border:0;margin:20px 0}.hack hr:after{content:"----------------------------------------------------------------------------------------------------";position:absolute;top:0;left:0;line-height:20px;width:100%;word-wrap:break-word}@-moz-document url-prefix(){.hack h1{display:block}}.hack-ones ol>li:after{content:"1."}p{margin:0 0 1.75rem}.container{max-width:70rem}.container,.container-fluid{margin:0 auto;padding:0 1rem}.inner{padding:1rem}.inner2x{padding:2rem}.pull-left{float:left}.pull-right{float:right}.progress-bar{height:8px;opacity:.8;background-color:#ccc;margin-top:12px}.progress-bar.progress-bar-show-percent{margin-top:38px}.progress-bar-filled{background-color:gray;height:100%;transition:width .3s ease;position:relative;width:0}.progress-bar-filled:before{content:"";border:6px solid transparent;border-top-color:gray;position:absolute;top:-12px;right:-6px}.progress-bar-filled:after{color:gray;content:attr(data-filled);display:block;font-size:12px;white-space:nowrap;position:absolute;border:6px solid transparent;top:-38px;right:0;-ms-transform:translateX(50%);transform:translateX(50%)}table{width:100%;border-collapse:collapse;margin:1.75rem 0;color:#778087}table td,table th{vertical-align:top;border:1px solid #ccc;line-height:15px;padding:10px}table thead th{font-size:10px}table tbody td:first-child{font-weight:700;color:#333}.form{width:30rem}.form-group{margin-bottom:1.75rem;overflow:auto}.form-group label{border-bottom:2px solid #ccc;color:#333;width:10rem;display:inline-block;height:38px;line-height:38px;padding:0;float:left;position:relative}.form-group.form-success label{color:#4caf50!important;border-color:#4caf50!important}.form-group.form-warning label{color:#ff9800!important;border-color:#ff9800!important}.form-group.form-error label{color:#f44336!important;border-color:#f44336!important}.form-control{outline:none;border:none;border-bottom:2px solid #ccc;padding:.5rem 0;width:20rem;height:38px;background-color:transparent}.form-control:focus{border-color:#555}.form-group.form-textarea label:after{position:absolute;content:"";width:2px;background-color:#fff;right:-2px;top:0;bottom:0}textarea.form-control{height:auto;resize:none;padding:1rem 0;border-bottom:2px solid #ccc;border-left:2px solid #ccc;padding:.5rem}select.form-control{border-radius:0;background-color:transparent;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none}.help-block{color:#999;margin-top:.5rem}.form-actions{margin-bottom:1.75rem}.btn{display:-ms-inline-flexbox;display:inline-flex;-ms-flex-align:center;align-items:center;-ms-flex-pack:center;justify-content:center;cursor:pointer;outline:none;padding:.65rem 2rem;font-size:1rem;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;position:relative;z-index:1}.btn:active{box-shadow:inset 0 1px 3px rgba(0,0,0,.12)}.btn.btn-ghost{border-color:#757575;color:#757575;background-color:transparent}.btn.btn-ghost:focus,.btn.btn-ghost:hover{border-color:#424242;color:#424242;z-index:2}.btn.btn-ghost:hover{background-color:transparent}.btn-block{width:100%;display:-ms-flexbox;display:flex}.btn-default{color:#fff;background-color:#e0e0e0;border:1px solid #e0e0e0;color:#333}.btn-default:focus:not(.btn-ghost),.btn-default:hover{background-color:#dcdcdc;border-color:#dcdcdc}.btn-success{color:#fff;background-color:#4caf50;border:1px solid #4caf50}.btn-success:focus:not(.btn-ghost),.btn-success:hover{background-color:#43a047;border-color:#43a047}.btn-success.btn-ghost{border-color:#4caf50;color:#4caf50}.btn-success.btn-ghost:focus,.btn-success.btn-ghost:hover{border-color:#388e3c;color:#388e3c;z-index:2}.btn-error{color:#fff;background-color:#f44336;border:1px solid #f44336}.btn-error:focus:not(.btn-ghost),.btn-error:hover{background-color:#e53935;border-color:#e53935}.btn-error.btn-ghost{border-color:#f44336;color:#f44336}.btn-error.btn-ghost:focus,.btn-error.btn-ghost:hover{border-color:#d32f2f;color:#d32f2f;z-index:2}.btn-warning{color:#fff;background-color:#ff9800;border:1px solid #ff9800}.btn-warning:focus:not(.btn-ghost),.btn-warning:hover{background-color:#fb8c00;border-color:#fb8c00}.btn-warning.btn-ghost{border-color:#ff9800;color:#ff9800}.btn-warning.btn-ghost:focus,.btn-warning.btn-ghost:hover{border-color:#f57c00;color:#f57c00;z-index:2}.btn-info{color:#fff;background-color:#00bcd4;border:1px solid #00bcd4}.btn-info:focus:not(.btn-ghost),.btn-info:hover{background-color:#00acc1;border-color:#00acc1}.btn-info.btn-ghost{border-color:#00bcd4;color:#00bcd4}.btn-info.btn-ghost:focus,.btn-info.btn-ghost:hover{border-color:#0097a7;color:#0097a7;z-index:2}.btn-primary{color:#fff;background-color:#2196f3;border:1px solid #2196f3}.btn-primary:focus:not(.btn-ghost),.btn-primary:hover{background-color:#1e88e5;border-color:#1e88e5}.btn-primary.btn-ghost{border-color:#2196f3;color:#2196f3}.btn-primary.btn-ghost:focus,.btn-primary.btn-ghost:hover{border-color:#1976d2;color:#1976d2;z-index:2}.btn-group{overflow:auto}.btn-group .btn{float:left}.btn-group .btn-ghost:not(:first-child){margin-left:-1px}.card{border:1px solid #ccc}.card .card-header{color:#333;text-align:center;background-color:#ddd;padding:.5rem 0}.alert{color:#ccc;padding:1rem;border:1px solid #ccc;margin-bottom:1.75rem}.alert-success{color:#4caf50;border-color:#4caf50}.alert-error{color:#f44336;border-color:#f44336}.alert-info{color:#00bcd4;border-color:#00bcd4}.alert-warning{color:#ff9800;border-color:#ff9800}.media:not(:last-child){margin-bottom:1.25rem}.media-left{padding-right:1rem}.media-left,.media-right{display:table-cell;vertical-align:top}.media-right{padding-left:1rem}.media-body{display:table-cell;vertical-align:top}.media-heading{font-size:1.16667rem;font-weight:700}.media-content{margin-top:.3rem}.avatarholder,.placeholder{background-color:#f0f0f0;text-align:center;color:#b9b9b9;font-size:1rem;border:1px solid #f0f0f0}.avatarholder{width:48px;height:48px;line-height:46px;font-size:2rem;background-size:cover;background-position:50%;background-repeat:no-repeat}.avatarholder.rounded{border-radius:33px}.loading{display:inline-block;content:"&nbsp;";height:20px;width:20px;margin:0 .5rem;animation:a .6s infinite linear;border:2px solid #e91e63;border-right-color:transparent;border-radius:50%}.btn .loading{margin-bottom:0;width:14px;height:14px}.btn div.loading{float:left}.alert .loading{margin-bottom:-5px}@keyframes a{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}.menu{width:100%}.menu .menu-item{display:block;color:#616161;border-color:#616161}.menu .menu-item.active,.menu .menu-item:hover{color:#000;border-color:#000;background-color:transparent}@media screen and (max-width:768px){.form-group label{display:block;border-bottom:none;width:100%}.form-group.form-textarea label:after{display:none}.form-control{width:100%}textarea.form-control{border-left:none;padding:.5rem 0}pre::-webkit-scrollbar{height:3px}}@media screen and (max-width:480px){.form{width:100%}}html{font-size:14px}.standard{font-family:-apple-system,BlinkMacSystemFont,avenir next,avenir,helvetica,helvetica neue,Ubuntu,segoe ui,arial,sans-serif}.standard h1{font-size:2em;font-weight:700;margin:.67em 0}.standard h2{font-size:1.5em;font-weight:700;margin:.83em 0}.standard h3{font-size:1.17em;font-weight:700}.standard h3,.standard p{margin:1.75rem 0}.standard ol,.standard ul{display:block;list-style-type:disc;padding-left:20px;margin:1.75rem 0}.standard ol ul,.standard ul ul{margin:.75rem 0;list-style-type:square}.standard ol{list-style-type:decimal}.standard li{display:list-item;padding-left:0}.standard blockquote{margin:1.75rem 0;padding-left:10px;border-left:5px solid #f0f0f0}.standard pre{margin:1.75rem 0;white-space:pre}.standard hr{border:0;height:1px;display:block;background-color:#e2e2e2;margin:1.75rem 0}.dark-grey{background-color:#181818;color:#ccc}.dark-grey pre{background-color:#181818;padding:0;border:none}.dark-grey pre code{color:#00bcd4}.dark-grey h1 a,.dark-grey h2 a,.dark-grey h3 a,.dark-grey h4 a,.dark-grey h5 a{color:#ccc}.dark-grey code,.dark-grey strong{color:#fff}.dark-grey code{font-weight:100}.dark-grey table{color:#ccc}.dark-grey table td,.dark-grey table th{border-color:#444}.dark-grey table tbody td:first-child{color:#fff}.dark-grey .form-group label{color:#ccc;border-color:rgba(95,95,95,.78)}.dark-grey .form-group.form-textarea label:after{background-color:#181818}.dark-grey .form-control{color:#ccc;border-color:rgba(95,95,95,.78)}.dark-grey .form-control:focus{border-color:#ccc;color:#ccc}.dark-grey textarea.form-control{color:#ccc}.dark-grey .card{border-color:rgba(95,95,95,.78)}.dark-grey .card .card-header{background-color:transparent;color:#ccc;border-bottom:1px solid rgba(95,95,95,.78)}.dark-grey .btn.btn-ghost.btn-default{border-color:#ababab;color:#ababab}.dark-grey .btn.btn-ghost.btn-default:focus,.dark-grey .btn.btn-ghost.btn-default:hover{border-color:#9c9c9c;color:#9c9c9c;z-index:1}.dark-grey .btn.btn-ghost.btn-default:focus,.dark-grey .btn.btn-ghost.btn-default:hover{border-color:#e0e0e0;color:#e0e0e0}.dark-grey .btn.btn-ghost.btn-primary:focus,.dark-grey .btn.btn-ghost.btn-primary:hover{border-color:#64b5f6;color:#64b5f6}.dark-grey .btn.btn-ghost.btn-success:focus,.dark-grey .btn.btn-ghost.btn-success:hover{border-color:#81c784;color:#81c784}.dark-grey .btn.btn-ghost.btn-info:focus,.dark-grey .btn.btn-ghost.btn-info:hover{border-color:#4dd0e1;color:#4dd0e1}.dark-grey .btn.btn-ghost.btn-error:focus,.dark-grey .btn.btn-ghost.btn-error:hover{border-color:#e57373;color:#e57373}.dark-grey .btn.btn-ghost.btn-warning:focus,.dark-grey .btn.btn-ghost.btn-warning:hover{border-color:#ffb74d;color:#ffb74d}.dark-grey .avatarholder,.dark-grey .placeholder{background-color:transparent;border-color:#333}.dark-grey .menu .menu-item{color:#ccc;border-color:rgba(95,95,95,.78)}.dark-grey .menu .menu-item.active,.dark-grey .menu .menu-item:hover{color:#fff;border-color:#ccc}/*!* Copyright (C) 2019 Josh Habdas <jhabdas@protonmail.com>
+*
+* This file is part of After Dark.
+*
+* After Dark is free software: you can redistribute it and/or modify
+* it under the terms of the GNU Affero General Public License as published
+* by the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* After Dark is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU Affero General Public License for more details.
+*
+* You should have received a copy of the GNU Affero General Public License
+* along with this program. If not, see <https://www.gnu.org/licenses/>.*/:root{--screen-size-small: 30em}@keyframes intro{0%{opacity:0}100%{opacity:1}}.blur-up.lazyloading{filter:blur(5px);opacity:1;transition:opacity 1s,filter 1.5s}.blur-up.lazyload{opacity:0;filter:blur(10px)}.blur-up.lazyloaded{filter:blur(0);transition:filter 1s}.hack .readmore{margin-bottom:2.2em}.responsive-iframe,.ratio-container{position:relative;padding-bottom:56.25%;padding-top:25px;height:0}.responsive-iframe iframe,.ratio-container>*:not([itemprop=caption]){position:absolute;top:0;left:0;width:100%;height:100%}iframe{border:0}main,footer{animation:intro .3s both;animation-delay:.15s}header:first-of-type+details{margin:20px 0}footer time[datetime$=M]:before{content:"\2013\0020"}body>footer p.muted{margin-bottom:0}@media only screen and (max-width:768px){footer time[datetime$=M]{display:none}}blockquote cite{display:block}blockquote cite::before{content:"\2014\00A0"}:target{filter:brightness(1.2)}:disabled{cursor:not-allowed}.hack li ul{margin:0}.hack ol li{padding-left:27px}.main{padding:20px 10px}input.form-control{border-radius:0;background-color:transparent;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none}input.form-control,textarea.form-control,select.form-control,.help-block{font-size:initial}@media only screen and (max-width:768px){.help-block{font-size:unset}}html{font-size:13px}.hack .form input,.hack .form textarea,.hack .form button,.hack .form label{font-size:1rem}.hack .alert .highlight:first-of-type .chroma,.hack .card .highlight:first-of-type .chroma,.hack .alert pre:first-of-type,.hack .alert p:first-of-type,.hack .card pre:first-of-type,.hack .card p:first-of-type{margin-top:unset}.hack .alert .highlight:last-of-type .chroma,.hack .card .highlight:last-of-type .chroma,.hack .alert pre:last-of-type,.hack .alert p:last-of-type,.hack .card pre:last-of-type,.hack .card p:last-of-type{margin-bottom:unset}.hack blockquote,.hack blockquote:after{line-height:1.5}.hack figure,.standard figure{margin:unset}.hack figure a{border-bottom:none}.hack figure a:hover{background-color:inherit}article header img{width:100%;border-radius:3px}table td,table th{line-height:inherit}table a{border-bottom:unset}img{max-width:100%}@media only screen and (min-width:768px){html{font-size:16px}.container{max-width:50rem}}@media only screen and (min-width:768px),(-ms-high-contrast:active),(-ms-high-contrast:none){html{margin-left:calc(100vw - 100%)}}/*!
+ * Copyright (C) 2019  Josh Habdas <jhabdas@protonmail.com>
+ *
+ * This file is part of After Dark.
+ *
+ * After Dark is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * After Dark is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+a[rel*="external"]::after {
+  content: " " url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20class='i-external'%20viewBox='0%200%2032%2032'%20width='14'%20height='14'%20fill='none'%20stroke='%23ff9800'%20stroke-linecap='round'%20stroke-linejoin='round'%20stroke-width='9.38%'%3E%3Cpath%20d='M14%209%20L3%209%203%2029%2023%2029%2023%2018%20M18%204%20L28%204%2028%2014%20M28%204%20L14%2018'/%3E%3C/svg%3E");
+}
+nav a.active {
+  background-color: inherit;
+  color: #fff;
+}
+a[itemprop="url"] {
+  color: #ff9800;
+}
+a[itemprop="url"]:hover {
+  color: #fff;
+}
+.muted, .help-block {
+  opacity: 0.70;
+}
+.hack .muted,
+.hack .help-block {
+  color: #e0e0e0;
+}
+</style>
+        
+
+
+  
+    <meta name="theme-color" content=#181818>
+  
+
+
+      
+    
+  
+
+
+    
+    
+      <script integrity="sha512-ISTAV0GadOIz/NXXHOS+eCM0ysXVVHhQTlvA6LJxz/DeA5yIxm0Vqf5IE+WH0yuuXkayAKtoZkQ326nch5f/fg==">fetchInject(["/css/syntax.css"]);</script>
+      <noscript>
+        <link href="../../css/syntax.css" rel="stylesheet">
+      </noscript>
+    
+  </head>
+  
+  
+  
+  <body class="standard dark-grey main container">
+    <header>
+  <style>
+body {
+    background-image: url("/background.jpg");
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    min-height: 100vh;
+}
+
+div {
+    background-color: #1d1d1d
+}
+
+canvas {
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:-1;
+     
+    height: 100vh;
+    width: 100vw;
+}
+
+main {
+    padding-left: 4em;
+    margin-left: -4em;
+    padding-right: 4em;
+    margin-right: -4em;
+    padding-bottom: 1em;
+
+    min-height: 80vh;
+
+    background-color: #1d1d1d;
+}
+
+footer {
+    padding-left: 4em;
+    margin-left: -4em;
+    padding-right: 4em;
+    margin-right: -4em;
+
+    min-height: 8vh;
+
+    margin-top: -2em;
+    background-color: #1d1d1d
+}
+</style>
+
+<style>
+main {
+    padding-top: 3em;
+    margin-top:-3em;
+    background-color: #1d1d1d;
+}
+</style>
+
+</header>
+    <main>
+  
+    
+      <style>{{ -}}.hack header figure[itemtype*=ImageObject]{position:relative}.hack header figure[itemtype*=ImageObject] figcaption{position:absolute;bottom:0;right:0;text-align:right;padding:15px;font-style:oblique;font-size:smaller;mix-blend-mode:soft-light}.hack header figure[itemtype*=ImageObject] [itemprop=headline]{font-weight:700}</style>
+    
+  
+  <article itemscope itemtype="https://schema.org/BlogPosting">
+    <meta itemprop="name" content="Deep Learning Aided Differentiating of Chicken from Duck Eggs using Simulated Data">
+<meta itemprop="description" content="(This is a mirror of the documentation of crisps deep learning module that is also available here. The examples used for illustrating crisps functionality also illustrate general usage and design of both the Fully Connected Neural Networks and Bayes Classification which is why the post has been reposted here.)
+  Feature Classification &amp; Deep Learning Bayes Classifier, Fully Connected Neural Networks, Convolutional Neural Networks, SIFT
+#include &lt;classification/bayes_classifier.hpp&gt;#include &lt;classification/sift.">
+<meta itemprop="datePublished" content="2021-10-06T00:00:00&#43;02:00" />
+<meta itemprop="dateModified" content="2021-10-06T00:00:00&#43;02:00" />
+<meta itemprop="wordCount" content="3472">
+<meta itemprop="image" content="http://clemens-cords.com">
+
+
+
+<meta itemprop="keywords" content="" />
+
+    <header>
+      <span class="muted" style="float:inherit; position:relative; top:1em;" id="Title">
+        <a href="../../post" style="color:#00f7c6;"> &lt;&lt; back to index</a>
+      </span>
+      <h1 itemprop="headline name" style="color:#00f7c6">Deep Learning Aided Differentiating of Chicken from Duck Eggs using Simulated Data</h1>
+      <hr style="border:1px solid #e92d7d"> </hr>
+      <p class="muted">
+        <svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <circle cx="16" cy="16" r="14" />
+  <path d="M16 8 L16 16 20 20" />
+</svg>
+<span>17 minute read</span>
+<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
+</svg>
+
+  Published: <time datetime="2021-10-06T00:00:00&#43;02:00">6 Oct, 2021</time>
+
+
+
+   <span style="float:right" itemprop="articleSection"> Categories:  [ <a href="../../categories/crisp/">crisp</a> | <a href="../../categories/deep-learning/">deep learning</a> ]</span>
+
+
+        
+
+
+
+
+      </p>
+      <br>
+
+      
+      
+
+
+
+    </header>
+    <div itemprop="articleBody">
+        <span class="muted" style="float:right; position:relative; top:-1em;">
+          <a href="#Comments" style="color:#00f7c6; ">&#11015; jump to comments</a>
+        </span>
+        <br>
+      <span style="float:none; position:relative; top:-3em">
+      <br>
+<div>
+<p>(This is a mirror of the documentation of <code>crisp</code>s deep learning module that is also available <a href="https://github.com/Clemapfel/crisp/blob/main/docs/feature_classification/feature_classification_and_deep_learning.md">here</a>. The examples used for illustrating <code>crisp</code>s functionality also illustrate general usage and design of both the Fully Connected Neural Networks and Bayes Classification which is why the post has been reposted here.)</p>
+</div>
+<hr>
+<h1 id="feature-classification--deep-learning">Feature Classification &amp; Deep Learning</h1>
+<p>Bayes Classifier, Fully Connected Neural Networks, Convolutional Neural Networks, SIFT</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#cd2828;font-weight:bold">#include</span> <span style="color:#cd2828;font-weight:bold">&lt;classification/bayes_classifier.hpp&gt;</span><span style="color:#cd2828;font-weight:bold">
+</span><span style="color:#cd2828;font-weight:bold">#include</span> <span style="color:#cd2828;font-weight:bold">&lt;classification/sift.hpp&gt;</span><span style="color:#cd2828;font-weight:bold">
+</span><span style="color:#cd2828;font-weight:bold">#include</span> <span style="color:#cd2828;font-weight:bold">&lt;classification/fully_connected_neural_networks.hpp&gt;</span><span style="color:#cd2828;font-weight:bold">
+</span><span style="color:#cd2828;font-weight:bold">#include</span> <span style="color:#cd2828;font-weight:bold">&lt;classification/convolutional_neural_networks.hpp&gt;</span><span style="color:#cd2828;font-weight:bold">
+</span><span style="color:#cd2828;font-weight:bold"></span>
+<span style="color:#999;font-style:italic">// all of the above collected in:
+</span><span style="color:#999;font-style:italic"></span><span style="color:#cd2828;font-weight:bold">#include</span> <span style="color:#cd2828;font-weight:bold">&lt;classification.hpp&gt;</span><span style="color:#cd2828;font-weight:bold">
+</span></code></pre></div><h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#1-introduction">Introduction</a> <br>
+1.1 <a href="#11-features--class-membership">Features, Class Membership</a><br></li>
+<li><a href="#2-bayes-statistical-classifier">Bayes Statistical Classifier</a><br>
+2.1 <a href="#21-training-the-bayes-classifier">Training the Bayes Classifier</a><br>
+2.2 <a href="#22-identification-using-the-bayes-classifier">Using the Bayes Classifier for Identification</a><br></li>
+<li><a href="#3-neural-networks">Neural Networks</a><br>
+3.1 <a href="#31-architecture">Architecture</a><br>
+3.2 <a href="#32-weights-and-biases">Weights and Biases</a><br>
+3.3 <a href="#33-creating-a-network">Creating/Loading a Network</a><br>
+3.4 <a href="#34-training-the-network">Training the Network</a><br>
+3.5 <a href="#35-using-the-network-for-classification">Using the Network for Identification</a><br></li>
+</ol>
+<h2 id="1-introduction">1. Introduction</h2>
+<p>We learned how to extract part of an image into a <a href="https://github.com/Clemapfel/crisp/blob/main/docs/segmentation/segmentation.md">segment</a>, then compute unique descriptors that describe the selected <a href=".https://github.com/Clemapfel/crisp/blob/main/docs/feature_extraction/feature_extraction.md">region&rsquo;s</a> shape and texture. Now, it is finally time to use these descriptors to solve one of the most common image processing applications: classification.</p>
+<p>To classify an object means to divide the population it is from into a number of classes <code>{C_0, C_1, ..., C_m-1}</code>, then assign a label to any one specific object. This label represents what class it belongs to. For the sake of simplicity, for the rest of this tutorial, we assume that an object can only belong to exactly one class. While this assumption is not necessary for any of <code>crisp</code>s deep learning features, it will make things easier to follow later.</p>
+<h3 id="11-features--class-membership">1.1 Features &amp; Class Membership</h3>
+<p>For one specific region or object, class membership is given as a <code>m*1</code> matrix <code>M</code>:</p>
+<table>
+<thead>
+<tr>
+<th>class index i</th>
+<th><code>M(i, 0)</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>{0, 1}</td>
+</tr>
+<tr>
+<td>1</td>
+<td>{0, 1}</td>
+</tr>
+<tr>
+<td>&hellip;</td>
+<td>&hellip;</td>
+</tr>
+<tr>
+<td>m-1</td>
+<td>{0, 1}</td>
+</tr>
+</tbody>
+</table>
+<p>Where if <code>M(4, 0) == 1</code> then the object is classified into class <code>C4</code>. Because an object can only belong to one class at a time, <code>M.sum() == 1</code> (as all values except for the single <code>1</code> are <code>0</code> and an object has to belong to at least one class).</p>
+<p>In order to be able to classify an object we need to describe it somehow, we do this using a <code>n*1</code> matrix called a <em>feature vector</em>.  Each row of this matrix <code>N</code> corresponds to one feature:</p>
+<table>
+<thead>
+<tr>
+<th>feature index</th>
+<th><code>N(i, 0)</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>[-1, 1]</td>
+</tr>
+<tr>
+<td>1</td>
+<td>[-1, 1]</td>
+</tr>
+<tr>
+<td>&hellip;</td>
+<td>&hellip;</td>
+</tr>
+<tr>
+<td>n-1</td>
+<td>[-1, 1]</td>
+</tr>
+</tbody>
+</table>
+<p>When classifying multiple objects from the same population, all objects in that population have to have a feature vector of the same size and meaning, that is for each object, each row means the same thing. All that changes is the actual values of the features. As we saw in the table above, it is necessary to normalize the value of the feature into the range <code>[-1, 1]</code>. In the literature, features are often normalized into <code>[0, 1]</code> but because this is a subset of <code>[-1, 1]</code> anyway, either approach works in <code>crisp</code>.</p>
+<p>A <em>training data set</em> in <code>crisp</code> is a set of feature vectors and their corresponding, desired classifications. In practice, this set is represented by two matrices:</p>
+<ul>
+<li>
+<p><code>FeatureMatrix_t</code> is a <code>n*x</code> matrix where <code>n</code> the number of features and <code>x</code> the number of samples in the population. Each row is one feature, each column is one sample. All its values should be normalized into `[-1, 1]</p>
+</li>
+<li>
+<p><code>ClassificationMatrix_t</code> is a <code>m*x</code> matrix where <code>m</code> is the number of classes and <code>x</code> the number of sample. Each row is one class, each column is one sample. All elements of a row should be either 1 or 0</p>
+</li>
+</ul>
+<p>The number of columns, <code>x</code>, has to be identical for both matrices. If one object has its feature vector as the column of the feature matrix at position <code>i</code>, the <code>i</code>ths column of the classification matrix corresponds to that same object.</p>
+<p>It may be instructive to consider a practical example. Consider the following data set:</p>
+<table>
+<thead>
+<tr>
+<th>sample</th>
+<th>class</th>
+<th>egg weight (g)</th>
+<th>yolk to white ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Chicken</td>
+<td>52</td>
+<td>31%</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Chicken</td>
+<td>58</td>
+<td>34%</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Chicken</td>
+<td>67</td>
+<td>32%</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Chicken</td>
+<td>62</td>
+<td>37%</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Chicken</td>
+<td>59</td>
+<td>32%</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Chicken</td>
+<td>65</td>
+<td>29%</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Duck</td>
+<td>61</td>
+<td>36%</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Duck</td>
+<td>63</td>
+<td>35%</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Duck</td>
+<td>69</td>
+<td>39%</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Duck</td>
+<td>60</td>
+<td>38%</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Duck</td>
+<td>71</td>
+<td>37%</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Duck</td>
+<td>75</td>
+<td>34%</td>
+</tr>
+</tbody>
+</table>
+<p>Here we have a set of 12 eggs from both chickens and ducks. Each egg sample has 3 data point: whether it was from a chicken or duck, it&rsquo;s weight, and it&rsquo;s yolk-to-white-ratio.
+We want to create a classifier can decide whether a new, unknown egg we hand it is from a chicken or duck.</p>
+<p>Before we can use <code>crisp</code> for classification, we need to arrange the data in a way that <code>crisp</code> understands.</p>
+<p>We have <code>m = 2</code> classes and <code>n = 2</code> features. We are trying to predict the &ldquo;class&rdquo; property of each egg, so we create a matrix with 2 rows, each column of the matrix has a single <code>1</code> depending on whether the sample was from a chicken or duck.</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">auto</span> classes = Eigen::Matrix&lt;<span style="color:#3677a9">2</span>, <span style="color:#3677a9">12</span>&gt;();
+<span style="color:#999;font-style:italic">// sample: 0  1  2  3  4  5  6  7  8  9  10 11
+</span><span style="color:#999;font-style:italic"></span>classes &lt;&lt; <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#999;font-style:italic">// is chicken
+</span><span style="color:#999;font-style:italic"></span>           <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>; <span style="color:#999;font-style:italic">// is duck
+</span></code></pre></div><p>Each egg sample gets a 2x1 feature vector that is 1 in the first row if it is from a chicken, or 1 in the second row if it is from a duck.</p>
+<p>We transform the feature values in a similar way. Each column corresponds to one sample (egg), we arbitrarily decide that weight will be in row 0, yolk-ratio in row 1. Recall that features need to be normalized, so we divide both feature values by 100:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">auto</span> features = Eigen::Matrix&lt;<span style="color:#3677a9">2</span>, <span style="color:#3677a9">12</span>&gt;();
+<span style="color:#999;font-style:italic">// sample:    0    1    2    3    4    5    6    7    8    9   10   11
+</span><span style="color:#999;font-style:italic"></span>features &lt;&lt; <span style="color:#3677a9">.52</span>, <span style="color:#3677a9">.58</span>, <span style="color:#3677a9">.67</span>, <span style="color:#3677a9">.62</span>, <span style="color:#3677a9">.59</span>, <span style="color:#3677a9">.65</span>, <span style="color:#3677a9">.61</span>, <span style="color:#3677a9">.63</span>, <span style="color:#3677a9">.69</span>, <span style="color:#3677a9">.60</span>, <span style="color:#3677a9">.71</span>, <span style="color:#3677a9">.75</span>, <span style="color:#999;font-style:italic">// weight
+</span><span style="color:#999;font-style:italic"></span>            <span style="color:#3677a9">.31</span>, <span style="color:#3677a9">.34</span>, <span style="color:#3677a9">.32</span>, <span style="color:#3677a9">.37</span>, <span style="color:#3677a9">.32</span>, <span style="color:#3677a9">.29</span>, <span style="color:#3677a9">.36</span>, <span style="color:#3677a9">.35</span>, <span style="color:#3677a9">.39</span>, <span style="color:#3677a9">.38</span>, <span style="color:#3677a9">.37</span>, <span style="color:#3677a9">.34</span>; <span style="color:#999;font-style:italic">// yok ratio
+</span></code></pre></div><p>We call the first matrix <em>class membership matrix</em> and the second a <em>feature matrix</em>.</p>
+<h3 id="2-bayes-statistical-classifier">2. Bayes Statistical Classifier</h3>
+<p>The simplest classifier in <code>crisp</code> is <code>crisp::BayesClassifier</code>. This class has two template parameters:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">template</span>&lt;size_t FeatureN, size_t ClassN&gt;
+<span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">BayesClassifier</span>
+{
+</code></pre></div><ul>
+<li><code>FeatureN</code> is the number of features (<code>n</code> in our notation)</li>
+<li><code>ClassN</code> is the number of classes (<code>m</code> in our notation)</li>
+</ul>
+<p>Both need to be available at compile time.</p>
+<p>The classifier works by estimating the type of distribution, mean and variance from a given population. When we hand it a sample <code>x</code> to identify the classifier will return a score that is directly proportional to, in our chicken-or-duck example, the following probabilities:</p>
+<pre><code>p( x | chicken)  // is our current egg x from a chicken
+p( x | duck)     // is our current egg x from a duck
+</code></pre><p>The return values of the classifier are not actual probabilities (they can be outside the range <code>[0, 1]</code>), however the order and relative value of the actual probabilities are preserved. This means we can compare and quantify them, just like we would probabilities.</p>
+<h3 id="21-training-the-bayes-classifier">2.1 Training the Bayes Classifier</h3>
+<p>To estimate the values needed for classification, the bayes classifier needs to observe the training set population. We retrieve the feature- and classification matrix from earlier, then call <code>BayesClassifier::train</code>:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">auto</span> classes = Eigen::Matrix&lt;<span style="color:#3677a9">2</span>, <span style="color:#3677a9">12</span>&gt;();
+classes &lt;&lt; <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#999;font-style:italic">// is chicken
+</span><span style="color:#999;font-style:italic"></span>           <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>; <span style="color:#999;font-style:italic">// is duck
+</span><span style="color:#999;font-style:italic"></span>
+<span style="color:#6ab825;font-weight:bold">auto</span> features = Eigen::Matrix&lt;<span style="color:#3677a9">2</span>, <span style="color:#3677a9">12</span>&gt;();
+features &lt;&lt; <span style="color:#3677a9">.52</span>, <span style="color:#3677a9">.58</span>, <span style="color:#3677a9">.67</span>, <span style="color:#3677a9">.62</span>, <span style="color:#3677a9">.59</span>, <span style="color:#3677a9">.65</span>, <span style="color:#3677a9">.61</span>, <span style="color:#3677a9">.63</span>, <span style="color:#3677a9">.69</span>, <span style="color:#3677a9">.60</span>, <span style="color:#3677a9">.71</span>, <span style="color:#3677a9">.75</span>, <span style="color:#999;font-style:italic">// weight
+</span><span style="color:#999;font-style:italic"></span>            <span style="color:#3677a9">.31</span>, <span style="color:#3677a9">.34</span>, <span style="color:#3677a9">.32</span>, <span style="color:#3677a9">.37</span>, <span style="color:#3677a9">.32</span>, <span style="color:#3677a9">.29</span>, <span style="color:#3677a9">.36</span>, <span style="color:#3677a9">.35</span>, <span style="color:#3677a9">.39</span>, <span style="color:#3677a9">.38</span>, <span style="color:#3677a9">.37</span>, <span style="color:#3677a9">.34</span>; <span style="color:#999;font-style:italic">// yolk 
+</span><span style="color:#999;font-style:italic"></span>            
+<span style="color:#6ab825;font-weight:bold">auto</span> bayes = BayesClassifier&lt;<span style="color:#3677a9">2</span>, <span style="color:#3677a9">2</span>&gt;(); <span style="color:#999;font-style:italic">// 2 features, 2 classes
+</span><span style="color:#999;font-style:italic"></span>bayes.train(feature, classes);
+</code></pre></div><p>That&rsquo;s all, unlike deep learning procedures later in this section, the bayes classifier only needs to iterate through the training set once to achieve the maximum possible classification performance based on the evidence.</p>
+<h3 id="22-identification-using-the-bayes-classifier">2.2 Identification using the Bayes Classifier</h3>
+<p>Sticking to our chicken-or-duck example, let&rsquo;s say we just came  home and found 3 eggs around our hypothetical farm and we really want to know whether it was the chickens or the ducks that hid them. We measure their size and content:</p>
+<table>
+<thead>
+<tr>
+<th>egg</th>
+<th>weight</th>
+<th>yolk ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>51</td>
+<td>29%</td>
+</tr>
+<tr>
+<td>1</td>
+<td>67</td>
+<td>37%</td>
+</tr>
+<tr>
+<td>2</td>
+<td>70</td>
+<td>38%</td>
+</tr>
+</tbody>
+</table>
+<p>We arrange these three samples just like we did with our training datas feature matrix:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">auto</span> to_identify = Eigen::MatrixXf(<span style="color:#3677a9">2</span>, <span style="color:#3677a9">3</span>);
+<span style="color:#999;font-style:italic">//               0    1    2    // egg
+</span><span style="color:#999;font-style:italic"></span>to_identify &lt;&lt; <span style="color:#3677a9">.51</span>, <span style="color:#3677a9">.60</span>, <span style="color:#3677a9">.70</span>,   <span style="color:#999;font-style:italic">// weight
+</span><span style="color:#999;font-style:italic"></span>               <span style="color:#3677a9">.29</span>, <span style="color:#3677a9">.28</span>, <span style="color:#3677a9">.38</span>;   <span style="color:#999;font-style:italic">// yolk ratio
+</span></code></pre></div><p>We can then classify them using:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">auto</span> result = bayes.identify(to_identify);
+std::cout &lt;&lt; result &lt;&lt; std::endl;
+</code></pre></div><div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#3677a9">0.667373</span>  <span style="color:#3677a9">0.500235</span>  <span style="color:#3677a9">0.0936609</span>
+<span style="color:#3677a9">0.332627</span>  <span style="color:#3677a9">0.499765</span>  <span style="color:#3677a9">0.906339</span>
+</code></pre></div><p>We get a bunch of numbers, let&rsquo;s try to understand what they mean. Firstly, each column index corresponds to their respective egg sample:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#999;font-style:italic">// 0       1        2
+</span><span style="color:#999;font-style:italic"></span><span style="color:#3677a9">0.667373</span>  <span style="color:#3677a9">0.500235</span>  <span style="color:#3677a9">0.0936609</span>
+<span style="color:#3677a9">0.332627</span>  <span style="color:#3677a9">0.499765</span>  <span style="color:#3677a9">0.906339</span>
+</code></pre></div><p>The numbers are scores representing the relative probability that the sample in column <code>i</code> is from class <code>j</code> where <code>j</code> is the row index. In our training data set, we had chickens as <code>j = 0</code> and ducks as <code>j = 1</code>, so:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#999;font-style:italic">// 0       1       2
+</span><span style="color:#999;font-style:italic"></span><span style="color:#3677a9">0.667373</span>  <span style="color:#3677a9">0.500235</span>  <span style="color:#3677a9">0.0936609</span>    <span style="color:#999;font-style:italic">// ~p(egg | chicken)
+</span><span style="color:#999;font-style:italic"></span><span style="color:#3677a9">0.332627</span>  <span style="color:#3677a9">0.499765</span>  <span style="color:#3677a9">0.906339</span>     <span style="color:#999;font-style:italic">// ~p(egg | duck)
+</span></code></pre></div><p>Where <code>~p(x | y)</code> is a score that&rsquo;s directly proportional to the probability <code>p(x | y)</code>.</p>
+<p>We decide which egg came from which species by simply comparing the probabilities, choosing the class membership with the higher score.</p>
+<p>Technically we would assign egg <code>0</code> and <code>1</code> as chicken,<code>3</code> as duck, however the result for egg <code>1</code> is so ambiguous that it is basically a coin toss. To quantify this ambiguity, we assign each result a <em>confidence score</em>. One of the simplest confidence score is the absolute distance between the values:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">auto</span> to_confidence = [](<span style="color:#6ab825;font-weight:bold">float</span> a, <span style="color:#6ab825;font-weight:bold">float</span> b) 
+{
+    assert(a &gt;= <span style="color:#3677a9">0</span> and a &lt;= <span style="color:#3677a9">1</span> and b &gt;= <span style="color:#3677a9">0</span> and b &lt;= <span style="color:#3677a9">1</span>);
+    <span style="color:#6ab825;font-weight:bold">return</span> <span style="color:#447fcf">abs</span>(a-b);
+};
+</code></pre></div><p>Because our classification output is always in <code>[0, 1]</code>, the higher the distance between the two probabilities, the more certain we can be that we did not make a classification error.</p>
+<p>We summarize our results as such:</p>
+<table>
+<thead>
+<tr>
+<th>egg</th>
+<th>~p(chicken)</th>
+<th>~p(duck)</th>
+<th>classification</th>
+<th>confidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0.667</td>
+<td>0.332</td>
+<td>chicken</td>
+<td>0.33 (medium)</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.5</td>
+<td>0.499</td>
+<td>chicken</td>
+<td>0.001 (very low)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.09</td>
+<td>0.90</td>
+<td>duck</td>
+<td>0.84 (high)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-neural-networks">3 Neural Networks</h2>
+<p>While the Bayes Classifier is useful and can lead to quite decent results with very little computational cost, some classification processes require a more flexible approach. Since the 1970s, the state-of-the-art way of solving classification problems in a semi-supervised way has been <em>neural networks</em>. This tutorial will not cover how they work in detail, instead we will learn just enough fundamentals to understand how to use <code>crisp::NeuralNetwork</code> and how to interpret its results.</p>
+<h3 id="31-architecture">3.1 Architecture</h3>
+<p>A neural network has <code>l</code> layers. Each layer <code>L_i</code> has a number of <em>neurons</em> <code>#L_i</code>.</p>
+<ul>
+<li><code>L_0</code> is called the <em>input layer</em>. This layer has the same number of neurons as the feature vector has rows: <code>#L_0 = n</code></li>
+<li><code>L_l</code> is called the <em>output layer</em>. This layer as the same number of neurons as the number of possible classes: <code>#L_l = m</code></li>
+<li><code>L_i</code> for <code>i</code> in <code>{1, 2, ..., l-1}</code> are called <em>hidden layers</em></li>
+</ul>
+<p>Where <code>n</code> the number of features, <code>m</code> the number of classes (c.f. <a href="#11-features--class-membership">Section 1</a>).</p>
+<p>We call the number of layers and the number of neurons in each layer a network&rsquo;s <em>architecture</em>. We define the architecture in <code>crisp</code> using the template arguments of <code>crisp::NeuralNetwork</code>:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">template</span>&lt;size_t... NeuronsPerLayer&gt;
+<span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">NeuralNetwork</span>;
+
+<span style="color:#6ab825;font-weight:bold">auto</span> nn = NeuralNetwork&lt;n, <span style="color:#a61717;background-color:#e3d2d2">#</span>L_1, <span style="color:#a61717;background-color:#e3d2d2">#</span>L_2, ..., m&gt;();
+</code></pre></div><p>Where <code>n</code>, <code>m</code>, <code>#L_i</code> as defined above. For example:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#999;font-style:italic">// binary feature vector: n = 2
+</span><span style="color:#999;font-style:italic">// two possible classes: m = 2
+</span><span style="color:#999;font-style:italic">// one hidden layer with 3 neurons: #L_1 = 3
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">auto</span> nn = NeuralNetwork&lt;<span style="color:#3677a9">2</span>, <span style="color:#3677a9">3</span>, <span style="color:#3677a9">2</span>&gt;();
+
+<span style="color:#999;font-style:italic">// 20 features, 2 hidden layers with 3 neurons each, 2 classes
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">auto</span> nn = NeuralNetwork&lt;<span style="color:#3677a9">20</span>, <span style="color:#3677a9">3</span>, <span style="color:#3677a9">3</span>, <span style="color:#3677a9">2</span>&gt;();
+
+<span style="color:#999;font-style:italic">// 2 features, 5 layers with 10 neurons each, 19 classes
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">auto</span> nn = NeuralNetwork&lt;<span style="color:#3677a9">2</span>, <span style="color:#3677a9">10</span>, <span style="color:#3677a9">10</span>, <span style="color:#3677a9">10</span>, <span style="color:#3677a9">10</span>, <span style="color:#3677a9">10</span>, <span style="color:#3677a9">19</span>&gt;();
+</code></pre></div><p>A network&rsquo;s architecture governs its structure. For the same problem, different architectures can result in vastly different results. Furthermore, the computational complexity (in terms of runtime performance) will of course increase with the total number of neurons. In praxis choosing the correct architecture is somewhat of an art, while heuristics exist in the literature it is often important to experiment.</p>
+<h3 id="32-weights-and-biases">3.2 Weights and Biases</h3>
+<p>Each neuron has a number of <em>weights</em> and one <em>bias</em>. The number of weights is equal to the number of neurons in the previous layer, for example if we&rsquo;re in layer <code>L_2</code>, all our neurons will have <code>#L_1</code> weights and a single bias. The weights and biases govern a neuron&rsquo;s output, thus (along with architecture) they completely define a network&rsquo;s performance in terms of classification.</p>
+<h2 id="33-creating-a-network">3.3 Creating a Network</h2>
+<p>We can construct a fresh, untrained network like so:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#cd2828;font-weight:bold">#include</span> <span style="color:#cd2828;font-weight:bold">&lt;classification/fully_connected_neural_network.hpp&gt;</span><span style="color:#cd2828;font-weight:bold">
+</span><span style="color:#cd2828;font-weight:bold"></span>
+<span style="color:#999;font-style:italic">// in main.cpp
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">auto</span> nn = crisp::NeuralNetwork&lt;<span style="color:#3677a9">2</span>, <span style="color:#3677a9">2</span>, <span style="color:#3677a9">2</span>&gt;();
+</code></pre></div><p>This initializes all weights to <code>1 + eps</code> and all biases to <code>0 + eps</code>, where <code>eps ∈  [-0.25, +0.25]</code> (random, uniformly distributed). <br></p>
+<p>Once our network is trained, we will want to export it to the disk to avoid having to retrain it every time the application launches. We can convert a network into a string like so:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">auto</span> nn = crisp::NeuralNetwork&lt;<span style="color:#3677a9">2</span>, <span style="color:#3677a9">2</span>, <span style="color:#3677a9">2</span>, <span style="color:#3677a9">2</span>&gt;();
+<span style="color:#6ab825;font-weight:bold">auto</span> exported = nn.as_string();
+<span style="color:#999;font-style:italic">// save exported to file
+</span></code></pre></div><p>We can then simply save the string to a file or otherwise store it. At a later point, we can then load the neural network from the disk using:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">auto</span> nn = crisp::NeuralNetwork&lt;<span style="color:#3677a9">2</span>, <span style="color:#3677a9">2</span>, <span style="color:#3677a9">2</span>, <span style="color:#3677a9">2</span>&gt;();
+
+<span style="color:#6ab825;font-weight:bold">auto</span> file = std::ifstream(<span style="color:#999;font-style:italic">/*...*/</span> + <span style="color:#ed9d13">&#34;/crisp/docs/feature_classification/chicken_or_duck_nn_2_4_4_2.txt&#34;</span>);
+std::stringstream buffer;
+buffer &lt;&lt; file.rdbuf();
+std::string str = buffer.str();
+nn.from_string(str);
+</code></pre></div><p>Here we&rsquo;re opening a file stream, moving its content into a buffer stringstream and then create a plain string from said stringstream. The neural network can then parse the string it generated on a previous occasion and load the weights and biases.
+This is somewhat clumsy owing to C++s file interface so feel free to save the string generated using <code>as_string()</code> as you see fit.<br>
+Note that for loading to be successful, the exported network and the network we&rsquo;re trying to import have to have identical architectures. Trying to import the exported string of a network with a different architecture will trigger an exception. It is therefore good practice to state the network&rsquo;s architecture in the filename (as in the above example).</p>
+<h2 id="34-training-the-network">3.4 Training the Network</h2>
+<p>Recall our egg example from <a href="#11-features--class-membership">section 1</a>:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">auto</span> classes = Eigen::Matrix&lt;<span style="color:#3677a9">2</span>, <span style="color:#3677a9">12</span>&gt;();
+classes &lt;&lt; <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#999;font-style:italic">// is chicken
+</span><span style="color:#999;font-style:italic"></span>           <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">0</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>; <span style="color:#999;font-style:italic">// is duck
+</span><span style="color:#999;font-style:italic"></span>
+<span style="color:#6ab825;font-weight:bold">auto</span> features = Eigen::Matrix&lt;<span style="color:#3677a9">2</span>, <span style="color:#3677a9">12</span>&gt;();
+features &lt;&lt; <span style="color:#3677a9">.52</span>, <span style="color:#3677a9">.58</span>, <span style="color:#3677a9">.67</span>, <span style="color:#3677a9">.62</span>, <span style="color:#3677a9">.59</span>, <span style="color:#3677a9">.65</span>, <span style="color:#3677a9">.61</span>, <span style="color:#3677a9">.63</span>, <span style="color:#3677a9">.69</span>, <span style="color:#3677a9">.60</span>, <span style="color:#3677a9">.71</span>, <span style="color:#3677a9">.75</span>, <span style="color:#999;font-style:italic">// weight
+</span><span style="color:#999;font-style:italic"></span>            <span style="color:#3677a9">.31</span>, <span style="color:#3677a9">.34</span>, <span style="color:#3677a9">.32</span>, <span style="color:#3677a9">.37</span>, <span style="color:#3677a9">.32</span>, <span style="color:#3677a9">.29</span>, <span style="color:#3677a9">.36</span>, <span style="color:#3677a9">.35</span>, <span style="color:#3677a9">.39</span>, <span style="color:#3677a9">.38</span>, <span style="color:#3677a9">.37</span>, <span style="color:#3677a9">.34</span>; <span style="color:#999;font-style:italic">// yolk 
+</span></code></pre></div><p>We will use this data to train our network. Unlike the bayes classifier, neural networks will have to complete many training cycles. Each cycle of going through the entire training data set once is called an <em>epoch</em>.</p>
+<p>We can conduct a single epoch like so:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">auto</span> nn = NeuralNetwork&lt;<span style="color:#3677a9">2</span>, <span style="color:#3677a9">4</span>, <span style="color:#3677a9">4</span>, <span style="color:#3677a9">2</span>&gt;(<span style="color:#999;font-style:italic">/*...*/</span>);
+
+nn.train(features, classes);
+</code></pre></div><p>Neural Networks work in a way that is guaranteed to converge towards a set of optimal class boundaries (functions that divide the feature space into the given classes) with enough epochs. Here, &ldquo;optimal&rdquo; means, that we&rsquo;re minimizing the <em>mean square error</em>. We can directly compute the error of the current network state like so:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">nn.compute_mean_squared_error(feature, classes);
+</code></pre></div><p>Here, we are not computing the error between <code>feature</code> and <code>classes</code>, rather, the neural network generates a classification matrix from <code>feature</code>, then measures the error between this result and <code>classes</code>.</p>
+<p>The errors for the first few epochs with our egg data and the architecture from the above example:</p>
+<table>
+<thead>
+<tr>
+<th>epoch</th>
+<th>maximum MSE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2.42762</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2.08903</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.778278</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0.675251</td>
+</tr>
+</tbody>
+</table>
+<p>We see that the error is already decreasing rapidly. Depending on the architecture and problem, the mean square error may actually increase at the beginning, but then slowly stabilize and go back down as more epochs are completed.</p>
+<p>If we want to only train for a certain number of epochs, we use:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">for</span> (size_t n_epochs = <span style="color:#3677a9">0</span>; n_epochs &lt; <span style="color:#3677a9">10000</span>; ++n_epochs)
+   nn.train(features, classes);
+</code></pre></div><p>If we have no idea how many epochs are needed to get to an acceptable classification error, we can instead use <code>NeuralNetwork::train_until</code>. It has 3 arguments: the feature matrix, the classification matrix and a mean square error threshold. If the network observes the current classification error to be stable and below that threshold, the function exits and returns the number of epochs it took:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">auto</span> n_epochs = nn.train_until(features, classes, <span style="color:#3677a9">0.15</span>);
+std::cout &lt;&lt; n_epochs &lt;&lt; std::endl;
+</code></pre></div><p>The number of epochs is only useful for monitoring and can often be discarded. For our egg training data, it took <code>1059191</code> many epochs to get below the threshold of <code>0.15</code>. This is quite a lot, one parameter that governs the convergence behavior is called the <em>learning constant</em> (often called <code>μ</code> or <code>α</code>). This is a value in <code>[0, 1]</code> that we can optionally hand to the network on construction or by setting it later using <code>set_learning_constant</code>:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">float</span> alpha = <span style="color:#3677a9">0.001</span>;
+<span style="color:#6ab825;font-weight:bold">auto</span> nn = NeuralNetwork&lt;<span style="color:#3677a9">2</span>, <span style="color:#3677a9">4</span>, <span style="color:#3677a9">4</span>, <span style="color:#3677a9">2</span>&gt;(alpha);
+
+<span style="color:#999;font-style:italic">// or
+</span><span style="color:#999;font-style:italic"></span>nn.set_learning_constant(alpha);
+</code></pre></div><p>Usually values will be between <code>0.0001</code> and <code>0.1</code>, however just like the network&rsquo;s architecture, finding a good learning constant will require a lot of experimentation. For badly chosen values, the network can even begin to diverge, meaning the error will increase.</p>
+<p>Now that our network is trained, we should export it, so we don&rsquo;t have to do another <code>1059191</code> epochs. The weights and biases for the above example with <code>alpha = 0.001</code> were:</p>
+<pre><code>1 0 7.30575 -1.03484 2.03974 -5.31141 5.80577 1.88958 6.59601 4.74493 -0.485592 1.42384 1.80752 2.70784 5.16637 3.31374 4.56878 -0.904903 1.88335 1.32096 1.80904 0.728481 5.68054 -0.569291 2.96311 1.78811 2.837 -0.384504 1.49958 6.98229 0.633096 1.17761 0.2897 -1.09701 -1.95467 3.00161 3.54201 -0.634866 -1.76444 -2.18135 1.18332 -0.43307 1.34111 0.527556 
+</code></pre><p>The first number will always be <code>1</code>, this is the single and only weight of the input layer. It is always followed by a <code>0</code> which is the bias of the input layer. All following number correspond to the weights and biases of the subsequent layers.</p>
+<h2 id="35-using-the-network-for-classification">3.5 Using the Network for Classification</h2>
+<p>Now that our network is well-trained and the mean squared error is low, we should compute its <em>classification error</em>. Unlike the MSE, the classification error is defined as the percentage of false-positive or false negatives when classifying a data set for which the actual correct classifications are known.<br>
+We first load the network into memory using the string we generated earlier, then we classify the entire feature matrix from the training set:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">auto</span> nn = NeuralNetwork&lt;<span style="color:#3677a9">2</span>, <span style="color:#3677a9">4</span>, <span style="color:#3677a9">4</span>, <span style="color:#3677a9">2</span>&gt;();
+nn.from_string(<span style="color:#999;font-style:italic">/*...*/</span>);
+std::cout &lt;&lt; classes &lt;&lt; std::endl;
+std::cout &lt;&lt; nn.identify(features) &lt;&lt; std::endl;
+</code></pre></div><div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">   <span style="color:#3677a9">0.99638</span>    <span style="color:#3677a9">0.993424</span>    <span style="color:#3677a9">0.988063</span>    <span style="color:#3677a9">0.856026</span>    <span style="color:#3677a9">0.998413</span>    <span style="color:#3677a9">0.999656</span>   -<span style="color:#3677a9">0.227162</span>    <span style="color:#3677a9">0.343421</span> <span style="color:#3677a9">0.000525594</span>   -<span style="color:#3677a9">0.426658</span> -<span style="color:#3677a9">0.00993148</span> -<span style="color:#3677a9">0.00718939</span>
+-<span style="color:#3677a9">0.0112014</span>    <span style="color:#3677a9">0.434531</span>    <span style="color:#3677a9">0.715863</span>    <span style="color:#3677a9">0.272235</span>   -<span style="color:#3677a9">0.189113</span>   <span style="color:#3677a9">0.0802148</span>    <span style="color:#3677a9">0.891286</span>    <span style="color:#3677a9">0.900159</span>    <span style="color:#3677a9">0.924364</span>    <span style="color:#3677a9">0.830156</span>    <span style="color:#3677a9">0.925139</span>    <span style="color:#3677a9">0.924666</span>
+</code></pre></div><p>Like with the bayes classifier, each of the rows correspond to one class (chicken or duck), each column corresponds to one sample (egg). We classify an egg as chicken if the value in row 0 is higher, as a duck if the value in row 1 is higher.</p>
+<p>We get the following result, where <code>E(x)</code> is the expected value of <code>x</code> as designated in the training sets classification matrix <code>M</code></p>
+<table>
+<thead>
+<tr>
+<th>sample</th>
+<th>Chicken</th>
+<th>E(Chicken)</th>
+<th>Duck</th>
+<th>E(Duck)</th>
+<th>correct</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0.99638</td>
+<td>1</td>
+<td>-0.0112014</td>
+<td>0</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.993424</td>
+<td>1</td>
+<td>0.434531</td>
+<td>0</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.988063</td>
+<td>1</td>
+<td>0.715863</td>
+<td>0</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.856026</td>
+<td>1</td>
+<td>0.272235</td>
+<td>0</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0.998413</td>
+<td>1</td>
+<td>-0.189113</td>
+<td>0</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0.999656</td>
+<td>1</td>
+<td>0.0802148</td>
+<td>0</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>6</td>
+<td>-0.227162</td>
+<td>0</td>
+<td>0.891286</td>
+<td>1</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>7</td>
+<td>0.343421</td>
+<td>0</td>
+<td>0.900159</td>
+<td>1</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>8</td>
+<td>0.000525594</td>
+<td>0</td>
+<td>0.924364</td>
+<td>1</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>9</td>
+<td>-0.426658</td>
+<td>0</td>
+<td>0.830156</td>
+<td>1</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>10</td>
+<td>-0.00993148</td>
+<td>0</td>
+<td>0.925139</td>
+<td>1</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>11</td>
+<td>-0.00718939</td>
+<td>0</td>
+<td>0.924666</td>
+<td>1</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table>
+<p>We see that the neural network was able to classify all samples correctly. The least confident sample from this population was egg <code>2</code>, while the most confidently classified was egg <code>5</code>, where confidence is defined as in <a href="#21-training-the-bayes-classifier">section 2</a>.</p>
+<p>Now that we know our neural network works decently well, we can use it to identify the three unknown eggs:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">auto</span> to_identify = Eigen::MatrixXf(<span style="color:#3677a9">2</span>, <span style="color:#3677a9">3</span>);
+to_identify &lt;&lt; <span style="color:#3677a9">.51</span>, <span style="color:#3677a9">.60</span>, <span style="color:#3677a9">.70</span>,   <span style="color:#999;font-style:italic">// weight
+</span><span style="color:#999;font-style:italic"></span>               <span style="color:#3677a9">.29</span>, <span style="color:#3677a9">.28</span>, <span style="color:#3677a9">.38</span>;   <span style="color:#999;font-style:italic">// yolk ratio
+</span><span style="color:#999;font-style:italic"></span>               
+<span style="color:#6ab825;font-weight:bold">auto</span> results = nn.identify(to_identify);
+</code></pre></div><div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#999;font-style:italic">//   0          1         2
+</span><span style="color:#999;font-style:italic"></span> -<span style="color:#3677a9">0.021921</span>   <span style="color:#3677a9">0.8932</span>    -<span style="color:#3677a9">0.0119139</span>    <span style="color:#999;font-style:italic">// chicken
+</span><span style="color:#999;font-style:italic"></span>  <span style="color:#3677a9">0.926603</span>   <span style="color:#3677a9">0.918492</span>   <span style="color:#3677a9">0.925525</span>     <span style="color:#999;font-style:italic">// duck
+</span></code></pre></div><p>Just like with bayes classifier, eggs <code>0</code> and <code>2</code> were identified confidently. Egg <code>1</code> was previously undetermined as the bayes classifier assigned both options the same score, our neural network however leans more towards duck, if only by a difference of <code>0.02</code>. This result is still not very confident, but it&rsquo;s at least possible to choose one or the other.</p>
+
+      </span>
+      <span class="muted" style="float:right; position:relative; top:5em;">
+        <a href="#Title" style="color:#00f7c6;">&#11014; jump to beginning</a>
+      </span>
+      <br>
+<hr style="border:1px solid #999999"> </hr>
+<h2> Comments <span class="muted">(via GitHub)</span></h2>
+
+
+
+<div id="Comments">
+<script src="https://utteranc.es/client.js"
+        repo="Clemapfel/rat_game_website"
+        issue-term="og:title"
+        label="[comment]"
+        theme="github-dark"
+        crossorigin="anonymous"
+        async>
+</script>
+</div>
+<hr style="border:1px solid #999999"> </hr>
+
+    </div>
+
+  </article>
+</main>
+    <footer>
+  <div>
+<center>
+<p style="font-size:11px" class="muted">
+&copy 2021 C. Cords | all images, code and writing are original and subject to copyright, unless otherwise specified.<br>
+Hosted by <a href="https://in-berlin.de/"> Individual Network Berlin e.V</a>, styled with <a href="https://after-dark.habd.as/"> After Dark </a>
+</p>
+</center>
+</div>
+
+</footer>
+    
+    
+    
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1531 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    
+
+
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; worker-src 'self' blob:; connect-src 'self' wss: data:; font-src 'self' https: data:; img-src 'self' https: data:; object-src 'none'">
+
+
+    <meta name="generator" content="After Dark Hugo">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title style="color:#00f7c6">A (personal) modern C&#43;&#43; Styleguide | Clemens Cords&#39; Homepage</title>
+    <meta name="description" content="Quickstart  skip to here for a fully syntax highlighted code example that has all the possible cases Introduction  People, especially outside of CS, often think of code as purely utilitarian. It&rsquo;s like a machine or a tool, it doesn&rsquo;t matter how dirty it is inside, as long as it works and if it breaks you can call someone to fix it, it&rsquo;s the best it can be. While this may be the case for a pneumatic borer I would urge everyone to consider source code asthetically equivalent to a dissertation, a pamphlet or an instruction guide and any piece of code should have the same care and effort put into it&rsquo;s formatting and presentation as into more traditional documents.">
+    <meta name="keywords" content="crisp, deep learning, game design, programming, ">
+    
+    
+    
+    
+    <meta property="og:title" content="A (personal) modern C&#43;&#43; Styleguide" />
+<meta property="og:description" content="Quickstart  skip to here for a fully syntax highlighted code example that has all the possible cases Introduction  People, especially outside of CS, often think of code as purely utilitarian. It&rsquo;s like a machine or a tool, it doesn&rsquo;t matter how dirty it is inside, as long as it works and if it breaks you can call someone to fix it, it&rsquo;s the best it can be. While this may be the case for a pneumatic borer I would urge everyone to consider source code asthetically equivalent to a dissertation, a pamphlet or an instruction guide and any piece of code should have the same care and effort put into it&rsquo;s formatting and presentation as into more traditional documents." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://clemens-cords.com/post/c&#43;&#43;_style_guide/" />
+<meta property="og:image" content="http://clemens-cords.com" />
+<meta property="article:published_time" content="2021-05-18T00:00:00+02:00" />
+<meta property="article:modified_time" content="2021-05-18T00:00:00+02:00" />
+
+    <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://clemens-cords.com"/>
+
+<meta name="twitter:title" content="A (personal) modern C&#43;&#43; Styleguide"/>
+<meta name="twitter:description" content="Quickstart  skip to here for a fully syntax highlighted code example that has all the possible cases Introduction  People, especially outside of CS, often think of code as purely utilitarian. It&rsquo;s like a machine or a tool, it doesn&rsquo;t matter how dirty it is inside, as long as it works and if it breaks you can call someone to fix it, it&rsquo;s the best it can be. While this may be the case for a pneumatic borer I would urge everyone to consider source code asthetically equivalent to a dissertation, a pamphlet or an instruction guide and any piece of code should have the same care and effort put into it&rsquo;s formatting and presentation as into more traditional documents."/>
+
+    
+
+
+
+
+
+    
+
+    
+    
+  <meta name="referrer" content="same-origin">
+
+
+    
+    
+    <script integrity="sha512-2t0yyNrUdtn9WGIoBVxq5vtoJQYfoDQDbqRPpOb75f1hiL39DGLdJKDrGP60fBhXfrFeKyVhzWJvHvLgln/ElA==">/*! Fetch Inject v2.0.4 | Copyright (C) Josh Habdas <jhabdas@protonmail.com> (https://habd.as) | @license Zlib */
+var fetchInject=function(){"use strict";const e=function(e,t,r,n,o,c,i){c=t.createElement(r),i=t.getElementsByTagName(r)[0],c.appendChild(t.createTextNode(n.text)),c.onload=o(n),i?i.parentNode.insertBefore(c,i):t.head.appendChild(c)};return function(t,r){if(!arguments.length)return Promise.reject(new ReferenceError("Failed to execute 'fetchInject': 1 argument required but only 0 present."));if(arguments[0]&&arguments[0].constructor!==Array)return Promise.reject(new TypeError("Failed to execute 'fetchInject': argument 1 must be of type 'Array'."));if(arguments[1]&&arguments[1].constructor!==Promise)return Promise.reject(new TypeError("Failed to execute 'fetchInject': argument 2 must be of type 'Promise'."));const n=[],o=r?[].concat(r):[],c=[];return t.forEach(e=>o.push(window.fetch(e).then(e=>[e.clone().text(),e.blob()]).then(e=>Promise.all(e).then(e=>{n.push({text:e[0],blob:e[1]})})))),Promise.all(o).then(()=>(n.forEach(t=>{c.push({then:r=>{t.blob.type.includes("text/css")?e(window,document,"style",t,r):e(window,document,"script",t,r)}})}),Promise.all(c)))}}();
+</script>
+    <script integrity="sha512-2XlvnxweZhaHgBdCoOK0PoCUWiSfKibb&#43;RCRZNgqLdvbnx0ZH67FDGKQqmpqCerjMJbZFv6fsXgbmJOOA9K&#43;qA==">/*!
+ * Copyright (C) 2019  Josh Habdas <jhabdas@protonmail.com>
+ *
+ * This file is part of After Dark.
+ *
+ * After Dark is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * After Dark is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+fetchInject(["/js/lazysizes.min.js"]);
+</script>
+    
+
+
+  
+    
+
+  <meta title="mod:fractal-forest" content="status:enabled">
+  
+    <script async src=../../js/bpgdec8a.js integrity=sha384-8PG0go3BW8hLm63KbTxk/hNcehaoSbrAhKzsmy2Jhs/KY8QdiKKkjhdeyHY/Q/0I&#10;></script>
+  
+
+
+  
+  
+  
+  
+
+
+    
+    <link rel="canonical" href="http://clemens-cords.com/post/c&#43;&#43;_style_guide/">
+    
+    
+    <link rel="icon" href="../../favicon.png" sizes="any">
+
+    
+
+  
+  
+  
+  
+  
+  
+  
+    
+      
+        <style>html{font-size:12px}*{box-sizing:border-box;text-rendering:geometricPrecision}body{font-size:1rem;line-height:1.5rem;margin:0;font-family:Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;word-wrap:break-word}h1,h2,h3,h4,h5,h6{line-height:1.3em}fieldset{border:none;padding:0;margin:0}pre{padding:2rem;margin:1.75rem 0;background-color:#fff;border:1px solid #ccc;overflow:auto}code[class*=language-],pre[class*=language-],pre code{font-weight:100;text-shadow:none;margin:1.75rem 0}a{cursor:pointer;color:#eb1c79;text-decoration:none;border-bottom:1px solid #eb1c79}a:hover{background-color:#eb1c79;color:#fff}.grid{display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap}.grid.\-top{-ms-flex-align:start;align-items:flex-start}.grid.\-middle{-ms-flex-align:center;align-items:center}.grid.\-bottom{-ms-flex-align:end;align-items:flex-end}.grid.\-stretch{-ms-flex-align:stretch;align-items:stretch}.grid.\-baseline{-ms-flex-align:baseline;align-items:baseline}.grid.\-left{-ms-flex-pack:start;justify-content:flex-start}.grid.\-center{-ms-flex-pack:center;justify-content:center}.grid.\-right{-ms-flex-pack:end;justify-content:flex-end}.grid.\-between{-ms-flex-pack:justify;justify-content:space-between}.grid.\-around{-ms-flex-pack:distribute;justify-content:space-around}.cell{-ms-flex:1;flex:1;box-sizing:border-box}@media screen and (min-width:768px){.cell.\-1of12{-ms-flex:0 0 8.33333%;flex:0 0 8.33333%}.cell.\-2of12{-ms-flex:0 0 16.66667%;flex:0 0 16.66667%}.cell.\-3of12{-ms-flex:0 0 25%;flex:0 0 25%}.cell.\-4of12{-ms-flex:0 0 33.33333%;flex:0 0 33.33333%}.cell.\-5of12{-ms-flex:0 0 41.66667%;flex:0 0 41.66667%}.cell.\-6of12{-ms-flex:0 0 50%;flex:0 0 50%}.cell.\-7of12{-ms-flex:0 0 58.33333%;flex:0 0 58.33333%}.cell.\-8of12{-ms-flex:0 0 66.66667%;flex:0 0 66.66667%}.cell.\-9of12{-ms-flex:0 0 75%;flex:0 0 75%}.cell.\-10of12{-ms-flex:0 0 83.33333%;flex:0 0 83.33333%}.cell.\-11of12{-ms-flex:0 0 91.66667%;flex:0 0 91.66667%}}@media screen and (max-width:768px){.grid{-ms-flex-direction:column;flex-direction:column}.cell{-ms-flex:0 0 auto;flex:0 0 auto}}.hack,.hack blockquote,.hack code,.hack em,.hack h1,.hack h2,.hack h3,.hack h4,.hack h5,.hack h6,.hack strong{font-size:1rem;font-style:normal;font-family:Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif}.hack blockquote,.hack code,.hack em,.hack strong{line-height:20px}.hack blockquote,.hack code,.hack footer,.hack h1,.hack h2,.hack h3,.hack h4,.hack h5,.hack h6,.hack header,.hack li,.hack ol,.hack p,.hack section,.hack ul{float:none;margin:0;padding:0}.hack blockquote,.hack h1,.hack ol,.hack p,.hack ul{margin-top:20px;margin-bottom:20px}.hack h1{position:relative;display:inline-block;display:table-cell;padding:20px 0 30px;margin:0;overflow:hidden}.hack h1:after{content:"====================================================================================================";position:absolute;bottom:10px;left:0}.hack h1+*{margin-top:0}.hack h2,.hack h3,.hack h4,.hack h5,.hack h6{position:relative;margin-bottom:1.75rem}.hack h2:before,.hack h3:before,.hack h4:before,.hack h5:before,.hack h6:before{display:inline}.hack h2:before{content:"## "}.hack h3:before{content:"### "}.hack h4:before{content:"#### "}.hack h5:before{content:"##### "}.hack h6:before{content:"###### "}.hack li{position:relative;display:block;padding-left:20px}.hack li:after{position:absolute;top:0;left:0}.hack ul>li:after{content:"-"}.hack ol{counter-reset:a}.hack ol>li:after{content:counter(a) ".";counter-increment:a}.hack ol li:nth-child(n+10):after{left:-7px}.hack blockquote{position:relative;padding-left:17px;padding-left:2ch;overflow:hidden}.hack blockquote:after{content:">\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>";white-space:pre;position:absolute;top:0;left:0;line-height:20px}.hack em:after,.hack em:before{content:"*";display:inline}.hack pre code:after,.hack pre code:before{content:""}.hack code{font-weight:700}.hack code:after,.hack code:before{content:"`";display:inline}.hack hr{position:relative;height:20px;overflow:hidden;border:0;margin:20px 0}.hack hr:after{content:"----------------------------------------------------------------------------------------------------";position:absolute;top:0;left:0;line-height:20px;width:100%;word-wrap:break-word}@-moz-document url-prefix(){.hack h1{display:block}}.hack-ones ol>li:after{content:"1."}p{margin:0 0 1.75rem}.container{max-width:70rem}.container,.container-fluid{margin:0 auto;padding:0 1rem}.inner{padding:1rem}.inner2x{padding:2rem}.pull-left{float:left}.pull-right{float:right}.progress-bar{height:8px;opacity:.8;background-color:#ccc;margin-top:12px}.progress-bar.progress-bar-show-percent{margin-top:38px}.progress-bar-filled{background-color:gray;height:100%;transition:width .3s ease;position:relative;width:0}.progress-bar-filled:before{content:"";border:6px solid transparent;border-top-color:gray;position:absolute;top:-12px;right:-6px}.progress-bar-filled:after{color:gray;content:attr(data-filled);display:block;font-size:12px;white-space:nowrap;position:absolute;border:6px solid transparent;top:-38px;right:0;-ms-transform:translateX(50%);transform:translateX(50%)}table{width:100%;border-collapse:collapse;margin:1.75rem 0;color:#778087}table td,table th{vertical-align:top;border:1px solid #ccc;line-height:15px;padding:10px}table thead th{font-size:10px}table tbody td:first-child{font-weight:700;color:#333}.form{width:30rem}.form-group{margin-bottom:1.75rem;overflow:auto}.form-group label{border-bottom:2px solid #ccc;color:#333;width:10rem;display:inline-block;height:38px;line-height:38px;padding:0;float:left;position:relative}.form-group.form-success label{color:#4caf50!important;border-color:#4caf50!important}.form-group.form-warning label{color:#ff9800!important;border-color:#ff9800!important}.form-group.form-error label{color:#f44336!important;border-color:#f44336!important}.form-control{outline:none;border:none;border-bottom:2px solid #ccc;padding:.5rem 0;width:20rem;height:38px;background-color:transparent}.form-control:focus{border-color:#555}.form-group.form-textarea label:after{position:absolute;content:"";width:2px;background-color:#fff;right:-2px;top:0;bottom:0}textarea.form-control{height:auto;resize:none;padding:1rem 0;border-bottom:2px solid #ccc;border-left:2px solid #ccc;padding:.5rem}select.form-control{border-radius:0;background-color:transparent;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none}.help-block{color:#999;margin-top:.5rem}.form-actions{margin-bottom:1.75rem}.btn{display:-ms-inline-flexbox;display:inline-flex;-ms-flex-align:center;align-items:center;-ms-flex-pack:center;justify-content:center;cursor:pointer;outline:none;padding:.65rem 2rem;font-size:1rem;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;position:relative;z-index:1}.btn:active{box-shadow:inset 0 1px 3px rgba(0,0,0,.12)}.btn.btn-ghost{border-color:#757575;color:#757575;background-color:transparent}.btn.btn-ghost:focus,.btn.btn-ghost:hover{border-color:#424242;color:#424242;z-index:2}.btn.btn-ghost:hover{background-color:transparent}.btn-block{width:100%;display:-ms-flexbox;display:flex}.btn-default{color:#fff;background-color:#e0e0e0;border:1px solid #e0e0e0;color:#333}.btn-default:focus:not(.btn-ghost),.btn-default:hover{background-color:#dcdcdc;border-color:#dcdcdc}.btn-success{color:#fff;background-color:#4caf50;border:1px solid #4caf50}.btn-success:focus:not(.btn-ghost),.btn-success:hover{background-color:#43a047;border-color:#43a047}.btn-success.btn-ghost{border-color:#4caf50;color:#4caf50}.btn-success.btn-ghost:focus,.btn-success.btn-ghost:hover{border-color:#388e3c;color:#388e3c;z-index:2}.btn-error{color:#fff;background-color:#f44336;border:1px solid #f44336}.btn-error:focus:not(.btn-ghost),.btn-error:hover{background-color:#e53935;border-color:#e53935}.btn-error.btn-ghost{border-color:#f44336;color:#f44336}.btn-error.btn-ghost:focus,.btn-error.btn-ghost:hover{border-color:#d32f2f;color:#d32f2f;z-index:2}.btn-warning{color:#fff;background-color:#ff9800;border:1px solid #ff9800}.btn-warning:focus:not(.btn-ghost),.btn-warning:hover{background-color:#fb8c00;border-color:#fb8c00}.btn-warning.btn-ghost{border-color:#ff9800;color:#ff9800}.btn-warning.btn-ghost:focus,.btn-warning.btn-ghost:hover{border-color:#f57c00;color:#f57c00;z-index:2}.btn-info{color:#fff;background-color:#00bcd4;border:1px solid #00bcd4}.btn-info:focus:not(.btn-ghost),.btn-info:hover{background-color:#00acc1;border-color:#00acc1}.btn-info.btn-ghost{border-color:#00bcd4;color:#00bcd4}.btn-info.btn-ghost:focus,.btn-info.btn-ghost:hover{border-color:#0097a7;color:#0097a7;z-index:2}.btn-primary{color:#fff;background-color:#2196f3;border:1px solid #2196f3}.btn-primary:focus:not(.btn-ghost),.btn-primary:hover{background-color:#1e88e5;border-color:#1e88e5}.btn-primary.btn-ghost{border-color:#2196f3;color:#2196f3}.btn-primary.btn-ghost:focus,.btn-primary.btn-ghost:hover{border-color:#1976d2;color:#1976d2;z-index:2}.btn-group{overflow:auto}.btn-group .btn{float:left}.btn-group .btn-ghost:not(:first-child){margin-left:-1px}.card{border:1px solid #ccc}.card .card-header{color:#333;text-align:center;background-color:#ddd;padding:.5rem 0}.alert{color:#ccc;padding:1rem;border:1px solid #ccc;margin-bottom:1.75rem}.alert-success{color:#4caf50;border-color:#4caf50}.alert-error{color:#f44336;border-color:#f44336}.alert-info{color:#00bcd4;border-color:#00bcd4}.alert-warning{color:#ff9800;border-color:#ff9800}.media:not(:last-child){margin-bottom:1.25rem}.media-left{padding-right:1rem}.media-left,.media-right{display:table-cell;vertical-align:top}.media-right{padding-left:1rem}.media-body{display:table-cell;vertical-align:top}.media-heading{font-size:1.16667rem;font-weight:700}.media-content{margin-top:.3rem}.avatarholder,.placeholder{background-color:#f0f0f0;text-align:center;color:#b9b9b9;font-size:1rem;border:1px solid #f0f0f0}.avatarholder{width:48px;height:48px;line-height:46px;font-size:2rem;background-size:cover;background-position:50%;background-repeat:no-repeat}.avatarholder.rounded{border-radius:33px}.loading{display:inline-block;content:"&nbsp;";height:20px;width:20px;margin:0 .5rem;animation:a .6s infinite linear;border:2px solid #e91e63;border-right-color:transparent;border-radius:50%}.btn .loading{margin-bottom:0;width:14px;height:14px}.btn div.loading{float:left}.alert .loading{margin-bottom:-5px}@keyframes a{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}.menu{width:100%}.menu .menu-item{display:block;color:#616161;border-color:#616161}.menu .menu-item.active,.menu .menu-item:hover{color:#000;border-color:#000;background-color:transparent}@media screen and (max-width:768px){.form-group label{display:block;border-bottom:none;width:100%}.form-group.form-textarea label:after{display:none}.form-control{width:100%}textarea.form-control{border-left:none;padding:.5rem 0}pre::-webkit-scrollbar{height:3px}}@media screen and (max-width:480px){.form{width:100%}}html{font-size:14px}.standard{font-family:-apple-system,BlinkMacSystemFont,avenir next,avenir,helvetica,helvetica neue,Ubuntu,segoe ui,arial,sans-serif}.standard h1{font-size:2em;font-weight:700;margin:.67em 0}.standard h2{font-size:1.5em;font-weight:700;margin:.83em 0}.standard h3{font-size:1.17em;font-weight:700}.standard h3,.standard p{margin:1.75rem 0}.standard ol,.standard ul{display:block;list-style-type:disc;padding-left:20px;margin:1.75rem 0}.standard ol ul,.standard ul ul{margin:.75rem 0;list-style-type:square}.standard ol{list-style-type:decimal}.standard li{display:list-item;padding-left:0}.standard blockquote{margin:1.75rem 0;padding-left:10px;border-left:5px solid #f0f0f0}.standard pre{margin:1.75rem 0;white-space:pre}.standard hr{border:0;height:1px;display:block;background-color:#e2e2e2;margin:1.75rem 0}.dark-grey{background-color:#181818;color:#ccc}.dark-grey pre{background-color:#181818;padding:0;border:none}.dark-grey pre code{color:#00bcd4}.dark-grey h1 a,.dark-grey h2 a,.dark-grey h3 a,.dark-grey h4 a,.dark-grey h5 a{color:#ccc}.dark-grey code,.dark-grey strong{color:#fff}.dark-grey code{font-weight:100}.dark-grey table{color:#ccc}.dark-grey table td,.dark-grey table th{border-color:#444}.dark-grey table tbody td:first-child{color:#fff}.dark-grey .form-group label{color:#ccc;border-color:rgba(95,95,95,.78)}.dark-grey .form-group.form-textarea label:after{background-color:#181818}.dark-grey .form-control{color:#ccc;border-color:rgba(95,95,95,.78)}.dark-grey .form-control:focus{border-color:#ccc;color:#ccc}.dark-grey textarea.form-control{color:#ccc}.dark-grey .card{border-color:rgba(95,95,95,.78)}.dark-grey .card .card-header{background-color:transparent;color:#ccc;border-bottom:1px solid rgba(95,95,95,.78)}.dark-grey .btn.btn-ghost.btn-default{border-color:#ababab;color:#ababab}.dark-grey .btn.btn-ghost.btn-default:focus,.dark-grey .btn.btn-ghost.btn-default:hover{border-color:#9c9c9c;color:#9c9c9c;z-index:1}.dark-grey .btn.btn-ghost.btn-default:focus,.dark-grey .btn.btn-ghost.btn-default:hover{border-color:#e0e0e0;color:#e0e0e0}.dark-grey .btn.btn-ghost.btn-primary:focus,.dark-grey .btn.btn-ghost.btn-primary:hover{border-color:#64b5f6;color:#64b5f6}.dark-grey .btn.btn-ghost.btn-success:focus,.dark-grey .btn.btn-ghost.btn-success:hover{border-color:#81c784;color:#81c784}.dark-grey .btn.btn-ghost.btn-info:focus,.dark-grey .btn.btn-ghost.btn-info:hover{border-color:#4dd0e1;color:#4dd0e1}.dark-grey .btn.btn-ghost.btn-error:focus,.dark-grey .btn.btn-ghost.btn-error:hover{border-color:#e57373;color:#e57373}.dark-grey .btn.btn-ghost.btn-warning:focus,.dark-grey .btn.btn-ghost.btn-warning:hover{border-color:#ffb74d;color:#ffb74d}.dark-grey .avatarholder,.dark-grey .placeholder{background-color:transparent;border-color:#333}.dark-grey .menu .menu-item{color:#ccc;border-color:rgba(95,95,95,.78)}.dark-grey .menu .menu-item.active,.dark-grey .menu .menu-item:hover{color:#fff;border-color:#ccc}/*!* Copyright (C) 2019 Josh Habdas <jhabdas@protonmail.com>
+*
+* This file is part of After Dark.
+*
+* After Dark is free software: you can redistribute it and/or modify
+* it under the terms of the GNU Affero General Public License as published
+* by the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* After Dark is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU Affero General Public License for more details.
+*
+* You should have received a copy of the GNU Affero General Public License
+* along with this program. If not, see <https://www.gnu.org/licenses/>.*/:root{--screen-size-small: 30em}@keyframes intro{0%{opacity:0}100%{opacity:1}}.blur-up.lazyloading{filter:blur(5px);opacity:1;transition:opacity 1s,filter 1.5s}.blur-up.lazyload{opacity:0;filter:blur(10px)}.blur-up.lazyloaded{filter:blur(0);transition:filter 1s}.hack .readmore{margin-bottom:2.2em}.responsive-iframe,.ratio-container{position:relative;padding-bottom:56.25%;padding-top:25px;height:0}.responsive-iframe iframe,.ratio-container>*:not([itemprop=caption]){position:absolute;top:0;left:0;width:100%;height:100%}iframe{border:0}main,footer{animation:intro .3s both;animation-delay:.15s}header:first-of-type+details{margin:20px 0}footer time[datetime$=M]:before{content:"\2013\0020"}body>footer p.muted{margin-bottom:0}@media only screen and (max-width:768px){footer time[datetime$=M]{display:none}}blockquote cite{display:block}blockquote cite::before{content:"\2014\00A0"}:target{filter:brightness(1.2)}:disabled{cursor:not-allowed}.hack li ul{margin:0}.hack ol li{padding-left:27px}.main{padding:20px 10px}input.form-control{border-radius:0;background-color:transparent;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none}input.form-control,textarea.form-control,select.form-control,.help-block{font-size:initial}@media only screen and (max-width:768px){.help-block{font-size:unset}}html{font-size:13px}.hack .form input,.hack .form textarea,.hack .form button,.hack .form label{font-size:1rem}.hack .alert .highlight:first-of-type .chroma,.hack .card .highlight:first-of-type .chroma,.hack .alert pre:first-of-type,.hack .alert p:first-of-type,.hack .card pre:first-of-type,.hack .card p:first-of-type{margin-top:unset}.hack .alert .highlight:last-of-type .chroma,.hack .card .highlight:last-of-type .chroma,.hack .alert pre:last-of-type,.hack .alert p:last-of-type,.hack .card pre:last-of-type,.hack .card p:last-of-type{margin-bottom:unset}.hack blockquote,.hack blockquote:after{line-height:1.5}.hack figure,.standard figure{margin:unset}.hack figure a{border-bottom:none}.hack figure a:hover{background-color:inherit}article header img{width:100%;border-radius:3px}table td,table th{line-height:inherit}table a{border-bottom:unset}img{max-width:100%}@media only screen and (min-width:768px){html{font-size:16px}.container{max-width:50rem}}@media only screen and (min-width:768px),(-ms-high-contrast:active),(-ms-high-contrast:none){html{margin-left:calc(100vw - 100%)}}/*!
+ * Copyright (C) 2019  Josh Habdas <jhabdas@protonmail.com>
+ *
+ * This file is part of After Dark.
+ *
+ * After Dark is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * After Dark is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+a[rel*="external"]::after {
+  content: " " url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20class='i-external'%20viewBox='0%200%2032%2032'%20width='14'%20height='14'%20fill='none'%20stroke='%23ff9800'%20stroke-linecap='round'%20stroke-linejoin='round'%20stroke-width='9.38%'%3E%3Cpath%20d='M14%209%20L3%209%203%2029%2023%2029%2023%2018%20M18%204%20L28%204%2028%2014%20M28%204%20L14%2018'/%3E%3C/svg%3E");
+}
+nav a.active {
+  background-color: inherit;
+  color: #fff;
+}
+a[itemprop="url"] {
+  color: #ff9800;
+}
+a[itemprop="url"]:hover {
+  color: #fff;
+}
+.muted, .help-block {
+  opacity: 0.70;
+}
+.hack .muted,
+.hack .help-block {
+  color: #e0e0e0;
+}
+</style>
+        
+
+
+  
+    <meta name="theme-color" content=#181818>
+  
+
+
+      
+    
+  
+
+
+    
+    
+      <script integrity="sha512-ISTAV0GadOIz/NXXHOS+eCM0ysXVVHhQTlvA6LJxz/DeA5yIxm0Vqf5IE+WH0yuuXkayAKtoZkQ326nch5f/fg==">fetchInject(["/css/syntax.css"]);</script>
+      <noscript>
+        <link href="../../css/syntax.css" rel="stylesheet">
+      </noscript>
+    
+  </head>
+  
+  
+  
+  <body class="standard dark-grey main container">
+    <header>
+  <style>
+body {
+    background-image: url("/background.jpg");
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    min-height: 100vh;
+}
+
+div {
+    background-color: #1d1d1d
+}
+
+canvas {
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:-1;
+     
+    height: 100vh;
+    width: 100vw;
+}
+
+main {
+    padding-left: 4em;
+    margin-left: -4em;
+    padding-right: 4em;
+    margin-right: -4em;
+    padding-bottom: 1em;
+
+    min-height: 80vh;
+
+    background-color: #1d1d1d;
+}
+
+footer {
+    padding-left: 4em;
+    margin-left: -4em;
+    padding-right: 4em;
+    margin-right: -4em;
+
+    min-height: 8vh;
+
+    margin-top: -2em;
+    background-color: #1d1d1d
+}
+</style>
+
+<style>
+main {
+    padding-top: 3em;
+    margin-top:-3em;
+    background-color: #1d1d1d;
+}
+</style>
+
+</header>
+    <main>
+  
+    
+      <style>{{ -}}.hack header figure[itemtype*=ImageObject]{position:relative}.hack header figure[itemtype*=ImageObject] figcaption{position:absolute;bottom:0;right:0;text-align:right;padding:15px;font-style:oblique;font-size:smaller;mix-blend-mode:soft-light}.hack header figure[itemtype*=ImageObject] [itemprop=headline]{font-weight:700}</style>
+    
+  
+  <article itemscope itemtype="https://schema.org/BlogPosting">
+    <meta itemprop="name" content="A (personal) modern C&#43;&#43; Styleguide">
+<meta itemprop="description" content="Quickstart  skip to here for a fully syntax highlighted code example that has all the possible cases Introduction  People, especially outside of CS, often think of code as purely utilitarian. It&rsquo;s like a machine or a tool, it doesn&rsquo;t matter how dirty it is inside, as long as it works and if it breaks you can call someone to fix it, it&rsquo;s the best it can be. While this may be the case for a pneumatic borer I would urge everyone to consider source code asthetically equivalent to a dissertation, a pamphlet or an instruction guide and any piece of code should have the same care and effort put into it&rsquo;s formatting and presentation as into more traditional documents.">
+<meta itemprop="datePublished" content="2021-05-18T00:00:00&#43;02:00" />
+<meta itemprop="dateModified" content="2021-05-18T00:00:00&#43;02:00" />
+<meta itemprop="wordCount" content="7171">
+<meta itemprop="image" content="http://clemens-cords.com">
+
+
+
+<meta itemprop="keywords" content="" />
+
+    <header>
+      <span class="muted" style="float:inherit; position:relative; top:1em;" id="Title">
+        <a href="../../post" style="color:#00f7c6;"> &lt;&lt; back to index</a>
+      </span>
+      <h1 itemprop="headline name" style="color:#00f7c6">A (personal) modern C&#43;&#43; Styleguide</h1>
+      <hr style="border:1px solid #e92d7d"> </hr>
+      <p class="muted">
+        <svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <circle cx="16" cy="16" r="14" />
+  <path d="M16 8 L16 16 20 20" />
+</svg>
+<span>34 minute read</span>
+<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
+</svg>
+
+  Published: <time datetime="2021-05-18T00:00:00&#43;02:00">18 May, 2021</time>
+
+
+
+   <span style="float:right" itemprop="articleSection"> Categories:  [ <a href="../../categories/programming/">programming</a> ]</span>
+
+
+        
+
+
+
+
+      </p>
+      <br>
+
+      
+      
+
+
+
+    </header>
+    <div itemprop="articleBody">
+        <span class="muted" style="float:right; position:relative; top:-1em;">
+          <a href="#Comments" style="color:#00f7c6; ">&#11015; jump to comments</a>
+        </span>
+        <br>
+      <span style="float:none; position:relative; top:-3em">
+      <h1 id="QUICKSTART"> Quickstart </h1>
+skip to <a href="#EXAMPLE">here</a> for a fully syntax highlighted code example that has all the possible cases
+<h1 id="INTRODUCTION"> Introduction </h1>
+<p>People, especially outside of CS, often think of code as purely utilitarian. It&rsquo;s like a machine or a tool, it doesn&rsquo;t matter how dirty it is inside, as long as it works and if it breaks you can call someone to fix it, it&rsquo;s the best it can be. While this may be the case for a <a href="https://saltassociation.co.uk/education/make-salt/rock-salt-production/" target="_blank">pneumatic borer</a> I would urge everyone to consider source code asthetically equivalent to a dissertation, a pamphlet or an instruction guide and any piece of code should have the same care and effort put into it&rsquo;s formatting and presentation as into more traditional documents. The main reason for this is to allow for cooperation, it&rsquo;s always nice to have good documentation but if someone new joins the team knowing nothing about how things are done and they&rsquo;re tasked to fix something rather than just use it their success and speed of accomplishing this mainly depends on how well maintained the code is. This way pretty code not only shows that you take pride and care in your work but also increases productiveness far, far into the future.<br></p>
+<p>I would like to quickly break down my philosophy of what makes good practice and code style. The most important things are (in order starting with most important):</p>
+<ol>
+<li><b>Consistency</b>: If you format something a certain way and you think it&rsquo;s the best way to do it, format it that way every single time</li>
+<li><b>Clarity</b>: Assume your audience has a very hard time understanding any code and try to make it easy to understand for them, not your well-trained doctorated senior dev</li>
+<li><b>Adaptability</b>: Try to stay with the most up-to-date-way of doing things and if someone shows you a better way to do things, adopt it without question</li>
+<li><b>Elegance</b>: Assuming maximum clarity and correctness the most elegant way to do something is the right way.</li>
+</ol>
+<h1 id="TOC">Table of Contents</h1><br>
+0. <a href="#QUICKSTART">Quickstart</a><br> 
+1. <a href="#BRACKETS">Loops & Brackets</a><br>
+2. <a href="#VARIABLES">Variables</a><br>
+&nbsp&nbsp&nbsp&nbsp2.1 <a href="#VARIABLES_NAMING">Naming</a><br>
+&nbsp&nbsp&nbsp&nbsp2.2 <a href="#VARIABLES_DECLARATION">Declaration</a><br>
+3. <a href="#OPERATORS">Operators</a><br>
+&nbsp&nbsp&nbsp&nbsp3.1 <a href="#OPERATORS_PTR">References and Pointers</a><br>
+&nbsp&nbsp&nbsp&nbsp3.2 <a href="#OPERATORS_LOGIC">Logical Operators</a><br>
+&nbsp&nbsp&nbsp&nbsp3.3 <a href="#OPERATORS_NUMERIC">Numerical Operators</a><br>
+&nbsp&nbsp&nbsp&nbsp3.4 <a href="#OPERATORS_PREFIX">Pre- and Postfix Increment</a><br>
+4. <a href="#FUNCTIONS">Functions</a><br>
+&nbsp&nbsp&nbsp&nbsp4.1 <a href="#FUNCTIONS_MEMBER">Member Functions</a><br>
+&nbsp&nbsp&nbsp&nbsp4.2 <a href="#LAMBDAS">Lambdas</a><br>
+&nbsp&nbsp&nbsp&nbsp4.3 <a href="#RETURN_AUTO">Auto-deducing Return Types</a><br>
+5. <a href="#CLASSES_ENUMES">Classes & Enums</a><br>
+&nbsp&nbsp&nbsp&nbsp5.1 <a href="#CLASSES_NAMING">Naming</a><br>
+&nbsp&nbsp&nbsp&nbsp5.2 <a href="#CLASS_VS_STRUCT">Class vs. Struct</a><br>
+&nbsp&nbsp&nbsp&nbsp5.3 <a href="#HPP_VS_CPP">Order of access-specified members: .hpp vs .cpp</a><br>
+&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp5.3.1 <a href="#FILENAMES">Filenames</a><br>
+&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp5.3.2 <a href="#HEADER_ONLY">Template for Header-only Libraries</a><br>
+&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp5.3.3 <a href="#NON_HEADER_ONLY">Template for Non-Header-Only</a><br>
+6. <a href="#DOCUMENTATION">Comments & Documentation</a><br>
+&nbsp&nbsp&nbsp&nbsp6.1 <a href="#DOCUMENTATION">In-File Documentation</a><br>
+&nbsp&nbsp&nbsp&nbsp6.2 <a href="#COMMENTS">Comments</a><br>
+&nbsp&nbsp&nbsp&nbsp6.3 <a href="#VARIABLE_NAMING_CLARITY">Choice of Variable/Function Names</a><br>
+7. <a href="#EPILOGUE">Closing Remarks</a><br>
+&nbsp&nbsp&nbsp&nbsp7.1 <a href="#EPILOGUE_GIT">Version Control</a><br>
+&nbsp&nbsp&nbsp&nbsp7.2 <a href="#EPILOGUE_BENCHMARK">Testing and Profiling</a><br>
+&nbsp&nbsp&nbsp&nbsp7.3 <a href="#EPILOGUE_OPTIMIZATION">When Optimization is not Appropriate</a><br>
+&nbsp&nbsp&nbsp&nbsp7.4 <a href="#EPILOGUE_REFACTOR">The Golden Rule: Always Refactor Once</a><br>
+8. <a href="#THANKS">Thanks and References</a><br>
+<h1 id="LOOPS">Loops & Brackets</h1>
+<p>Let&rsquo;s get the omnipresent stuff out of the way first:</p>
+<p>If present at all, brackets after if-else, while, for, try-catch and similar loops as well as blocks, non-lambda functions, classes, structs and enums should always have a newline before the first bracket as such:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#999;font-style:italic">// wrong
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">enum</span> { MEMBER_1, MEMBER_2 };
+
+<span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">foo</span> {
+    <span style="color:#6ab825;font-weight:bold">inline</span> <span style="color:#447fcf">Foo</span>() {
+        <span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">auto</span>&amp; i : unmentioned_member) {
+            initialize(i);
+        };
+    }
+    
+    <span style="color:#6ab825;font-weight:bold">inline</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">bar</span>() {
+        <span style="color:#6ab825;font-weight:bold">return</span> <span style="color:#3677a9">1</span>;
+    }
+    
+    <span style="color:#6ab825;font-weight:bold">inline</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">empty_function</span>() 
+    {
+    }
+}
+
+<span style="color:#999;font-style:italic">// correct
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">enum</span> 
+{
+    MEMBER_1, 
+    MEMBER_2
+};
+
+<span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">foo</span> 
+{
+    <span style="color:#6ab825;font-weight:bold">inline</span> <span style="color:#447fcf">Foo</span>() 
+    {
+        <span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">auto</span>&amp; i : unmentioned_member) 
+        {
+            initialize(i);
+        };
+    }
+    
+    <span style="color:#6ab825;font-weight:bold">inline</span> <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">bar</span>() 
+    {
+        <span style="color:#6ab825;font-weight:bold">return</span> <span style="color:#3677a9">1</span>;
+    }
+}
+</code></pre></div>
+<p>The only exceptions to this are namespaces and lambdas with only one line of code inside of them as empty blocks. These should be opened and closed in the same line:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#6ab825;font-weight:bold">namespace</span> style_guide::inside 
+{
+    Foo::Foo() 
+    {}  <span style="color:#999;font-style:italic">// newline before the first bracket but closed in the same line
+</span><span style="color:#999;font-style:italic"></span>    
+    Foo::Foo(ArgumentType arg) 
+        : _member_a(<span style="color:#999;font-style:italic">//...),
+</span><span style="color:#999;font-style:italic"></span>          _member_b(<span style="color:#999;font-style:italic">//...),
+</span><span style="color:#999;font-style:italic"></span>          _other_member([&amp;]() -&gt; MemberType&amp;&amp;   <span style="color:#999;font-style:italic">// newline because lambda body has more than one line of code
+</span><span style="color:#999;font-style:italic"></span>          {  
+            do_something_else();
+            <span style="color:#6ab825;font-weight:bold">return</span> std::move(MemberType(arg));
+          }()),
+          _member_c(<span style="color:#999;font-style:italic">//...)
+</span><span style="color:#999;font-style:italic"></span>    {
+        std::sort(member_a.begin(), member_a.end() [](<span style="color:#6ab825;font-weight:bold">auto</span> a, <span style="color:#6ab825;font-weight:bold">auto</span> b) { <span style="color:#6ab825;font-weight:bold">return</span> a &gt; b; });
+        <span style="color:#999;font-style:italic">// no newline because it is one line
+</span><span style="color:#999;font-style:italic"></span>    }
+}
+</code></pre></div>
+<p>Note how the multi-line lambda in the constructor is indented the same as the other _members in the trailing initializer list.</p>
+<p>Now this decision is pretty arbitrary and it&rsquo;s kind of a toincoss wether an individual dev will do newline-before or newline-after for curved brackets but I&rsquo;d still like to give some context: I think the main reason to do after is to force devs to put a basically empty line after the first statement. This helps distinguish between function/class definitions and regular statements and it also makes it easier to find the start of the loop. Basically what I&rsquo;m trying to say is:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#999;font-style:italic">// messy
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">namespace</span> space {
+    ClassName : <span style="color:#6ab825;font-weight:bold">public</span> Mother {
+        ClassName() = <span style="color:#6ab825;font-weight:bold">default</span>;
+        ClassName(ArgType arg) : ClassName() {
+        }
+    }
+}
+
+<span style="color:#999;font-style:italic">// clearer
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">namespace</span> space 
+{
+    ClassName : <span style="color:#6ab825;font-weight:bold">public</span> Mother 
+    {
+        ClassName() = <span style="color:#6ab825;font-weight:bold">default</span>;
+        ClassName(ArgType arg) 
+            : ClassName() 
+        {}
+    }
+}
+
+<span style="color:#999;font-style:italic">// equally clear though:
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">namespace</span> space {
+
+    ClassName : <span style="color:#6ab825;font-weight:bold">public</span> Mother {
+    
+        ClassName() = <span style="color:#6ab825;font-weight:bold">default</span>;
+        ClassName(ArgType arg) 
+            : ClassName() {
+        }
+    }
+}
+</code></pre></div>
+<p>What&rsquo;s important isn&rsquo;t the bracket but the empty or almost empty line after the declaration. The reason I pick newline-before is because for constructors like in the above example I like the opening bracket for the CTOR definition to not be inline with one of the initializer list statements, with normal functions it can&rsquo;t get lost but with CTORs it can in all the brackets of the initializer list:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp">    Foo::Foo()
+        : LambdaMember2([&amp;]() 
+          {
+            <span style="color:#6ab825;font-weight:bold">auto</span> res = multiline_lambda();
+            res += multiline_lambda();
+            <span style="color:#6ab825;font-weight:bold">return</span> res;
+          }(),
+          LambdaMember([&amp;](){ <span style="color:#6ab825;font-weight:bold">return</span> <span style="color:#447fcf">oneline_lambda</span>();}()) {
+    }
+</code></pre></div>
+<p>Is very hard to parse. With the bracket starting the ctor definition preceded by a newline it is much easier and if you&rsquo;re doing the newline-before in one situation you should do it always because as I said, consistency is the most important thing.</p>
+<h1 id="VARIABLES">Variables</h1>
+<p>The following variable naming scheme should be adhered to at all times in most C-based languages unless language specifics prohibit:</p>
+<table style="width:100%">
+  <tr>
+    <th>Scope</th>
+    <th>Qualifier</th>
+    <th>Naming</th>
+    <th>Example</th>
+  </tr>
+  <tr>
+    <td>local class-, function- or internal namespace scope</td>
+    <td>non-const or const</td>
+    <td>
+        lower-case snake_case<br>
+    </td>
+    <td>
+        <code>size_t not_a_member;</code><br>
+    </td>
+  </tr>
+  <tr>
+    <td>global scope</td>
+    <td>non-const or const</td>
+    <td>all-caps snake_case</td>
+    <td>
+        <code>static InputHandler INPUT_HANDLER;</code><br>
+        <code>#define PI 3.14159</code><br>
+    </td>
+  </tr>
+  <tr>
+    <td>public member</td>
+    <td>non-const</td>
+    <td>lower-case snake_case</td>
+    <td>
+        <code>Vector2f top, left;</code><br>
+    </td>
+  </tr>
+  <tr>
+    <td>public member</td>
+    <td>const</td>
+    <td>all-caps snake_case</td>
+    <td>
+        <code>const size_t MAX_THREAD_COUNT = 64;</code><br>
+    </td>
+  </tr>
+  <tr>
+    <td>private or protected member</td>
+    <td>non-const or const</td>
+    <td>lower-case snake_case with prefix "_"</td>
+    <td>
+        <code>std::string _id;</code><br>
+        <code>static Color _default_color;</code>
+    </td>
+  </tr>
+</table>
+<p>Some variables gain a pre- or postfix depending on their type as such (the above naming scheme still applies):</p>
+<table style="width:100%">
+  <tr>
+    <th>Type</th>
+    <th>Name</th>
+  </tr>
+  <tr>
+    <td>unsigned int index</td>
+    <td>i, j, ... or foo_i, foo_j, ...</td>
+  </tr>
+  <tr>
+    <td>unsigned int counter</td>
+    <td>n_foo</td>
+  </tr>
+  <tr>
+    <td>bool</td>
+    <td>is_foo, should_foo, can_foo, etc.</td>
+  </tr>
+  <tr>
+    <td>Type*</td>
+    <td>foo_ptr</td>
+  </tr>
+  <tr>
+    <td>Type::Iterator</td>
+    <td>foo_it</td>
+  </tr>
+  <tr>
+    <td>Color</td>
+    <td>foo_rgb, foo_rgba, foo_hsv, foo_hsva, etc.</td>
+  </tr>
+  <tr>
+    <td>Angle in [0, 360] or [0, 2&#960]</td>
+    <td>foo_dg, foo_rad</td>
+  </tr>
+  <tr>
+    <td>Percent in [0%, 100%]</td>
+    <td>foo_pct</td>
+  </tr>
+  <tr>
+    <td>typename or using/typedef declaration name</td>
+    <td>
+        Foo_t
+    </td>
+  </tr>
+</table>
+<h2 id="VARIABLES_DECLARATION">Declaration</h2>
+<p>The order of type qualifier should always adhere to the following priorites (where 0 is the left most qualifier)
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#3677a9">0</span>: <span style="color:#6ab825;font-weight:bold">static</span> 
+<span style="color:#3677a9">1</span>: <span style="color:#6ab825;font-weight:bold">inline</span>, <span style="color:#6ab825;font-weight:bold">extern</span>
+<span style="color:#3677a9">2</span>: <span style="color:#6ab825;font-weight:bold">mutable</span>
+<span style="color:#3677a9">4</span>: <span style="color:#6ab825;font-weight:bold">volatile</span> 
+<span style="color:#3677a9">5</span>: <span style="color:#6ab825;font-weight:bold">constexpr</span>, <span style="color:#6ab825;font-weight:bold">consteval</span>, <span style="color:#6ab825;font-weight:bold">const</span>
+<span style="color:#3677a9">6</span>: Type of the variable
+&lt;no space&gt;
+<span style="color:#3677a9">7</span>: &amp; or * or &amp;&amp;
+&lt;space&gt;
+<span style="color:#3677a9">8</span>: Name of the variable
+
+<span style="color:#999;font-style:italic">// for example
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">inline</span> <span style="color:#6ab825;font-weight:bold">const</span> foo* <span style="color:#6ab825;font-weight:bold">const</span> ptr = <span style="color:#999;font-style:italic">//...
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">extern</span> <span style="color:#6ab825;font-weight:bold">mutable</span> <span style="color:#6ab825;font-weight:bold">volatile</span> <span style="color:#6ab825;font-weight:bold">const</span> <span style="color:#6ab825;font-weight:bold">auto</span>* var = <span style="color:#999;font-style:italic">//...
+</span></code></pre></div></p>
+<p>In easier to remember terms: always put <code>static</code> fist, always group const as right as possible but before the variable type and name. It&rsquo;s rare for this many qualifiers to pile up but it&rsquo;s good to have a solid idea of where stuff goes should the time come.</p>
+<p>Any variable that explicitely calls a constructor or other function on the right hand-side of the declaration should have the type <code>auto</code>.</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#999;font-style:italic">// wrong:
+</span><span style="color:#999;font-style:italic"></span>Vector2f vec = Vector2f(<span style="color:#3677a9">20</span>, <span style="color:#3677a9">50</span>);
+Vector2f vec = create_vector(<span style="color:#3677a9">20</span>, <span style="color:#3677a9">50</span>);
+Vector2f <span style="color:#447fcf">vec</span>(<span style="color:#3677a9">20</span>, <span style="color:#3677a9">50</span>);
+
+<span style="color:#999;font-style:italic">// correct:
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">auto</span> vec = Vector2f(<span style="color:#3677a9">20</span>, <span style="color:#3677a9">50</span>);
+<span style="color:#6ab825;font-weight:bold">auto</span> vec = create_vector(<span style="color:#3677a9">20</span>, <span style="color:#3677a9">50</span>);
+</code></pre></div>
+<p>This is to avoid confusion with C++20s new aggregate initialization with round brackets as it is not immediately obvious which of these the following statement tries to invoke:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"> Vector2f <span style="color:#447fcf">foo</span>();
+</code></pre></div>
+<p>I could be either calling the default constructor of Vector2f with c++20 aggregrate initialization with round brackets and no arguments or forward declaring a function with return type Vector2f and no arguments. Using</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"> <span style="color:#6ab825;font-weight:bold">auto</span> foo = Vector2f();
+</code></pre></div>
+<p>makes it immediatly obvious.</p>
+<p>For trivial numeric types, always use <code>float</code> for floating points. 64-bit numbers like <code>double</code> should be a conscious decision on the developers part when they recognize that they need the extra precision, not the default. This is to avoid unnecessary overhead on certain cpu architectures or in bleeding-edge-performance environment.</p>
+<p>Be aware of potential overhead this may cause by casting up or down the precision hirarchy when interacting with other libraries. clang-tidy usually issues a warning for this and it should not be ignored.</p>
+<p>On the topic of casting, <code>static_cast<foo></code> should always be preferred over c-style casts, even for trivial numeric type:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#6ab825;font-weight:bold">double</span> high_precision = <span style="color:#3677a9">2.2153165231</span>;
+
+<span style="color:#999;font-style:italic">// wrong
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">float</span> low_precision = <span style="color:#6ab825;font-weight:bold">float</span>(high_precision);
+<span style="color:#6ab825;font-weight:bold">float</span> low_precision = (<span style="color:#6ab825;font-weight:bold">float</span>) high_precision;
+<span style="color:#6ab825;font-weight:bold">auto</span> low_precision = <span style="color:#6ab825;font-weight:bold">float</span>(high_precision);
+<span style="color:#6ab825;font-weight:bold">float</span> low_precision = <span style="color:#6ab825;font-weight:bold">static_cast</span>&lt;<span style="color:#6ab825;font-weight:bold">float</span>&gt;(high_precision);
+
+<span style="color:#999;font-style:italic">// correct
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">auto</span> low_precision = <span style="color:#6ab825;font-weight:bold">static_cast</span>&lt;<span style="color:#6ab825;font-weight:bold">float</span>&gt;(high_precision);
+</code></pre></div>
+<p>If multiple variables of the same type and type-qualifier are declared one after another, always use the <a href="https://en.cppreference.com/w/cpp/language/declarations#Declarators" target="_empty">init-declarator-list</a> form as such:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp">std::string first_name, 
+            last_name,
+            adress;
+            
+Foo *ptr_one,
+    *ptr_two;
+    
+Bar &amp;ref;
+Bar not_ref;
+</code></pre></div>
+<p>There should always be a newline after the first declaration. If one of the variables is a pointer, reference, r-value, etc. then all of them should have the same type qualifier. If this is not the case, the type should be explicitely redeclared in a new line.</p>
+<p>This form reduces redundant words be redeclaring the type over and over and makes it easy to group members or variables by type on first glance.</p>
+<p>I would make an exception if all variables names are very short words, consider:
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#999;font-style:italic">// version 1
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">struct</span> <span style="color:#447fcf;text-decoration:underline">Color</span> 
+{
+    <span style="color:#6ab825;font-weight:bold">float</span> r, g, b, a;
+}
+
+<span style="color:#999;font-style:italic">// version 2
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">struct</span> <span style="color:#447fcf;text-decoration:underline">Color</span> 
+{
+    <span style="color:#6ab825;font-weight:bold">float</span> r, 
+          g, 
+          b, 
+          a;
+}
+</code></pre></div></p>
+<p>I would not reject a pull request with version 1 however I would also not ask someone using version 2 for consistency to change the formatting to version 1. Make of that what you will.</p>
+<h1 id="OPERATORS">Operators</h1>
+<h2 id="OPERATORS_PTR">Reference, Pointer, R-Value-Reference, etc.</h2>
+In function arguments and any other variable delcaration there should be a space following the &, *, && qualifiers but <b>not</b> preceding it:
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp">Foo&amp; wrap_foo(<span style="color:#6ab825;font-weight:bold">const</span> Foo* <span style="color:#6ab825;font-weight:bold">const</span> foo_ptr, Foo&amp;&amp; foo_rvalue, <span style="color:#6ab825;font-weight:bold">const</span> Foo&amp; foo_ref) 
+{
+    <span style="color:#999;font-style:italic">// ...
+</span><span style="color:#999;font-style:italic"></span>}
+
+std::vector&lt;Foo&gt;* foo_vec_ptr = <span style="color:#999;font-style:italic">// ...
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">auto</span>&amp; foo : *foo_vec_ptr)
+{
+    <span style="color:#999;font-style:italic">// ...
+</span><span style="color:#999;font-style:italic"></span>}
+</code></pre></div>
+<p>I am aware this is an onpupolar choice so let me explain: When we read out code in real life meaning actually read it out loud to someone in the same room, when someone asks us: &ldquo;What is the type of <code>const Foo* bar</code>?&rdquo; we answer &ldquo;constant foo pointer&rdquo; or &ldquo;a pointer to a constant foo&rdquo;. It&rsquo;s the same the same with references, r-values, etc.. I consider the type qualifier to be part of the type and it should thus be grouped with the type in the declaration.</p>
+<p>I will admit this falls apart when using the above mentioned init-declarator-list:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#6ab825;font-weight:bold">const</span> Foo&amp; first,           <span style="color:#999;font-style:italic">// type Reference to a const Foo
+</span><span style="color:#999;font-style:italic"></span>           second,          <span style="color:#999;font-style:italic">// type const Foo
+</span><span style="color:#999;font-style:italic"></span>           *third,          <span style="color:#999;font-style:italic">// type Pointer to a const Foo
+</span><span style="color:#999;font-style:italic"></span>           *fourth <span style="color:#6ab825;font-weight:bold">const</span>;   <span style="color:#999;font-style:italic">// type constant Pointer to a constant Foo
+</span></code></pre></div>
+<p>which is why I stated that when using this form, all variables should have the same type and type qualifier.</p>
+<h2 id="OPERATORS_LOGIC"> Logical Operators </h2>
+<p>Always use <code>and, or, not</code> instead of <code>&amp;&amp;, ||, !</code> for boolean operands.<br>
+Always use <code>&amp;, |, ^, ~</code> instead of <code>bitand, bitor, xor, compl</code> for numerical operands. Similarly always use <code>&amp;=, |=, !=, ^=</code> over <code>and_eq, or_eq, not_eq, xor_eq</code> for these operands.</p>
+<p>It may be my lua background but I&rsquo;m fond of the <code>and, or, not</code> in boolean expressions, many people from non-cs fields that primarily work in matlab or another very high level scripting language will have an easier time reading complex boolean expressions and using the keywords eliminates typos where the bit-wise logical operators are used accidentally triggering not error but performance overhead from <a href="https://en.cppreference.com/w/cpp/language/operator_logical" target="_blank">non-short-circuiting</a> expressions.</p>
+<h2 id="OPERATORS_NUMERIC">Numerical Operators</h2>
+<p>There should be a space preceding and following the binary operators <code>+, -, /, %</code>. The unary <code>-</code> should be used on variables as well as number constants in favor of <code>-1 * </code></p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#6ab825;font-weight:bold">int</span> a, 
+    b;
+
+<span style="color:#999;font-style:italic">// wrong:
+</span><span style="color:#999;font-style:italic"></span>c = <span style="color:#3677a9">2</span>*(a+b);
+c = a*b;
+c = -<span style="color:#3677a9">1</span>*a;
+c = std::modulus(a, a%b);
+
+<span style="color:#999;font-style:italic">// correct:
+</span><span style="color:#999;font-style:italic"></span>c = <span style="color:#3677a9">2</span> * (a + b);
+c = a * b;
+c = -a;
+c = a % (a % b)
+</code></pre></div>
+<p>Unless in performance critical code conditions where every operation counts it is sometimes preferable to not mathematically simplify formulas for something if it aids in clarity.</p>
+<h2 id="OPERATORS_PREFIX">Pre- and Postfix Increment</h2>
+<p>Prefix incremenet / decrement should always be preferred over the postfix option unless specifically necessary to produce desired behavior:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp">size_t n = <span style="color:#3677a9">0</span>;
+
+<span style="color:#999;font-style:italic">// wrong:
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">auto</span> it = vec.begin(); it != vec.end() or n &lt; <span style="color:#3677a9">15</span>; it += <span style="color:#3677a9">1</span>, n++)
+    <span style="color:#999;font-style:italic">// ...
+</span><span style="color:#999;font-style:italic"></span>
+<span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">auto</span> it = vec.begin(); it != vec.end() or n &lt; <span style="color:#3677a9">15</span>; it.<span style="color:#6ab825;font-weight:bold">operator</span>++(<span style="color:#3677a9">1</span>), n++)
+    <span style="color:#999;font-style:italic">// ...
+</span><span style="color:#999;font-style:italic"></span>    
+<span style="color:#999;font-style:italic">// correct:
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">auto</span> it = vec.begin(); it != vec.end() or n &lt; <span style="color:#3677a9">15</span>; ++it, ++n)
+    <span style="color:#999;font-style:italic">// ... 
+</span><span style="color:#999;font-style:italic"></span>    
+</code></pre></div>
+<p>In many scenarios, post- and prefix operators are functionally equivalent but in that 1% of cases in which they aren&rsquo;t using the wrong one may cause hard-to-catch bugs. Always defaulting to the prefix version tends to avoid this as much as possible.</p>
+<h1 id="FUNCTIONS">Functions</h1>
+All function names should be lower-case snake_case. This includes lambdas however functors should be named according to the class naming specification (c.f. below). On declaration without definition, function arguments should be unnamed unless specifically necessary to give context or if there are multiple arguments of the same type:<br>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#999;font-style:italic">// wrong
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">set_position</span>(Vector2f position);
+<span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">add_percentage</span>(<span style="color:#6ab825;font-weight:bold">float</span>); <span style="color:#999;font-style:italic">// expects [0, 1], not [0, 100]
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">set_name</span>(std::string, std::string);
+
+<span style="color:#999;font-style:italic">// correct
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">set_position</span>(Vector2f);
+<span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">add_percentage</span>(<span style="color:#6ab825;font-weight:bold">float</span> zero_to_one);
+<span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">set_name</span>(std::string first_name, std::string last_name);
+</code></pre></div>
+<h3 id="FUNCTIONS_MEMBER">Member Functions</h3>
+<p>Members functions that set one or more member variables should always be named <code>set_*</code> where <code>*</code> is the same name used when declaring the member in the .hpp source code.</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">Color</span>
+{
+    <span style="color:#6ab825;font-weight:bold">private</span>:
+        <span style="color:#6ab825;font-weight:bold">float</span> _r, 
+              _g, 
+              _b, 
+              _alpha;
+
+    <span style="color:#6ab825;font-weight:bold">public</span>:
+        <span style="color:#6ab825;font-weight:bold">void</span> set_rgb(<span style="color:#6ab825;font-weight:bold">float</span>, <span style="color:#6ab825;font-weight:bold">float</span>, <span style="color:#6ab825;font-weight:bold">float</span>);
+        <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">set_alpha</span>();
+        
+        <span style="color:#999;font-style:italic">// wrong:
+</span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">set_red</span>(<span style="color:#6ab825;font-weight:bold">float</span>);
+        
+        <span style="color:#999;font-style:italic">// correct:
+</span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">void</span> set_r(<span style="color:#6ab825;font-weight:bold">float</span>;
+}
+</code></pre></div>
+<p>Similarly, getters should always be named <code>get_*</code>, however if the function returns a single bool, if that bool is a member variable named <code>_is_foo</code> it&rsquo;s getter should be named <code>get_is_foo()</code>, however if
+that value is not a member it&rsquo;s getter should be phrased like a yes-or-no question, for example:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">OsWindowHandler</span>;
+<span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">RenderWindow</span>
+{
+    <span style="color:#6ab825;font-weight:bold">private</span>:
+        std::string _id;
+        <span style="color:#6ab825;font-weight:bold">bool</span> _is_closed = <span style="color:#24909d">false</span>;
+
+    <span style="color:#6ab825;font-weight:bold">public</span>:
+        <span style="color:#6ab825;font-weight:bold">void</span> set_closed(<span style="color:#6ab825;font-weight:bold">bool</span> b) 
+        {
+            _closed = b;
+        }
+
+        <span style="color:#6ab825;font-weight:bold">bool</span> <span style="color:#447fcf">get_is_closed</span>() <span style="color:#6ab825;font-weight:bold">const</span>  <span style="color:#999;font-style:italic">// member bool
+</span><span style="color:#999;font-style:italic"></span>        {
+            <span style="color:#6ab825;font-weight:bold">return</span> _closed;
+        }
+
+        <span style="color:#6ab825;font-weight:bold">bool</span> <span style="color:#447fcf">is_focused</span>() <span style="color:#6ab825;font-weight:bold">const</span> <span style="color:#999;font-style:italic">// non-member bool
+</span><span style="color:#999;font-style:italic"></span>        {
+            <span style="color:#6ab825;font-weight:bold">return</span> OsWindowHandler::is_window_focused(_id);
+        }
+
+        <span style="color:#6ab825;font-weight:bold">bool</span> <span style="color:#447fcf">should_notify_on_close</span>() <span style="color:#6ab825;font-weight:bold">const</span> <span style="color:#999;font-style:italic">// non-member bool
+</span><span style="color:#999;font-style:italic"></span>        {
+            <span style="color:#6ab825;font-weight:bold">return</span> OsWindowHandler::get_context_settings(__id).should_notify_on_close;
+        }
+}
+</code></pre></div>
+<h2 id="LAMBDAS">Lambdas</h2>
+<p>Lambdas are very powerful in modern C++ and it can be very attractive to not add a new member function and instead just open a local lambda function inside another function. Lambdas should be used only where necessary, if you would call the potential member function from 2 or more places it&rsquo;s almost never worth it to not just create the new function.</p>
+<p>If you do have to use a lambda, if the lambda function itself is only called once inside it&rsquo;s scope, consider making it anonymous, the most common place would be inside a set or sorting algorithm with a custom comparison. If more than 1 routine needs it and it needs to be a lambda, consider making it a member and binding it to an std::function;</p>
+<p>A place I like to employ lambdas is for inline static initialization. Sometimes you need to call functions that do not return the object you&rsquo;re trying to initialize like so:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">TexturedFoo</span> : <span style="color:#6ab825;font-weight:bold">public</span> Drawable 
+{        
+    <span style="color:#6ab825;font-weight:bold">private</span>:
+        <span style="color:#6ab825;font-weight:bold">const</span> Texture _texture;
+        
+        <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">inline</span> <span style="color:#6ab825;font-weight:bold">const</span> _window_resolution = []() {
+        
+            <span style="color:#6ab825;font-weight:bold">if</span> (not RenderWindow::is_initialized())
+                RenderWindow::initialize_from_config();
+                
+            <span style="color:#6ab825;font-weight:bold">return</span> RenderWindow::get_resolution();
+        }();
+        
+    <span style="color:#6ab825;font-weight:bold">public</span>:
+        TexturedFoo(std::string texture_id)
+            : _texture([&amp;]() -&gt; Texture&amp;&amp; {
+                
+                <span style="color:#6ab825;font-weight:bold">auto</span> texture = new_texture();
+               
+                <span style="color:#6ab825;font-weight:bold">if</span> (not texture.load_from_file(texture_id))
+                    <span style="color:#6ab825;font-weight:bold">throw</span> /...
+                
+                <span style="color:#6ab825;font-weight:bold">return</span> std::move(texture);
+            }())
+        {}
+}
+</code></pre></div>
+<p>I think this can be a very elegant way to initiate things that need a more complex routine than just calling it&rsquo;s constructor, however thought should be put into wether it really is necessary to make this a lambda.<br>
+For the above example both initialization functions could just be a static member function of <code>RenderWindow</code> and <code>Texture</code> respectively and I would again argue that the lambda is only justified if that behavior is only called exactly once in the entirety of the library.<br><br>
+When using lambdas it&rsquo;s almost always best to delcare them as <code>[&amp;](auto arg1, auto arg2) { //&hellip; </code> nowadays. This way the compiler will decide which variables to capture themself and the argument type is automatically deduced. The capture should only be manually specificed if for example the invocation of a copy constructor is necessary. Similarly the trailing return-type <code> [&amp;](auto arg1, auto arg2) -&gt; foo { //&hellip;</code> should be ommitted unless specifically necessary.</p>
+<p>I would advise you to check on the <a href="https://en.cppreference.com/w/cpp/language/lambda" target="_blank">lambda docs page</a> every year or so, it feels like the new C++ versions, C++20 just recently and C++23 recently, are very impactful on what is possible with lambdas and I would encourange everyone to try to stay up to date with the most recent way of doing things, most recently templated lambdas and constraints/concepts support.</p>
+<h2 id="RETURN_AUTO"> Auto-deducing return types </h2>
+<p>It&rsquo;s tempting to always declare the return-types as auto if possible, even if it&rsquo;s not strictly necessary. It may often seem like the most modern way to do things but I would advise caution. If proper documentation isn&rsquo;t done yet it can send potential collborators on the hunt through your function definition to find out what exactly your function returns anyway. Without auto one look at the function declaration would&rsquo;ve sufficed. In my opinion, if auto is possible the following form should be used:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#999;font-style:italic">// wrong:
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">template</span>&lt;<span style="color:#6ab825;font-weight:bold">typename</span> Return_t&gt;
+<span style="color:#6ab825;font-weight:bold">auto</span> create_function() 
+{
+    <span style="color:#6ab825;font-weight:bold">return</span> std::move(std::function&lt;Return_t()&gt;());
+}
+
+<span style="color:#999;font-style:italic">// better:
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">template</span>&lt;<span style="color:#6ab825;font-weight:bold">typename</span> Return_t&gt;
+std::function&lt;Return_t()&gt;&amp;&amp; create_function 
+{
+    <span style="color:#6ab825;font-weight:bold">return</span> std::move(std::function&lt;Return_t()&gt;());
+}
+
+<span style="color:#999;font-style:italic">// best:
+</span><span style="color:#999;font-style:italic">// @brief dummy function
+</span><span style="color:#999;font-style:italic">// @returns rvalue of type function&lt;Return_t()&gt;
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">template</span>&lt;<span style="color:#6ab825;font-weight:bold">typename</span> Return_t&gt;
+<span style="color:#6ab825;font-weight:bold">auto</span> create_function() 
+{
+    <span style="color:#6ab825;font-weight:bold">return</span> std::move(std::function&lt;Return_t()&gt;());
+}
+</code></pre></div>
+<p>By employing good in-code documentation the original dev gets to use the convenience of auto and the collaborators only have to take one look at the function declaration to know what type the function returns. In cases were returning auto is absolutely necessary (such as when the return type depends on template parameters outside the developers control) other than proper documentation there is no way of getting around needing to see the definition to truly understand what&rsquo;s happening.</p>
+<h1 id="CLASSES_ENUMS">Classes & Enums</h1>
+<h2 id="CLASSES_NAMING">Naming</h2>
+Classes, Enums and other class-like entities are always named upper-case CamelCase. This includes structs, unions, enums, typenames and typedefs as well as using-declarations for any of these entities.<br>
+<h2>Enums</h2>
+As all Enum "members" are inherently scoped static constexpr constants, they should be in all-caps SNAKE_CASE. When each enumerator is manually defined with an expression, the enums type should also be manually defined as such:
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#999;font-style:italic">// wrong:
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">enum</span> <span style="color:#447fcf;text-decoration:underline">Manual</span> : <span style="color:#6ab825;font-weight:bold">int</span> {ZERO, ONE, TWO}
+<span style="color:#6ab825;font-weight:bold">enum</span> <span style="color:#447fcf;text-decoration:underline">Manual</span> {FIRST = <span style="color:#3677a9">1</span>, SECOND = <span style="color:#3677a9">2</span>, THIRD = -<span style="color:#3677a9">2</span>}
+
+<span style="color:#999;font-style:italic">// correct:
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">enum</span> <span style="color:#447fcf;text-decoration:underline">Manual</span> {ZERO, ONE, TWO}    <span style="color:#999;font-style:italic">// auto deduces int
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">enum</span> <span style="color:#447fcf;text-decoration:underline">Manual</span> : <span style="color:#6ab825;font-weight:bold">int</span> {FIRST = <span style="color:#3677a9">1</span>, SECOND = <span style="color:#3677a9">2</span>, THIRD = -<span style="color:#3677a9">2</span>}
+</code></pre></div>
+<p>An enum that&rsquo;s inside the global namespace should be declared a scope enum <code>enum class Foo</code>. This is to avoid name-collisions which can  be very annoying when an unrelated library you&rsquo;re using already reserved an enum constant name you want but they didn&rsquo;t scope their enum properly. If an enum is only used inside a very limited scope it is fine to omit the class for the convenience of not having to specify 3 scopes before using an enum constant.</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#6ab825;font-weight:bold">namespace</span> MyLibrary 
+{
+    <span style="color:#999;font-style:italic">// use enum class
+</span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">enum</span> <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">PublicEnum</span> { <span style="color:#999;font-style:italic">//...
+</span><span style="color:#999;font-style:italic"></span>    
+    <span style="color:#6ab825;font-weight:bold">namespace</span> detail 
+    {
+        <span style="color:#999;font-style:italic">// no enum class okay
+</span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">enum</span> <span style="color:#447fcf;text-decoration:underline">DetailEnum</span> { <span style="color:#999;font-style:italic">//...
+</span><span style="color:#999;font-style:italic"></span>    }
+    
+    <span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">Class</span> 
+    {
+        <span style="color:#6ab825;font-weight:bold">private</span>:
+            <span style="color:#999;font-style:italic">// also okay
+</span><span style="color:#999;font-style:italic"></span>            <span style="color:#6ab825;font-weight:bold">enum</span> <span style="color:#447fcf;text-decoration:underline">PrivateEnum</span> { <span style="color:#999;font-style:italic">//...
+</span><span style="color:#999;font-style:italic"></span>    }
+}
+<span style="color:#999;font-style:italic">// never put an enum in global namespace
+</span></code></pre></div>
+<h2 id="CLASS_VS_STRUCT">Class vs. Struct</h2> 
+<p>If all member variables and functions of a user-defined type are public, <code>struct</code> should be used an no access specifiers (<code>public, protected, private</code>) should be stated.</p>
+<p>In all other cases, <code>class</code> should be used and all members should be manually access specified.</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#999;font-style:italic">// wrong:
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">struct</span> <span style="color:#447fcf;text-decoration:underline">HSV</span> 
+{
+    <span style="color:#6ab825;font-weight:bold">public</span>:
+        <span style="color:#6ab825;font-weight:bold">float</span> _h, _s, _v;
+}
+
+<span style="color:#6ab825;font-weight:bold">struct</span> <span style="color:#447fcf;text-decoration:underline">Color</span> 
+{
+    HSV <span style="color:#447fcf">to_hsv</span>() <span style="color:#6ab825;font-weight:bold">const</span>;
+    
+    <span style="color:#6ab825;font-weight:bold">private</span>:
+        <span style="color:#6ab825;font-weight:bold">float</span> _r, _g, _b, _alpha;
+}
+
+<span style="color:#999;font-style:italic">// correct:
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">struct</span> <span style="color:#447fcf;text-decoration:underline">HSV</span> 
+{
+    <span style="color:#6ab825;font-weight:bold">float</span> h, s, v;  <span style="color:#999;font-style:italic">// no _ because members are public
+</span><span style="color:#999;font-style:italic"></span>}
+
+<span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">Color</span>
+{
+    <span style="color:#6ab825;font-weight:bold">public</span>:
+        HSV to_hsv() <span style="color:#6ab825;font-weight:bold">const</span>;
+        
+    <span style="color:#6ab825;font-weight:bold">private</span>:
+        <span style="color:#6ab825;font-weight:bold">float</span> _r, _g, _b, _alpha;
+}
+</code></pre></div>
+<h2 id="HPP_VS_CPP">File Organization: .hpp and .cpp</h2>
+<h3 id="FILENAMES"> Filenames </h3>
+<p>All programming language files should be lower-case snake_case. If a header holds a class named FooClass, the header should be named <code>foo_class.hpp</code> and similarly the source file should be <code>foo_class.cpp</code>.<br>
+If FooClass contains and internal class FooInternal declared in the same header then there should be a seperate second .cpp named <code>foo_internal.cpp</code>. This avoids having to recompile both classes when only changing something in one of them.</p>
+<p><code>.h</code> should not be used unless the entire header is exclusively written in C, not C++. For files in other programming languages the most common programming language file-extension should be used, for example if your data representation for a video-setting file is in lua and you agreed on a .cfg file extension for configs, the file should be name <code>video_settings.cfg.lua</code>. Many programming and data representation languages do not care what their file is name but you should still take care to make it immediatly obvious what language a file is written in, collaborators should not have to open the file in notepad and try to figure out the language. Here is a non-exhaustive list of languages and file extensions I personally use:</p>
+<table style="width:100%">
+  <tr>
+    <th>Language</th>
+    <th>Extension</th>
+  </tr>
+  <tr>
+    <td>C++</td>
+    <td>
+        .hpp for headers<br>
+        .cpp for source files
+    </td>
+  </tr>
+  <tr>
+    <td>Python</td>
+    <td>
+        .py
+    </td>
+  </tr>
+  <tr>
+    <td>Java</td>
+    <td>
+        .java
+    </td>
+  </tr>
+  <tr>
+    <td>JavaScript</td>
+    <td>
+        .js
+    </td>
+  </tr>
+  <tr>
+    <td>Lua</td>
+    <td>
+        .lua
+    </td>
+  </tr>
+  <tr>
+    <td>Ruby</td>
+    <td>
+        .rb
+    </td>
+  </tr>
+  <tr>
+    <td>Perl</td>
+    <td>
+        .pl
+    </td>
+  </tr>
+  <tr>
+    <td>Go / Golang</td>
+    <td>
+        .go
+    </td>
+  </tr>
+  <tr>
+    <td>R</td>
+    <td>
+        .R
+    </td>
+  </tr>
+  <tr>
+    <td>GLSL</td>
+    <td>
+        .glsl<br>
+        .frag for Fragment Shaders<br>
+        .vert for Vertex Shaders<br>
+    </td>
+  </tr>
+  <tr>
+    <td>Data Representation: CSV</td>
+    <td>
+        .csv
+    </td>
+  </tr>
+  <tr>
+    <td>Data Representation: XML</td>
+    <td>
+        .xml
+    </td>
+  </tr>
+  <tr>
+    <td>Data Representation: Lua</td>
+    <td>
+        .sav.lua for savefiles<br>
+        .cfg.lua for config<br>
+        etc.<br>
+    </td>
+  </tr>
+  <tr>
+    <td>Data Representation: JSON</td>
+    <td>
+        .json
+    </td>
+  </tr>
+  <tr>
+    <td>Data Representation: Matlab</td>
+    <td>
+        .MAT
+    </td>
+  </tr>
+</table>
+<p>I think a lot of these are standard and there&rsquo;s surely many I&rsquo;ve missed like all the html-related things like .md and .css but the point of this list was more to instill in you a point of consistent flexibility. If it doesn&rsquo;t matter to the computer the extension is technically arbitrary, but the human part of your company should decide one exactly one answer anyway and stick to that at all times. If that answer overrides the script languages default extension like I do with .lua, it should be .yourextension.lua to allow people from outside your team to easily classify your files too.</p>
+<h2 id="CLASSES">Classes: Declaration and Definition</h2>
+<p>I might be wrong on this but afaik in modern C++ the only reason to use the .hpp for declaration and .cpp for definition for a non-templated class is to reduce compile time. I&rsquo;ve asked this question to multiple people and nobody was able to give me a solid answer, for cyclic linkage and multiple definition errors you can <code>inline</code> functions in the .hpp and static members you can also <code>inline</code> to allocate them without a .cpp. Furthermore templated classes require the definition to be in a .hpp anyway so it&rsquo;s very confusing. This is how I&rsquo;ve been doing it so far and it kinda depends on a decision made at the very beginning of development:</p>
+<h3 id="HEADER_ONLY">Header-only library</h3>
+<p>If the library is header-only there should not be a single .cpp anywhere. The following form should be used:</p>
+<p>Inside the same access-specifier (private, protected, public) region, the declarations immediately followed by the definition should be in the following order:</p>
+<ol>
+<li>using / friend class declaration</li>
+<li>static member variables</li>
+<li>non-static member variables</li>
+<li>Constructor, Destructor, Copy- and Move-Constructors</li>
+<li>Assignment operators</li>
+<li>other operators</li>
+<li>static member functions</li>
+<li>non-static member functions</li>
+</ol>
+<p>Inside the class the access-specified regions should be in the following order:</p>
+<ol>
+<li>private</li>
+<li>protected</li>
+<li>public</li>
+</ol>
+<p>All functions should be defined inline, for non template files the <code>inline</code> keyboard should be used. Similarly all static members, both in templated and non-templated classes, should be initialized inline. This may cause static initilizations to be sensitive to the order they&rsquo;re declared in a file so be wary of that. If you&rsquo;re not sure you can always use the <a href="https://isocpp.org/wiki/faq/ctors#static-init-order" target="_blank">construct-on-first-use idiom</a>.</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#999;font-style:italic">// template_foo.hpp
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">template</span>&lt;<span style="color:#6ab825;font-weight:bold">typename</span> First_t, <span style="color:#6ab825;font-weight:bold">typename</span>... Args_t&gt;
+<span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">TemplateFoo</span> : <span style="color:#6ab825;font-weight:bold">protected</span> ParentFoo 
+{
+    <span style="color:#6ab825;font-weight:bold">private</span>:    
+        <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">inline</span> MemberType _static_private_member = <span style="color:#999;font-style:italic">//...
+</span><span style="color:#999;font-style:italic"></span>        Function_t _private_member;
+        
+        <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">private_func</span>(Args_t... members) <span style="color:#6ab825;font-weight:bold">const</span> 
+        {
+            <span style="color:#999;font-style:italic">// full definition here
+</span><span style="color:#999;font-style:italic"></span>        }
+        
+    <span style="color:#6ab825;font-weight:bold">protected</span>:
+        <span style="color:#6ab825;font-weight:bold">using</span> Function_t = std::function&lt;First_t(Args_t...)&gt;;
+    
+        <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">inline</span> <span style="color:#6ab825;font-weight:bold">protected</span> MemberType _protected_member = <span style="color:#999;font-style:italic">//..
+</span><span style="color:#999;font-style:italic"></span>        MemberType2 _protected_member;
+        
+        <span style="color:#6ab825;font-weight:bold">template</span>&lt;<span style="color:#6ab825;font-weight:bold">typename</span> T&gt;
+        First_t protected_func(T) 
+        {
+            <span style="color:#999;font-style:italic">// full definition here
+</span><span style="color:#999;font-style:italic"></span>        }
+        
+    <span style="color:#6ab825;font-weight:bold">public</span>:
+        <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">inline</span> <span style="color:#6ab825;font-weight:bold">constexpr</span> <span style="color:#6ab825;font-weight:bold">float</span> PUBLIC_CONST_FOO = <span style="color:#3677a9">42</span>;
+        <span style="color:#6ab825;font-weight:bold">float</span> x, y;
+        
+        Foo() = <span style="color:#6ab825;font-weight:bold">default</span>;
+        Foo(Args_t...) = <span style="color:#6ab825;font-weight:bold">default</span>;
+        <span style="color:#999;font-style:italic">// + dtor, move-assignment, copy-constructor, etc.
+</span><span style="color:#999;font-style:italic"></span>
+        <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">float</span> <span style="color:#447fcf">static_function</span>() 
+        {
+            <span style="color:#999;font-style:italic">// full definition here
+</span><span style="color:#999;font-style:italic"></span>        } 
+        
+        <span style="color:#6ab825;font-weight:bold">auto</span> <span style="color:#447fcf">get_private_member</span>() <span style="color:#6ab825;font-weight:bold">const</span> 
+        {
+            <span style="color:#6ab825;font-weight:bold">return</span> _private_member;
+        }
+}
+
+<span style="color:#999;font-style:italic">// non_template_foo.hpp
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">NonTemplateFoo</span> : <span style="color:#6ab825;font-weight:bold">public</span> TemplateFoo&lt;<span style="color:#6ab825;font-weight:bold">int</span>, <span style="color:#6ab825;font-weight:bold">int</span>&gt;
+{
+    <span style="color:#6ab825;font-weight:bold">private</span>:
+        <span style="color:#6ab825;font-weight:bold">static</span> <span style="color:#6ab825;font-weight:bold">inline</span> <span style="color:#6ab825;font-weight:bold">int</span> member = TemplateFoo&lt;<span style="color:#6ab825;font-weight:bold">int</span>, <span style="color:#6ab825;font-weight:bold">int</span>&gt;::static_function();
+
+    <span style="color:#6ab825;font-weight:bold">public</span>:
+        <span style="color:#6ab825;font-weight:bold">inline</span> <span style="color:#6ab825;font-weight:bold">void</span> NonTemplateFoo() 
+        {
+            <span style="color:#999;font-style:italic">// full definition here
+</span><span style="color:#999;font-style:italic"></span>        }
+}
+</code></pre></div>
+<p>Advantages of this form include an easier time linking things, being able to access the source code directly by just following back the header you included and less duplicated elements because you do not have to redeclare the template for every external definition.
+Disadvantages include far larger compile time and the fact an IDE is needed so collaborators can collabls longer functions or internal classes to rapidly access all declared functions signatures without having to scroll through thousands of lines. If that last point doesn&rsquo;t fully make sense, let&rsquo;s compare with the non-header only format:</p>
+<h2 id="NON_HEADER_ONLY">Not Header-only Library</h2>
+<p>If the library has at least one .cpp it is not header only and the following form should be used for all interal files from your library:</p>
+<p>Inside the same access-specifier members should be declared in the following order:</p>
+<ol>
+<li>using / friend class declaration</li>
+<li>static member variables</li>
+<li>non-static member variables</li>
+<li>Constructor, Destructor, Copy- and Move-Constructors</li>
+<li>Assignment operators</li>
+<li>other operators</li>
+<li>static member functions</li>
+<li>non-static member functions</li>
+</ol>
+<p>Inside the class the access-specified regions should be in the following order:</p>
+<ol>
+<li>public</li>
+<li>protected</li>
+<li>private</li>
+</ol>
+<p>Note that this is inverted when compared to header-only libraries. This is because in non-header-only libraries the class body should exclusively contain declarations. All functions and static members should be defined in the .cpp or if that is not possible (for example because the class is templated) they should still only be declared in the class definition and then defined later in the .hpp as such:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#999;font-style:italic">// template_foo.hpp
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">template</span>&lt;<span style="color:#6ab825;font-weight:bold">typename</span> T&gt;
+<span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">TemplateFoo</span> : <span style="color:#6ab825;font-weight:bold">public</span> ParentFoo 
+{
+    <span style="color:#6ab825;font-weight:bold">public</span>:
+        TemplateFoo();
+        <span style="color:#6ab825;font-weight:bold">float</span> <span style="color:#447fcf">get_member</span>(); 
+        <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">set_member</span>(<span style="color:#6ab825;font-weight:bold">float</span>) <span style="color:#6ab825;font-weight:bold">const</span>;
+        
+    <span style="color:#6ab825;font-weight:bold">protected</span>:
+        <span style="color:#6ab825;font-weight:bold">static</span> Type _protected_member;
+        
+    <span style="color:#6ab825;font-weight:bold">private</span>:
+        <span style="color:#6ab825;font-weight:bold">void</span> private_function();
+        <span style="color:#6ab825;font-weight:bold">float</span> _private_member;
+}
+
+<span style="color:#999;font-style:italic">// ###################################################################
+</span><span style="color:#999;font-style:italic"></span>
+<span style="color:#6ab825;font-weight:bold">template</span>&lt;<span style="color:#6ab825;font-weight:bold">typename</span> T&gt;
+Type TemplateFoo&lt;T&gt;::_protected_member = <span style="color:#999;font-style:italic">// ...
+</span><span style="color:#999;font-style:italic"></span>
+<span style="color:#6ab825;font-weight:bold">template</span>&lt;<span style="color:#6ab825;font-weight:bold">typename</span> T&gt;
+TemplateFoo&lt;T&gt;::TemplateFoo() 
+{
+    <span style="color:#999;font-style:italic">// full definition
+</span><span style="color:#999;font-style:italic"></span>}
+
+<span style="color:#6ab825;font-weight:bold">template</span>&lt;<span style="color:#6ab825;font-weight:bold">typename</span> T&gt; 
+<span style="color:#6ab825;font-weight:bold">float</span> TemplateFoo&lt;T&gt;::get_member() <span style="color:#6ab825;font-weight:bold">const</span> 
+{
+    <span style="color:#6ab825;font-weight:bold">return</span> _private_member;
+}
+
+<span style="color:#6ab825;font-weight:bold">template</span>&lt;<span style="color:#6ab825;font-weight:bold">typename</span> T&gt; 
+<span style="color:#6ab825;font-weight:bold">void</span> TemplateFoo&lt;T&gt;::set_member(<span style="color:#6ab825;font-weight:bold">float</span> f)
+{
+    _private_member = f;
+}
+</code></pre></div>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#999;font-style:italic">// non_template_foo.hpp
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">NonTemplateFoo</span> : <span style="color:#6ab825;font-weight:bold">public</span> ParentFoo 
+{
+    <span style="color:#6ab825;font-weight:bold">public</span>:
+        NonTemplateFoo();
+        <span style="color:#6ab825;font-weight:bold">float</span> <span style="color:#447fcf">get_member</span>(); 
+        <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">set_member</span>(<span style="color:#6ab825;font-weight:bold">float</span>) <span style="color:#6ab825;font-weight:bold">const</span>;
+        
+    <span style="color:#6ab825;font-weight:bold">protected</span>:
+        <span style="color:#6ab825;font-weight:bold">static</span> Type _protected_member;
+        
+    <span style="color:#6ab825;font-weight:bold">private</span>:
+        <span style="color:#6ab825;font-weight:bold">void</span> private_function();
+        <span style="color:#6ab825;font-weight:bold">float</span> _private_member;
+}
+
+<span style="color:#999;font-style:italic">// non_template_foo.cpp
+</span><span style="color:#999;font-style:italic"></span>Type NonTemplateFoo::_protected_member = <span style="color:#999;font-style:italic">// ...
+</span><span style="color:#999;font-style:italic"></span>
+NonTemplateFoo::NonTemplateFoo() 
+{
+    <span style="color:#999;font-style:italic">// ...
+</span><span style="color:#999;font-style:italic"></span>}
+
+<span style="color:#6ab825;font-weight:bold">float</span> NonTemplateFoo::get_member() 
+{
+    <span style="color:#6ab825;font-weight:bold">return</span> _private_member;
+}
+
+<span style="color:#6ab825;font-weight:bold">void</span> NonTemplateFoo::set_member(<span style="color:#6ab825;font-weight:bold">float</span> f) 
+{
+    _private_member = f;
+}
+
+<span style="color:#6ab825;font-weight:bold">void</span> NonTemplateFoo::private_function() 
+{   
+    <span style="color:#999;font-style:italic">// ..
+</span><span style="color:#999;font-style:italic"></span>}
+</code></pre></div>
+<p>Advantages of this form include improved readability as with just one look a collaborator can get all the relevant external information about a class. Further compile-time is vastly improved which I&rsquo;d like to put into context here because this point is honestly mostly dependent on personality.<br>
+Compile time is usually just seen as a necessary evil and since the user will most often not have to compile your product it&rsquo;s somewhat irrelevant for the economical process, right? Well anytime your machine is compiling you&rsquo;re not doing anything else. If this is just for a small app you only loose seconds which is irrelevant but if it&rsquo;s for a big highly interlinked app and especially if either your machine is slow and/or you use a lot of compile-time execution (which you should nowadays) things can add up fast. For my biggest project recompiling all modules on my somewhat-decent laptop can take upwards of 90s. In an environment where rapid iteration is needed this can add up fast and I can imagine is a big reason people tend to gravity towards scripting language that don&rsquo;t need to compile nowadays. <br><br>
+No matter how you stand on the issue of compile time, wether you split the .hpp or you don&rsquo;t is up to preference but you do have to decide early on stick to it. Again consistency is the most important thing, if you do something badly but the same everytime it&rsquo;s easier understood than using 20 different elegant solutions that don&rsquo;t look alike.</p>
+<h1>Comments & Documentation</h1>
+<h2 id="DOCUMENTATION">In-File Documentation</h2>
+Unless otherwise dictated by the documentation API your project uses, the following form should be employed for all public or protected functions:
+<table style="width:100%">
+  <tr>
+    <th>Tag</th>
+    <th>Is Optional</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>@brief</td>
+    <td>Never Optional</td>
+    <td>
+        Short description of what the function does. Should be one sentence
+    </td>
+  </tr>
+  <tr>
+    <td>@param</td>
+    <td>Optional if function has no parameters or functions exists in private context</td>
+    <td>
+        Description of function argument follower by <code>&ltname_of_the_parameter>:</code>. If parameter is unnamed in delcaration, the name is ommitted and replaced with a number instead (see example below
+    </td>
+  </tr>
+  <tr>
+    <td>@returns  </td>
+    <td>Optional if function returns void or function exists in private context</td>
+    <td>
+        Description of the returned value. If functions returns auto, explicit mention of the function return type
+    </td>
+  </tr>
+  <tr>
+    <td>@author</td>
+    <td>Always Optional</td>
+    <td>
+        Handle of developer, this may be the real name or for example a github user name. Ask collborators if they are okay with having their full name distributed and always give credit in highly collaborative scenarios such as crowd-sourcing 
+    </td>
+    </tr>
+  <tr>
+    <td>(no tag)</td>
+    <td>always optional</td>
+    <td>
+        Verbose description of the functions. Always put last after all the tagged content right before the actual function declaration
+    </td>
+  </tr>
+</table>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#999;font-style:italic">// @brief mix two foos using the ratio
+</span><span style="color:#999;font-style:italic">// @param 1: First foo to merge
+</span><span style="color:#999;font-style:italic">// @param 2: Second foo to merge
+</span><span style="color:#999;font-style:italic">// @param ratio: ratio of first to second foo, [0, 1]
+</span><span style="color:#999;font-style:italic">// @returns rvalue reference to newly merge foo
+</span><span style="color:#999;font-style:italic">// 
+</span><span style="color:#999;font-style:italic">// Functions takes two foos and applies (...) 
+</span><span style="color:#999;font-style:italic">// (...)
+</span><span style="color:#999;font-style:italic">// (...)
+</span><span style="color:#999;font-style:italic">// returning the now coagulated foos as an rvalue reference 
+</span><span style="color:#999;font-style:italic"></span>Foo&amp;&amp; merge_foos(Foo&amp;, Foo&amp;, <span style="color:#6ab825;font-weight:bold">float</span> ratio);
+</code></pre></div>
+<p>For private functions or functions and classes in <code>namespace detail</code> the documentation can be substituted with a single line like this:
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#999;font-style:italic">// @brief merge using ratio
+</span><span style="color:#999;font-style:italic"></span>Foo&amp;&amp; merge_foos(Foo&amp;, Foo&amp;, <span style="color:#6ab825;font-weight:bold">float</span> ratio);
+</code></pre></div></p>
+<p>While it would of course be best to document everything it&rsquo;s a reality of software development that proper documentation will happen last. That&rsquo;s why some tags are optional, it&rsquo;s an incentive for developers to at least do the one-line version however it is not an excuse to then never extend the one-line version. It&rsquo;s a temporary solution but a better compromise than not documenting anything.</p>
+<h2 id="COMMENTS">Comments</h2>
+<p>In case you haven&rsquo;t noticed so far, comments should be inline-comments of the form
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#999;font-style:italic">// this is a comment concerning the next line
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">auto</span> next_line = ...
+</code></pre></div>
+Notice the space after <code>//</code>. All comments should start at the smallest indent of the block meaning there should never be a piece of code left of the comment and the comment should be appropriately indented as such:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#999;font-style:italic">// wrong:
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">for</span> (size_t x = <span style="color:#3677a9">0</span>; x &lt; n_x; ++x)
+{
+    <span style="color:#6ab825;font-weight:bold">for</span> (size_t y = <span style="color:#3677a9">0</span>; y &lt; <span style="color:#3677a9">0.75</span> * n_x; ++y)    <span style="color:#999;font-style:italic">// x:y ratio should be 4:3
+</span><span style="color:#999;font-style:italic"></span>    {
+        doo_foo(x, y);
+        <span style="color:#999;font-style:italic">// ...
+</span><span style="color:#999;font-style:italic"></span>    }
+}
+            
+<span style="color:#999;font-style:italic">// correct:
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">for</span> (size_t x = <span style="color:#3677a9">0</span>; x &lt; n_x; ++x)
+{
+    <span style="color:#999;font-style:italic">// x:y ratio should be 4:3
+</span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">for</span> (size_t y = <span style="color:#3677a9">0</span>; y &lt; <span style="color:#3677a9">0.75</span> * n_x; ++y)
+    {
+        doo_foo(x, y);
+        <span style="color:#999;font-style:italic">// ...
+</span><span style="color:#999;font-style:italic"></span>    }
+}
+</code></pre></div>
+<p>All comments should be in-line comments. This is mostly a matter of prefrence but I do have a valid reason: When debugging you often want to disable a piece of the program by &ldquo;commenting it out&rdquo;, i.e. putting a multi-line comment around it temporarly. If there are already multiline comments in that section this will break the commented-out section up which means you have to add multiple comments just to comment something out for 10mins. An exception to this rule are comments at the very beginning of the file such as copy right disclaimers or similar legal-related things. As they are at the start of the file they can never interrupt multi-line comments. If you do decide to include multi-line comments in the release they should be formatted as such:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#999;font-style:italic">/* 
+</span><span style="color:#999;font-style:italic"> * There should be an empty line above the first line
+</span><span style="color:#999;font-style:italic"> * An each line should start with an asterisk
+</span><span style="color:#999;font-style:italic"> * (...)
+</span><span style="color:#999;font-style:italic"> * (...)
+</span><span style="color:#999;font-style:italic"> */</span>
+</code></pre></div>
+<h2 id="VARIABLE_NAMING_CLARITY">Choice of Variable/Function Names</h2>
+<p>Let&rsquo;s do a little hypothecial, first I&rsquo;d like you to look at this code completely out of context. I intentionally choose variable names poorly but without malice, maybe I&rsquo;m new or I really didn&rsquo;t have time to do this so I just submitted my first draft as a pull request</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">Base</span> 
+{};
+
+<span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">Wrapper</span> : <span style="color:#6ab825;font-weight:bold">public</span> WrapperBase
+{
+    <span style="color:#999;font-style:italic">// ...
+</span><span style="color:#999;font-style:italic"></span>};
+
+Pool 
+{
+    <span style="color:#6ab825;font-weight:bold">void</span> <span style="color:#447fcf">start</span>(size_t);
+    
+    std::condition_variable _var;
+    std::mutex _mutex;
+    std::queue&lt;std::unique_ptr&lt;TaskWrapperBase&gt;&gt; _q;
+    
+    std::vector&lt;std::<span style="color:#6ab825;font-weight:bold">thread</span>&gt; _w;
+    
+    <span style="color:#6ab825;font-weight:bold">bool</span> _res,
+         _shutdown,
+};
+
+<span style="color:#6ab825;font-weight:bold">void</span> Pool::start(size_t n)
+{
+    assert(_t.empty());
+
+    <span style="color:#6ab825;font-weight:bold">for</span> (size_t i = <span style="color:#3677a9">0</span>; i &lt; n; ++i)
+    {
+        _t.emplace_back([&amp;]()
+        {
+          <span style="color:#6ab825;font-weight:bold">auto</span> lock = std::unique_lock&lt;std::mutex&gt;(_mutex, std::defer_lock);
+          <span style="color:#6ab825;font-weight:bold">while</span> (<span style="color:#24909d">true</span>)
+          {
+              lock.lock();
+
+              _cv.wait(lock, [&amp;]() -&gt; <span style="color:#6ab825;font-weight:bold">bool</span> {
+                  <span style="color:#6ab825;font-weight:bold">return</span> _res || !_queue.empty() || _shutdown;
+              });
+
+              <span style="color:#6ab825;font-weight:bold">if</span> (_res || (_shutdown &amp;&amp; _queue.empty()))
+              {
+                  <span style="color:#6ab825;font-weight:bold">return</span>;
+              }
+              
+              <span style="color:#6ab825;font-weight:bold">auto</span> t = std::move(_queue.front());
+              _queue.pop();
+
+              lock.unlock();
+              t-&gt;<span style="color:#6ab825;font-weight:bold">operator</span>()();
+          }
+        });
+    }
+}
+</code></pre></div>
+<p>What happens in this code? I&rsquo;m sure many of you will be able to figure it out eventually but this isn&rsquo;t a pop-quiz, it&rsquo;s simply a demonstration of what a difference code-style can make to a third party. Let&rsquo;s look at the same code again but overly commented in a vein effort to explain what is happening:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#999;font-style:italic">// empty base needed for unique pointer 
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">Base</span> 
+{};
+
+<span style="color:#999;font-style:italic">// Wraps tasks
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">Wrapper</span> : <span style="color:#6ab825;font-weight:bold">public</span> WrapperBase
+{
+    <span style="color:#999;font-style:italic">// ...
+</span><span style="color:#999;font-style:italic"></span>};
+
+<span style="color:#999;font-style:italic">// variable size thread pool 
+</span><span style="color:#999;font-style:italic"></span>Pool 
+{
+    <span style="color:#6ab825;font-weight:bold">public</span>:
+        <span style="color:#999;font-style:italic">// ...
+</span><span style="color:#999;font-style:italic"></span>        
+    <span style="color:#6ab825;font-weight:bold">private</span>:
+        <span style="color:#999;font-style:italic">// initialize threads
+</span><span style="color:#999;font-style:italic"></span>        <span style="color:#6ab825;font-weight:bold">void</span> start(size_t);
+        
+        std::condition_variable _var;
+        std::mutex _mutex;
+        std::queue&lt;std::unique_ptr&lt;TaskWrapperBase&gt;&gt; _q;    <span style="color:#999;font-style:italic">// task queue
+</span><span style="color:#999;font-style:italic"></span>        
+        std::vector&lt;std::<span style="color:#6ab825;font-weight:bold">thread</span>&gt; _w;    <span style="color:#999;font-style:italic">// worker threads
+</span><span style="color:#999;font-style:italic"></span>        
+        <span style="color:#6ab825;font-weight:bold">bool</span> _res,      <span style="color:#999;font-style:italic">// is threapool paused for resizing?
+</span><span style="color:#999;font-style:italic"></span>             _shutdown, <span style="color:#999;font-style:italic">// is threapool shutting down?
+</span><span style="color:#999;font-style:italic"></span>};
+
+<span style="color:#6ab825;font-weight:bold">void</span> Pool::start(size_t n)
+{
+    <span style="color:#6ab825;font-weight:bold">for</span> (size_t i = <span style="color:#3677a9">0</span>; i &lt; n; ++i)
+    {
+        <span style="color:#999;font-style:italic">// add thread with routine
+</span><span style="color:#999;font-style:italic"></span>        _t.emplace_back([&amp;]()
+        {
+          <span style="color:#999;font-style:italic">// create lock for queue
+</span><span style="color:#999;font-style:italic"></span>          <span style="color:#6ab825;font-weight:bold">auto</span> lock = std::unique_lock&lt;std::mutex&gt;(_mutex, std::defer_lock);
+          
+          <span style="color:#999;font-style:italic">// keep checking if new task for taskqueue is ready
+</span><span style="color:#999;font-style:italic"></span>          <span style="color:#6ab825;font-weight:bold">while</span> (<span style="color:#24909d">true</span>)
+          {
+              lock.lock();
+              <span style="color:#999;font-style:italic">// wait at conditional variable until notified
+</span><span style="color:#999;font-style:italic"></span>              _cv.wait(lock, [&amp;]() -&gt; <span style="color:#6ab825;font-weight:bold">bool</span> {
+                  <span style="color:#6ab825;font-weight:bold">return</span> _res || !_queue.empty() || _shutdown;
+              });
+
+              <span style="color:#999;font-style:italic">// finish routine when resizing or shutting down
+</span><span style="color:#999;font-style:italic"></span>              <span style="color:#6ab825;font-weight:bold">if</span> (_res || (_shutdown &amp;&amp; _queue.empty()))
+              {
+                  <span style="color:#6ab825;font-weight:bold">return</span>;
+              }
+              
+              <span style="color:#999;font-style:italic">// then get task
+</span><span style="color:#999;font-style:italic"></span>              <span style="color:#6ab825;font-weight:bold">auto</span> t = std::move(_queue.front());
+              _queue.pop();
+
+              lock.unlock();
+              
+              <span style="color:#999;font-style:italic">// and run it
+</span><span style="color:#999;font-style:italic"></span>              t-&gt;<span style="color:#6ab825;font-weight:bold">operator</span>()();
+          }
+        });
+    }
+}
+</code></pre></div>
+<p>This is prefectly understandable, I think most people will immediately know whats going on and it could be argued that&rsquo;s the only thing that counts but I would like you to remind of one of the goals of this style guide: elegance. Comments are not elegant, because operating under the paradigm of &ldquo;only comment when absolutely necessary&rdquo; we can rewrite the code without sacrificing clarity like so:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Cpp" data-lang="Cpp"><span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">TaskWrapperBase</span> 
+{};
+
+<span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">TaskWrapper</span> : <span style="color:#6ab825;font-weight:bold">public</span> TaskWrapperBase
+{
+    <span style="color:#999;font-style:italic">// ...
+</span><span style="color:#999;font-style:italic"></span>};
+
+ThreadPool 
+{
+    <span style="color:#6ab825;font-weight:bold">public</span>: 
+        <span style="color:#999;font-style:italic">// ... 
+</span><span style="color:#999;font-style:italic"></span>        
+    <span style="color:#6ab825;font-weight:bold">private</span>: 
+        <span style="color:#6ab825;font-weight:bold">void</span> initialize_worker_threads(size_t);
+        
+        std::queue&lt;std::unique_ptr&lt;TaskWrapperBase&gt;&gt; _task_queue;
+        std::condition_variable _queue_conditional_variable;
+        std::mutex _queue_mutex;
+        
+        std::vector&lt;std::<span style="color:#6ab825;font-weight:bold">thread</span>&gt; _worker_threads;
+        
+        <span style="color:#6ab825;font-weight:bold">bool</span> _is_paused_for_resizing,
+             _is_shutting_down;
+
+};
+
+<span style="color:#6ab825;font-weight:bold">void</span> ThreadPool::initialize_worker_threads(size_t n_threads)
+{
+    <span style="color:#6ab825;font-weight:bold">for</span> (size_t i = <span style="color:#3677a9">0</span>; i &lt; n_threads; ++i)
+    {
+        _worker_threads.emplace_back([&amp;]()
+        {
+          <span style="color:#6ab825;font-weight:bold">auto</span> queue_lock = std::unique_lock&lt;std::mutex&gt;(_queue_mutex, std::defer_lock);
+          
+          <span style="color:#6ab825;font-weight:bold">while</span> (<span style="color:#24909d">true</span>)
+          {
+              queue_lock.lock();
+              _queue_conditional_variable.wait(queue_lock, [&amp;]() -&gt; <span style="color:#6ab825;font-weight:bold">bool</span> {
+                  <span style="color:#6ab825;font-weight:bold">return</span> not _task_queue.empty() or _is_paused_for_resizing or _is_shutting_down;
+              });
+
+              <span style="color:#6ab825;font-weight:bold">if</span> (_is_paused_for_resizing or _is_shutting_down and _task_queue.empty())
+                  <span style="color:#6ab825;font-weight:bold">return</span>;
+              
+              <span style="color:#6ab825;font-weight:bold">auto</span> new_task = std::move(_task_queue.front());
+              _task_queue.pop();
+
+              queue_lock.unlock();
+              new_task-&gt;<span style="color:#6ab825;font-weight:bold">operator</span>()();
+          }
+        });
+    }
+}
+</code></pre></div>
+<p>I think it is appropriate to say that this version is just as clear and easy to understand as the commented version except this time the reader actually looks at the code. Someone trying to debug the first version will ignore the code completely on their first read because they don&rsquo;t need it to understand what&rsquo;s even going on but when they do they still have to deal with obtuse variable names. Using the more elegant minimally commented version allows for less fluff at no cost of clarity.</p>
+<h1 id="EPILOGUE">Closing Comments</h1>
+Here are some things I didn't know where to put structurally but that I still think are important to say:
+<h2 id="EPILOGUE_GIT">Version Control</h2>
+Commit as often as possible. Anytime you change file or continue to the next step of implementing/fixing something, create a new commit. The actual commit message should be what was just done, past-tense, not what you're about to do. The more granular the commits are the easier it will be to rollback when something goes wrong and similar to documentation well formatted messages will help you understand things instantly even 2 years later. Consider coming up with a labeling scheme each message begins with, I often see things like <code>[FIX], [POLISH], [TYPO], [ISSUE#1234]</code> etc.. Some teams even uses emotes which I do kinda like but not all shells support this so maybe alphanumerical would be better for now.<br>
+You'd think having a million commits would get hard to manage but that's what pull-requests are for. They collapse all the tiny commits into one big package and by grouping them like this you both get the convenience of having the granularity on your machine but once it goes to the team or users they don't have to sift through pages and pages of messages to rebase. 
+<h2 id="EPILOGUE_BENCHMARK">Test and Profile Frequently</h2>
+Testing modules frequently is non-negotiable. I recommend <a href="https://github.com/google/googletest">google test</a> but an internal testing framework can also be used. Testing assures correctness and it can be used later to see if modules would interact properly were this new feature merge with the master.<br>
+Test small pieces of modules, you don't need to write a test for every function but a test should take no more than 5mins to finish. If you do need testing in general to run for 30mins should should create 6 smaller tests and run them sequentially. That way if you only change one part you don't need to run the giant test again to see if it works now.
+<p>Profiling and Benchmarking are a more sublte issue because they aren&rsquo;t always necessary in my opinion. For certain application yes, you should absolutely benchmark and especially if you&rsquo;re currently trying to optimize already existing code the only way you can do that properly is to actually benchmark the code by running it to see if it actually got faster. There are best-practice ways for this such as using a steady machine or running benchmarks multiple times and using statistical analysis on the results but I won&rsquo;t go into that here.<br>
+Don&rsquo;t think you can spot performance problems just by re-reading code, always run it even if you have three doctorates and 40 years of experience humans make errors or overlook things no matter how good they are at what they do. Having solid proof of how things are better now in forms of data is also a better way to convince customers or collaborators that what you did was actually successfull.<br>
+I do realize that this can be overkill, you don&rsquo;t need to squeeze out that last 5% performance increase for your app that starts a washing machine in your house. A good middle-ground I found is to have a profiling tool run in the background. For example for my game I have a seperate process that monitors how much time of the 1/60ths of a second (the duration of one frame) the rendering and simulation needs and how much time the engine has just waiting for the monitor to refresh. If nothing happens that index is at 0%, if the engine is so slow that it lags the screen the tool will notify me that the percentage is above 100%. I always have that number on the side of my screen, that way when something doesn&rsquo;t quite break but behaves unexpectedly non-performant I know to investigate.
+<br></p>
+<h2 id="EPILOGUE_OPTIMIZATION">When Optimization is Appropriate</h2>
+<p>On the topic of optimization, don&rsquo;t always go for the optimal way of doing things unless it&rsquo;s necessary. Again, some for some environments it&rsquo;s true, always do it the fastest way that&rsquo;s what counts but be realistic about it. If you for example want to allocate user made objects and access them later by ID and you expect the user to at most ever make 6 objects then writing a specially-hashed map that objects them in sub-logarithmic time is really not worth it vs just putting them in an array and iterating over all indices everytime you need to access them.
+Similarly I would always think first before parallelizing something. Anytime that decision is made, the reason should be &ldquo;we can&rsquo;t make it sequential because x&rdquo;. Sequential should always always be default, parallelization is something that introduce so much complexity and hard-to-catch bugs that I would honestly recommend not doing anything in paralell until you&rsquo;re read to release and then paralellizing thing to make everything snappier though this requires a good softwaredesigner because things have to be designed in a way that would work both sequential and in paralell from the beginning</p>
+<h2 id="EPILOGUE_REFACTOR">Always Refactor at least once</h2>
+When you realize you accomplished your taks or fixed a bug, take some time to go through your code again to pretty it up. I often set myself goals like "today I will implement x" and then at the end of the day when I run my test and it goes through I'll go "done for today" and leave and then I never touch that file again until something goes wrong. This is not good, just because something works doesn't mean it's done. It's not even about adding documentation, sometimes redundant stuff will be left over or an if-else branch has duplicate branches or you forgot to delete a commented out section or <strike>I</strike> you slacked off and didn't 100% keep to the style guide rules detailed above. Always doing at least one refactor will do wonders to keep your code clean and most importantly the more you do this the more you will just do things properly the first time. I'm still in this learning process myself but actually challenging what I do through force of habit will get me closer to doing it right the first time over time.
+<h1>Epilogue</h1>
+If you read this far through in one go then I would like to thank you for your time. The main point of this piece was less to inform (nobody is reading these anyway) but to investigate my own way of doing things. Writing everything out forces me to argue my points to the imagined reader and it helps me structure and maybe questions my ways of doing things and like I stated at the beginning, adaptability and a willingless to discard tradition in favor of better things are the 3rd most important thing you can do with your coding style.
+<p>C.</p>
+<hr>
+As I evolve I'll probably change and keep this update so here is a list of edits:
+First published, Mai 18th 2021
+Added Bracket Chapter, Mai 28th 2021
+Added "don't use else", Mai 30th 2021
+      </span>
+      <span class="muted" style="float:right; position:relative; top:5em;">
+        <a href="#Title" style="color:#00f7c6;">&#11014; jump to beginning</a>
+      </span>
+      <br>
+<hr style="border:1px solid #999999"> </hr>
+<h2> Comments <span class="muted">(via GitHub)</span></h2>
+
+
+
+<div id="Comments">
+<script src="https://utteranc.es/client.js"
+        repo="Clemapfel/rat_game_website"
+        issue-term="og:title"
+        label="[comment]"
+        theme="github-dark"
+        crossorigin="anonymous"
+        async>
+</script>
+</div>
+<hr style="border:1px solid #999999"> </hr>
+
+    </div>
+
+  </article>
+</main>
+    <footer>
+  <div>
+<center>
+<p style="font-size:11px" class="muted">
+&copy 2021 C. Cords | all images, code and writing are original and subject to copyright, unless otherwise specified.<br>
+Hosted by <a href="https://in-berlin.de/"> Individual Network Berlin e.V</a>, styled with <a href="https://after-dark.habd.as/"> After Dark </a>
+</p>
+</center>
+</div>
+
+</footer>
+    
+    
+    
+      
+    
+  </body>
+</html>

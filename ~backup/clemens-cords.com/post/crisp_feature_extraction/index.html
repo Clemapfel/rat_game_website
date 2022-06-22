@@ -1,0 +1,824 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    
+
+
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; worker-src 'self' blob:; connect-src 'self' wss: data:; font-src 'self' https: data:; img-src 'self' https: data:; object-src 'none'">
+
+
+    <meta name="generator" content="After Dark Hugo">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title style="color:#00f7c6">Describing a Regions Shape and Texture with Descriptors intended for Deep Learning Applications | Clemens Cords&#39; Homepage</title>
+    <meta name="description" content="(This is a mirror of the documentation of crisps feature extraction tutorial also available [here](here. It has been reposted on this blog because it also illustrates many of the techniques available to describe both an image regions shape and texture for classification via deep learning.)
+  Feature Extraction Image Regions, Region Descriptors, Boundary Tracing, Signatures, Pattern Descriptors
+#include &lt;image_region.hpp&gt;Table of Contents  Introduction
+1.1 Extracting a Region">
+    <meta name="keywords" content="crisp, deep learning, game design, programming, ">
+    
+    
+    
+    
+    <meta property="og:title" content="Describing a Regions Shape and Texture with Descriptors intended for Deep Learning Applications" />
+<meta property="og:description" content="(This is a mirror of the documentation of crisps feature extraction tutorial also available [here](here. It has been reposted on this blog because it also illustrates many of the techniques available to describe both an image regions shape and texture for classification via deep learning.)
+  Feature Extraction Image Regions, Region Descriptors, Boundary Tracing, Signatures, Pattern Descriptors
+#include &lt;image_region.hpp&gt;Table of Contents  Introduction
+1.1 Extracting a Region" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://clemens-cords.com/post/crisp_feature_extraction/" />
+<meta property="og:image" content="https://github.com/Clemapfel/crisp/blob/main/docs/feature_extraction/.resources/pepper.png" />
+<meta property="article:published_time" content="2021-09-28T00:00:00+02:00" />
+<meta property="article:modified_time" content="2021-09-28T00:00:00+02:00" />
+
+    <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://github.com/Clemapfel/crisp/blob/main/docs/feature_extraction/.resources/pepper.png"/>
+
+<meta name="twitter:title" content="Describing a Regions Shape and Texture with Descriptors intended for Deep Learning Applications"/>
+<meta name="twitter:description" content="(This is a mirror of the documentation of crisps feature extraction tutorial also available [here](here. It has been reposted on this blog because it also illustrates many of the techniques available to describe both an image regions shape and texture for classification via deep learning.)
+  Feature Extraction Image Regions, Region Descriptors, Boundary Tracing, Signatures, Pattern Descriptors
+#include &lt;image_region.hpp&gt;Table of Contents  Introduction
+1.1 Extracting a Region"/>
+
+    
+
+
+
+
+
+    
+
+    
+    
+  <meta name="referrer" content="same-origin">
+
+
+    
+    
+    <script integrity="sha512-2t0yyNrUdtn9WGIoBVxq5vtoJQYfoDQDbqRPpOb75f1hiL39DGLdJKDrGP60fBhXfrFeKyVhzWJvHvLgln/ElA==">/*! Fetch Inject v2.0.4 | Copyright (C) Josh Habdas <jhabdas@protonmail.com> (https://habd.as) | @license Zlib */
+var fetchInject=function(){"use strict";const e=function(e,t,r,n,o,c,i){c=t.createElement(r),i=t.getElementsByTagName(r)[0],c.appendChild(t.createTextNode(n.text)),c.onload=o(n),i?i.parentNode.insertBefore(c,i):t.head.appendChild(c)};return function(t,r){if(!arguments.length)return Promise.reject(new ReferenceError("Failed to execute 'fetchInject': 1 argument required but only 0 present."));if(arguments[0]&&arguments[0].constructor!==Array)return Promise.reject(new TypeError("Failed to execute 'fetchInject': argument 1 must be of type 'Array'."));if(arguments[1]&&arguments[1].constructor!==Promise)return Promise.reject(new TypeError("Failed to execute 'fetchInject': argument 2 must be of type 'Promise'."));const n=[],o=r?[].concat(r):[],c=[];return t.forEach(e=>o.push(window.fetch(e).then(e=>[e.clone().text(),e.blob()]).then(e=>Promise.all(e).then(e=>{n.push({text:e[0],blob:e[1]})})))),Promise.all(o).then(()=>(n.forEach(t=>{c.push({then:r=>{t.blob.type.includes("text/css")?e(window,document,"style",t,r):e(window,document,"script",t,r)}})}),Promise.all(c)))}}();
+</script>
+    <script integrity="sha512-2XlvnxweZhaHgBdCoOK0PoCUWiSfKibb&#43;RCRZNgqLdvbnx0ZH67FDGKQqmpqCerjMJbZFv6fsXgbmJOOA9K&#43;qA==">/*!
+ * Copyright (C) 2019  Josh Habdas <jhabdas@protonmail.com>
+ *
+ * This file is part of After Dark.
+ *
+ * After Dark is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * After Dark is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+fetchInject(["/js/lazysizes.min.js"]);
+</script>
+    
+
+
+  
+    
+
+  <meta title="mod:fractal-forest" content="status:enabled">
+  
+    <script async src=../../js/bpgdec8a.js integrity=sha384-8PG0go3BW8hLm63KbTxk/hNcehaoSbrAhKzsmy2Jhs/KY8QdiKKkjhdeyHY/Q/0I&#10;></script>
+  
+
+
+  
+  
+  
+  
+
+
+    
+    <link rel="canonical" href="http://clemens-cords.com/post/crisp_feature_extraction/">
+    
+    
+    <link rel="icon" href="../../favicon.png" sizes="any">
+
+    
+
+  
+  
+  
+  
+  
+  
+  
+    
+      
+        <style>html{font-size:12px}*{box-sizing:border-box;text-rendering:geometricPrecision}body{font-size:1rem;line-height:1.5rem;margin:0;font-family:Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;word-wrap:break-word}h1,h2,h3,h4,h5,h6{line-height:1.3em}fieldset{border:none;padding:0;margin:0}pre{padding:2rem;margin:1.75rem 0;background-color:#fff;border:1px solid #ccc;overflow:auto}code[class*=language-],pre[class*=language-],pre code{font-weight:100;text-shadow:none;margin:1.75rem 0}a{cursor:pointer;color:#eb1c79;text-decoration:none;border-bottom:1px solid #eb1c79}a:hover{background-color:#eb1c79;color:#fff}.grid{display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap}.grid.\-top{-ms-flex-align:start;align-items:flex-start}.grid.\-middle{-ms-flex-align:center;align-items:center}.grid.\-bottom{-ms-flex-align:end;align-items:flex-end}.grid.\-stretch{-ms-flex-align:stretch;align-items:stretch}.grid.\-baseline{-ms-flex-align:baseline;align-items:baseline}.grid.\-left{-ms-flex-pack:start;justify-content:flex-start}.grid.\-center{-ms-flex-pack:center;justify-content:center}.grid.\-right{-ms-flex-pack:end;justify-content:flex-end}.grid.\-between{-ms-flex-pack:justify;justify-content:space-between}.grid.\-around{-ms-flex-pack:distribute;justify-content:space-around}.cell{-ms-flex:1;flex:1;box-sizing:border-box}@media screen and (min-width:768px){.cell.\-1of12{-ms-flex:0 0 8.33333%;flex:0 0 8.33333%}.cell.\-2of12{-ms-flex:0 0 16.66667%;flex:0 0 16.66667%}.cell.\-3of12{-ms-flex:0 0 25%;flex:0 0 25%}.cell.\-4of12{-ms-flex:0 0 33.33333%;flex:0 0 33.33333%}.cell.\-5of12{-ms-flex:0 0 41.66667%;flex:0 0 41.66667%}.cell.\-6of12{-ms-flex:0 0 50%;flex:0 0 50%}.cell.\-7of12{-ms-flex:0 0 58.33333%;flex:0 0 58.33333%}.cell.\-8of12{-ms-flex:0 0 66.66667%;flex:0 0 66.66667%}.cell.\-9of12{-ms-flex:0 0 75%;flex:0 0 75%}.cell.\-10of12{-ms-flex:0 0 83.33333%;flex:0 0 83.33333%}.cell.\-11of12{-ms-flex:0 0 91.66667%;flex:0 0 91.66667%}}@media screen and (max-width:768px){.grid{-ms-flex-direction:column;flex-direction:column}.cell{-ms-flex:0 0 auto;flex:0 0 auto}}.hack,.hack blockquote,.hack code,.hack em,.hack h1,.hack h2,.hack h3,.hack h4,.hack h5,.hack h6,.hack strong{font-size:1rem;font-style:normal;font-family:Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif}.hack blockquote,.hack code,.hack em,.hack strong{line-height:20px}.hack blockquote,.hack code,.hack footer,.hack h1,.hack h2,.hack h3,.hack h4,.hack h5,.hack h6,.hack header,.hack li,.hack ol,.hack p,.hack section,.hack ul{float:none;margin:0;padding:0}.hack blockquote,.hack h1,.hack ol,.hack p,.hack ul{margin-top:20px;margin-bottom:20px}.hack h1{position:relative;display:inline-block;display:table-cell;padding:20px 0 30px;margin:0;overflow:hidden}.hack h1:after{content:"====================================================================================================";position:absolute;bottom:10px;left:0}.hack h1+*{margin-top:0}.hack h2,.hack h3,.hack h4,.hack h5,.hack h6{position:relative;margin-bottom:1.75rem}.hack h2:before,.hack h3:before,.hack h4:before,.hack h5:before,.hack h6:before{display:inline}.hack h2:before{content:"## "}.hack h3:before{content:"### "}.hack h4:before{content:"#### "}.hack h5:before{content:"##### "}.hack h6:before{content:"###### "}.hack li{position:relative;display:block;padding-left:20px}.hack li:after{position:absolute;top:0;left:0}.hack ul>li:after{content:"-"}.hack ol{counter-reset:a}.hack ol>li:after{content:counter(a) ".";counter-increment:a}.hack ol li:nth-child(n+10):after{left:-7px}.hack blockquote{position:relative;padding-left:17px;padding-left:2ch;overflow:hidden}.hack blockquote:after{content:">\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>";white-space:pre;position:absolute;top:0;left:0;line-height:20px}.hack em:after,.hack em:before{content:"*";display:inline}.hack pre code:after,.hack pre code:before{content:""}.hack code{font-weight:700}.hack code:after,.hack code:before{content:"`";display:inline}.hack hr{position:relative;height:20px;overflow:hidden;border:0;margin:20px 0}.hack hr:after{content:"----------------------------------------------------------------------------------------------------";position:absolute;top:0;left:0;line-height:20px;width:100%;word-wrap:break-word}@-moz-document url-prefix(){.hack h1{display:block}}.hack-ones ol>li:after{content:"1."}p{margin:0 0 1.75rem}.container{max-width:70rem}.container,.container-fluid{margin:0 auto;padding:0 1rem}.inner{padding:1rem}.inner2x{padding:2rem}.pull-left{float:left}.pull-right{float:right}.progress-bar{height:8px;opacity:.8;background-color:#ccc;margin-top:12px}.progress-bar.progress-bar-show-percent{margin-top:38px}.progress-bar-filled{background-color:gray;height:100%;transition:width .3s ease;position:relative;width:0}.progress-bar-filled:before{content:"";border:6px solid transparent;border-top-color:gray;position:absolute;top:-12px;right:-6px}.progress-bar-filled:after{color:gray;content:attr(data-filled);display:block;font-size:12px;white-space:nowrap;position:absolute;border:6px solid transparent;top:-38px;right:0;-ms-transform:translateX(50%);transform:translateX(50%)}table{width:100%;border-collapse:collapse;margin:1.75rem 0;color:#778087}table td,table th{vertical-align:top;border:1px solid #ccc;line-height:15px;padding:10px}table thead th{font-size:10px}table tbody td:first-child{font-weight:700;color:#333}.form{width:30rem}.form-group{margin-bottom:1.75rem;overflow:auto}.form-group label{border-bottom:2px solid #ccc;color:#333;width:10rem;display:inline-block;height:38px;line-height:38px;padding:0;float:left;position:relative}.form-group.form-success label{color:#4caf50!important;border-color:#4caf50!important}.form-group.form-warning label{color:#ff9800!important;border-color:#ff9800!important}.form-group.form-error label{color:#f44336!important;border-color:#f44336!important}.form-control{outline:none;border:none;border-bottom:2px solid #ccc;padding:.5rem 0;width:20rem;height:38px;background-color:transparent}.form-control:focus{border-color:#555}.form-group.form-textarea label:after{position:absolute;content:"";width:2px;background-color:#fff;right:-2px;top:0;bottom:0}textarea.form-control{height:auto;resize:none;padding:1rem 0;border-bottom:2px solid #ccc;border-left:2px solid #ccc;padding:.5rem}select.form-control{border-radius:0;background-color:transparent;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none}.help-block{color:#999;margin-top:.5rem}.form-actions{margin-bottom:1.75rem}.btn{display:-ms-inline-flexbox;display:inline-flex;-ms-flex-align:center;align-items:center;-ms-flex-pack:center;justify-content:center;cursor:pointer;outline:none;padding:.65rem 2rem;font-size:1rem;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;position:relative;z-index:1}.btn:active{box-shadow:inset 0 1px 3px rgba(0,0,0,.12)}.btn.btn-ghost{border-color:#757575;color:#757575;background-color:transparent}.btn.btn-ghost:focus,.btn.btn-ghost:hover{border-color:#424242;color:#424242;z-index:2}.btn.btn-ghost:hover{background-color:transparent}.btn-block{width:100%;display:-ms-flexbox;display:flex}.btn-default{color:#fff;background-color:#e0e0e0;border:1px solid #e0e0e0;color:#333}.btn-default:focus:not(.btn-ghost),.btn-default:hover{background-color:#dcdcdc;border-color:#dcdcdc}.btn-success{color:#fff;background-color:#4caf50;border:1px solid #4caf50}.btn-success:focus:not(.btn-ghost),.btn-success:hover{background-color:#43a047;border-color:#43a047}.btn-success.btn-ghost{border-color:#4caf50;color:#4caf50}.btn-success.btn-ghost:focus,.btn-success.btn-ghost:hover{border-color:#388e3c;color:#388e3c;z-index:2}.btn-error{color:#fff;background-color:#f44336;border:1px solid #f44336}.btn-error:focus:not(.btn-ghost),.btn-error:hover{background-color:#e53935;border-color:#e53935}.btn-error.btn-ghost{border-color:#f44336;color:#f44336}.btn-error.btn-ghost:focus,.btn-error.btn-ghost:hover{border-color:#d32f2f;color:#d32f2f;z-index:2}.btn-warning{color:#fff;background-color:#ff9800;border:1px solid #ff9800}.btn-warning:focus:not(.btn-ghost),.btn-warning:hover{background-color:#fb8c00;border-color:#fb8c00}.btn-warning.btn-ghost{border-color:#ff9800;color:#ff9800}.btn-warning.btn-ghost:focus,.btn-warning.btn-ghost:hover{border-color:#f57c00;color:#f57c00;z-index:2}.btn-info{color:#fff;background-color:#00bcd4;border:1px solid #00bcd4}.btn-info:focus:not(.btn-ghost),.btn-info:hover{background-color:#00acc1;border-color:#00acc1}.btn-info.btn-ghost{border-color:#00bcd4;color:#00bcd4}.btn-info.btn-ghost:focus,.btn-info.btn-ghost:hover{border-color:#0097a7;color:#0097a7;z-index:2}.btn-primary{color:#fff;background-color:#2196f3;border:1px solid #2196f3}.btn-primary:focus:not(.btn-ghost),.btn-primary:hover{background-color:#1e88e5;border-color:#1e88e5}.btn-primary.btn-ghost{border-color:#2196f3;color:#2196f3}.btn-primary.btn-ghost:focus,.btn-primary.btn-ghost:hover{border-color:#1976d2;color:#1976d2;z-index:2}.btn-group{overflow:auto}.btn-group .btn{float:left}.btn-group .btn-ghost:not(:first-child){margin-left:-1px}.card{border:1px solid #ccc}.card .card-header{color:#333;text-align:center;background-color:#ddd;padding:.5rem 0}.alert{color:#ccc;padding:1rem;border:1px solid #ccc;margin-bottom:1.75rem}.alert-success{color:#4caf50;border-color:#4caf50}.alert-error{color:#f44336;border-color:#f44336}.alert-info{color:#00bcd4;border-color:#00bcd4}.alert-warning{color:#ff9800;border-color:#ff9800}.media:not(:last-child){margin-bottom:1.25rem}.media-left{padding-right:1rem}.media-left,.media-right{display:table-cell;vertical-align:top}.media-right{padding-left:1rem}.media-body{display:table-cell;vertical-align:top}.media-heading{font-size:1.16667rem;font-weight:700}.media-content{margin-top:.3rem}.avatarholder,.placeholder{background-color:#f0f0f0;text-align:center;color:#b9b9b9;font-size:1rem;border:1px solid #f0f0f0}.avatarholder{width:48px;height:48px;line-height:46px;font-size:2rem;background-size:cover;background-position:50%;background-repeat:no-repeat}.avatarholder.rounded{border-radius:33px}.loading{display:inline-block;content:"&nbsp;";height:20px;width:20px;margin:0 .5rem;animation:a .6s infinite linear;border:2px solid #e91e63;border-right-color:transparent;border-radius:50%}.btn .loading{margin-bottom:0;width:14px;height:14px}.btn div.loading{float:left}.alert .loading{margin-bottom:-5px}@keyframes a{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}.menu{width:100%}.menu .menu-item{display:block;color:#616161;border-color:#616161}.menu .menu-item.active,.menu .menu-item:hover{color:#000;border-color:#000;background-color:transparent}@media screen and (max-width:768px){.form-group label{display:block;border-bottom:none;width:100%}.form-group.form-textarea label:after{display:none}.form-control{width:100%}textarea.form-control{border-left:none;padding:.5rem 0}pre::-webkit-scrollbar{height:3px}}@media screen and (max-width:480px){.form{width:100%}}html{font-size:14px}.standard{font-family:-apple-system,BlinkMacSystemFont,avenir next,avenir,helvetica,helvetica neue,Ubuntu,segoe ui,arial,sans-serif}.standard h1{font-size:2em;font-weight:700;margin:.67em 0}.standard h2{font-size:1.5em;font-weight:700;margin:.83em 0}.standard h3{font-size:1.17em;font-weight:700}.standard h3,.standard p{margin:1.75rem 0}.standard ol,.standard ul{display:block;list-style-type:disc;padding-left:20px;margin:1.75rem 0}.standard ol ul,.standard ul ul{margin:.75rem 0;list-style-type:square}.standard ol{list-style-type:decimal}.standard li{display:list-item;padding-left:0}.standard blockquote{margin:1.75rem 0;padding-left:10px;border-left:5px solid #f0f0f0}.standard pre{margin:1.75rem 0;white-space:pre}.standard hr{border:0;height:1px;display:block;background-color:#e2e2e2;margin:1.75rem 0}.dark-grey{background-color:#181818;color:#ccc}.dark-grey pre{background-color:#181818;padding:0;border:none}.dark-grey pre code{color:#00bcd4}.dark-grey h1 a,.dark-grey h2 a,.dark-grey h3 a,.dark-grey h4 a,.dark-grey h5 a{color:#ccc}.dark-grey code,.dark-grey strong{color:#fff}.dark-grey code{font-weight:100}.dark-grey table{color:#ccc}.dark-grey table td,.dark-grey table th{border-color:#444}.dark-grey table tbody td:first-child{color:#fff}.dark-grey .form-group label{color:#ccc;border-color:rgba(95,95,95,.78)}.dark-grey .form-group.form-textarea label:after{background-color:#181818}.dark-grey .form-control{color:#ccc;border-color:rgba(95,95,95,.78)}.dark-grey .form-control:focus{border-color:#ccc;color:#ccc}.dark-grey textarea.form-control{color:#ccc}.dark-grey .card{border-color:rgba(95,95,95,.78)}.dark-grey .card .card-header{background-color:transparent;color:#ccc;border-bottom:1px solid rgba(95,95,95,.78)}.dark-grey .btn.btn-ghost.btn-default{border-color:#ababab;color:#ababab}.dark-grey .btn.btn-ghost.btn-default:focus,.dark-grey .btn.btn-ghost.btn-default:hover{border-color:#9c9c9c;color:#9c9c9c;z-index:1}.dark-grey .btn.btn-ghost.btn-default:focus,.dark-grey .btn.btn-ghost.btn-default:hover{border-color:#e0e0e0;color:#e0e0e0}.dark-grey .btn.btn-ghost.btn-primary:focus,.dark-grey .btn.btn-ghost.btn-primary:hover{border-color:#64b5f6;color:#64b5f6}.dark-grey .btn.btn-ghost.btn-success:focus,.dark-grey .btn.btn-ghost.btn-success:hover{border-color:#81c784;color:#81c784}.dark-grey .btn.btn-ghost.btn-info:focus,.dark-grey .btn.btn-ghost.btn-info:hover{border-color:#4dd0e1;color:#4dd0e1}.dark-grey .btn.btn-ghost.btn-error:focus,.dark-grey .btn.btn-ghost.btn-error:hover{border-color:#e57373;color:#e57373}.dark-grey .btn.btn-ghost.btn-warning:focus,.dark-grey .btn.btn-ghost.btn-warning:hover{border-color:#ffb74d;color:#ffb74d}.dark-grey .avatarholder,.dark-grey .placeholder{background-color:transparent;border-color:#333}.dark-grey .menu .menu-item{color:#ccc;border-color:rgba(95,95,95,.78)}.dark-grey .menu .menu-item.active,.dark-grey .menu .menu-item:hover{color:#fff;border-color:#ccc}/*!* Copyright (C) 2019 Josh Habdas <jhabdas@protonmail.com>
+*
+* This file is part of After Dark.
+*
+* After Dark is free software: you can redistribute it and/or modify
+* it under the terms of the GNU Affero General Public License as published
+* by the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* After Dark is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU Affero General Public License for more details.
+*
+* You should have received a copy of the GNU Affero General Public License
+* along with this program. If not, see <https://www.gnu.org/licenses/>.*/:root{--screen-size-small: 30em}@keyframes intro{0%{opacity:0}100%{opacity:1}}.blur-up.lazyloading{filter:blur(5px);opacity:1;transition:opacity 1s,filter 1.5s}.blur-up.lazyload{opacity:0;filter:blur(10px)}.blur-up.lazyloaded{filter:blur(0);transition:filter 1s}.hack .readmore{margin-bottom:2.2em}.responsive-iframe,.ratio-container{position:relative;padding-bottom:56.25%;padding-top:25px;height:0}.responsive-iframe iframe,.ratio-container>*:not([itemprop=caption]){position:absolute;top:0;left:0;width:100%;height:100%}iframe{border:0}main,footer{animation:intro .3s both;animation-delay:.15s}header:first-of-type+details{margin:20px 0}footer time[datetime$=M]:before{content:"\2013\0020"}body>footer p.muted{margin-bottom:0}@media only screen and (max-width:768px){footer time[datetime$=M]{display:none}}blockquote cite{display:block}blockquote cite::before{content:"\2014\00A0"}:target{filter:brightness(1.2)}:disabled{cursor:not-allowed}.hack li ul{margin:0}.hack ol li{padding-left:27px}.main{padding:20px 10px}input.form-control{border-radius:0;background-color:transparent;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none}input.form-control,textarea.form-control,select.form-control,.help-block{font-size:initial}@media only screen and (max-width:768px){.help-block{font-size:unset}}html{font-size:13px}.hack .form input,.hack .form textarea,.hack .form button,.hack .form label{font-size:1rem}.hack .alert .highlight:first-of-type .chroma,.hack .card .highlight:first-of-type .chroma,.hack .alert pre:first-of-type,.hack .alert p:first-of-type,.hack .card pre:first-of-type,.hack .card p:first-of-type{margin-top:unset}.hack .alert .highlight:last-of-type .chroma,.hack .card .highlight:last-of-type .chroma,.hack .alert pre:last-of-type,.hack .alert p:last-of-type,.hack .card pre:last-of-type,.hack .card p:last-of-type{margin-bottom:unset}.hack blockquote,.hack blockquote:after{line-height:1.5}.hack figure,.standard figure{margin:unset}.hack figure a{border-bottom:none}.hack figure a:hover{background-color:inherit}article header img{width:100%;border-radius:3px}table td,table th{line-height:inherit}table a{border-bottom:unset}img{max-width:100%}@media only screen and (min-width:768px){html{font-size:16px}.container{max-width:50rem}}@media only screen and (min-width:768px),(-ms-high-contrast:active),(-ms-high-contrast:none){html{margin-left:calc(100vw - 100%)}}/*!
+ * Copyright (C) 2019  Josh Habdas <jhabdas@protonmail.com>
+ *
+ * This file is part of After Dark.
+ *
+ * After Dark is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * After Dark is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+a[rel*="external"]::after {
+  content: " " url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20class='i-external'%20viewBox='0%200%2032%2032'%20width='14'%20height='14'%20fill='none'%20stroke='%23ff9800'%20stroke-linecap='round'%20stroke-linejoin='round'%20stroke-width='9.38%'%3E%3Cpath%20d='M14%209%20L3%209%203%2029%2023%2029%2023%2018%20M18%204%20L28%204%2028%2014%20M28%204%20L14%2018'/%3E%3C/svg%3E");
+}
+nav a.active {
+  background-color: inherit;
+  color: #fff;
+}
+a[itemprop="url"] {
+  color: #ff9800;
+}
+a[itemprop="url"]:hover {
+  color: #fff;
+}
+.muted, .help-block {
+  opacity: 0.70;
+}
+.hack .muted,
+.hack .help-block {
+  color: #e0e0e0;
+}
+</style>
+        
+
+
+  
+    <meta name="theme-color" content=#181818>
+  
+
+
+      
+    
+  
+
+
+    
+    
+      <script integrity="sha512-ISTAV0GadOIz/NXXHOS+eCM0ysXVVHhQTlvA6LJxz/DeA5yIxm0Vqf5IE+WH0yuuXkayAKtoZkQ326nch5f/fg==">fetchInject(["/css/syntax.css"]);</script>
+      <noscript>
+        <link href="../../css/syntax.css" rel="stylesheet">
+      </noscript>
+    
+  </head>
+  
+  
+  
+  <body class="standard dark-grey main container">
+    <header>
+  <style>
+body {
+    background-image: url("/background.jpg");
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    min-height: 100vh;
+}
+
+div {
+    background-color: #1d1d1d
+}
+
+canvas {
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:-1;
+     
+    height: 100vh;
+    width: 100vw;
+}
+
+main {
+    padding-left: 4em;
+    margin-left: -4em;
+    padding-right: 4em;
+    margin-right: -4em;
+    padding-bottom: 1em;
+
+    min-height: 80vh;
+
+    background-color: #1d1d1d;
+}
+
+footer {
+    padding-left: 4em;
+    margin-left: -4em;
+    padding-right: 4em;
+    margin-right: -4em;
+
+    min-height: 8vh;
+
+    margin-top: -2em;
+    background-color: #1d1d1d
+}
+</style>
+
+<style>
+main {
+    padding-top: 3em;
+    margin-top:-3em;
+    background-color: #1d1d1d;
+}
+</style>
+
+</header>
+    <main>
+  
+    
+      <style>{{ -}}.hack header figure[itemtype*=ImageObject]{position:relative}.hack header figure[itemtype*=ImageObject] figcaption{position:absolute;bottom:0;right:0;text-align:right;padding:15px;font-style:oblique;font-size:smaller;mix-blend-mode:soft-light}.hack header figure[itemtype*=ImageObject] [itemprop=headline]{font-weight:700}</style>
+    
+  
+  <article itemscope itemtype="https://schema.org/BlogPosting">
+    <meta itemprop="name" content="Describing a Regions Shape and Texture with Descriptors intended for Deep Learning Applications">
+<meta itemprop="description" content="(This is a mirror of the documentation of crisps feature extraction tutorial also available [here](here. It has been reposted on this blog because it also illustrates many of the techniques available to describe both an image regions shape and texture for classification via deep learning.)
+  Feature Extraction Image Regions, Region Descriptors, Boundary Tracing, Signatures, Pattern Descriptors
+#include &lt;image_region.hpp&gt;Table of Contents  Introduction
+1.1 Extracting a Region">
+<meta itemprop="datePublished" content="2021-09-28T00:00:00&#43;02:00" />
+<meta itemprop="dateModified" content="2021-09-28T00:00:00&#43;02:00" />
+<meta itemprop="wordCount" content="4883">
+<meta itemprop="image" content="https://github.com/Clemapfel/crisp/blob/main/docs/feature_extraction/.resources/pepper.png">
+
+
+
+<meta itemprop="keywords" content="" />
+
+    <header>
+      <span class="muted" style="float:inherit; position:relative; top:1em;" id="Title">
+        <a href="../../post" style="color:#00f7c6;"> &lt;&lt; back to index</a>
+      </span>
+      <h1 itemprop="headline name" style="color:#00f7c6">Describing a Regions Shape and Texture with Descriptors intended for Deep Learning Applications</h1>
+      <hr style="border:1px solid #e92d7d"> </hr>
+      <p class="muted">
+        <svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <circle cx="16" cy="16" r="14" />
+  <path d="M16 8 L16 16 20 20" />
+</svg>
+<span>23 minute read</span>
+<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
+</svg>
+
+  Published: <time datetime="2021-09-28T00:00:00&#43;02:00">28 Sep, 2021</time>
+
+
+
+   <span style="float:right" itemprop="articleSection"> Categories:  [ <a href="../../categories/crisp/">crisp</a> | <a href="../../categories/deep-learning/">deep learning</a> ]</span>
+
+
+        
+
+
+
+
+      </p>
+      <br>
+
+      
+      
+
+
+
+    </header>
+    <div itemprop="articleBody">
+        <span class="muted" style="float:right; position:relative; top:-1em;">
+          <a href="#Comments" style="color:#00f7c6; ">&#11015; jump to comments</a>
+        </span>
+        <br>
+      <span style="float:none; position:relative; top:-3em">
+      <br>
+<div>
+<p>(This is a mirror of the documentation of <code>crisp</code>s feature extraction tutorial also available [here](<a href="https://github.com/Clemapfel/crisp/tree/main/docs/feature_extraction">here</a>. It has been reposted on this blog because it also illustrates many of the techniques available to describe both an image regions shape and texture for classification via deep learning.)</p>
+</div>
+<hr>
+<h1 id="feature-extraction">Feature Extraction</h1>
+<p>Image Regions, Region Descriptors, Boundary Tracing, Signatures, Pattern Descriptors</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#cd2828;font-weight:bold">#include</span> <span style="color:#cd2828;font-weight:bold">&lt;image_region.hpp&gt;</span><span style="color:#cd2828;font-weight:bold">
+</span></code></pre></div><h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#1-introduction"><strong>Introduction</strong></a><br>
+1.1 <a href="#11-an-example">Extracting a Region</a><br></li>
+<li><a href="#2-region-boundary"><strong>Region Boundary</strong></a><br>
+2.1 <a href="#21-8-connectivity-and-minimal-cardinality">Definition</a><br>
+2.2 <a href="#22-boundary-polygon">Boundary Polygon</a><br></li>
+<li><a href="#3-boundary-signatures"><strong>Boundary Signature</strong></a><br>
+3.1 <a href="#31-vertex-polygon">Vertex Polygon</a><br>
+3.2 <a href="#32-slope-chain-code-signature">Slope Chain Code Signature</a><br>
+3.3 <a href="#33-radial-distance-signature">Radial Distance Signature</a><br>
+3.4 <a href="#34-complex-coordinate-signature">Complex Coordinate Signature</a><br>
+3.5 <a href="#35-farthest-point-signature">Farthest Point Signature</a><br></li>
+<li><a href="#4-whole-region-descriptors"><strong>Whole Region Descriptors</strong></a><br>
+4.1 <a href="#41-area--perimeter-compactness">Area, Perimeter, Compactness</a><br>
+4.2 <a href="#42-centroid">Centroid</a><br>
+4.3 <a href="#43-aabb">Axis Aligned Bounding Box</a><br>
+4.4 <a href="#44-major--minor-axis">Major and Minor Axis</a><br>
+4.5 <a href="#45-eccentricity">Eccentricity</a><br>
+4.6 <a href="#46-circularity">Circularity</a><br>
+4.7 <a href="#47-holes">Holes</a><br>
+4.8 <a href="#48-moment-invariants">N-ths Moment Invariant</a><br></li>
+<li><a href="#5-texture-descriptors"><strong>Texture Descriptors</strong></a><br>
+5.1 <a href="#51-intensity-histogram">Intensity Histogram</a><br>
+5.2 <a href="#52-maximum-response">Maximum Intensity Response</a><br>
+5.3 <a href="#53-mean-variance">Mean, Variance</a><br>
+5.4 <a href="#54-n-ths-pearson-standardized-moment-around-the-mean">N-ths Pearson Standardized, Centralized Moment</a><br>
+5.5 <a href="#55-average-entropy">Average Entropy</a><br>
+5.6 <a href="#56-co-occurrence-matrix">Co-Occurrence Matrix</a><br>
+5.7 <a href="#57-intensity-correlation">Intensity Correlation</a><br>
+5.8 <a href="#58-homogeneity">Homogeneity</a><br>
+5.9 <a href="#59-entropy">Directed Entropy</a><br>
+5.10 <a href="#510-contrast">Contrast</a><br></li>
+</ol>
+<h2 id="1-introduction">1. Introduction</h2>
+<p>In the <a href="https://github.com/Clemapfel/crisp/tree/main/docs/segmentation">tutorial on segmentation</a>, we discussed how to extract part of an image. Now, we will find out what to actually do with said segment. <br> Recall that, in <code>crisp</code>, an image <em>segment</em> is a set of pixel coordinates <code>Vector2ui</code>:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">using</span> ImageSegment = std::set&lt;Vector2ui, <span style="color:#999;font-style:italic">/*...*/</span>&gt;;
+</code></pre></div><p><code>crisp::ImageSegment</code> holds no information about anything other than the pixels coordinates. This allows for a certain degree of generality, we can use a segment as if it were part of many images. The only restraint on those images is, that they have to be at least the size of the segment.</p>
+<p>We can apply any function only to a segment of an image, like so:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">auto</span> lambda_operator = []&lt;<span style="color:#6ab825;font-weight:bold">typename</span> Image_t&gt;(size_t x, size_t y, <span style="color:#6ab825;font-weight:bold">const</span> Image_t&amp; image) -&gt; <span style="color:#6ab825;font-weight:bold">typename</span> Image_t::Value_t
+{
+    <span style="color:#6ab825;font-weight:bold">auto</span>&amp; value = image(x, y);
+    <span style="color:#999;font-style:italic">// some transformation
+</span><span style="color:#999;font-style:italic"></span>    <span style="color:#6ab825;font-weight:bold">return</span> value;
+};
+
+ImageSegment segment = <span style="color:#999;font-style:italic">/*...*/</span>;
+<span style="color:#6ab825;font-weight:bold">auto</span> image = <span style="color:#999;font-style:italic">/*...*/</span>;
+
+<span style="color:#6ab825;font-weight:bold">for</span> (<span style="color:#6ab825;font-weight:bold">const</span> <span style="color:#6ab825;font-weight:bold">auto</span> position : segment)
+    image(position.x(), position.y()) = lambda_operator(position.x(), position.y(), image);
+</code></pre></div><p>Here, we first define a templated lambda. This function takes the pixel coordinate and the corresponding image as arguments, reads the pixel&rsquo;s value, transforms it in some way, then assigns it back to the image.</p>
+<p>While this works well when the entire image is available, sometimes we really don&rsquo;t need the rest of the image. For just this purpose, <code>crisp</code> defines <code>crisp::ImageRegion</code>:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">template</span>&lt;<span style="color:#6ab825;font-weight:bold">typename</span> Image_t&gt;
+<span style="color:#6ab825;font-weight:bold">class</span> <span style="color:#447fcf;text-decoration:underline">ImageRegion</span>
+{   
+    <span style="color:#6ab825;font-weight:bold">using</span> Value_t = Image_t::Value_t;
+    
+    <span style="color:#6ab825;font-weight:bold">public</span>:
+        <span style="color:#999;font-style:italic">/* ... */</span>
+        
+    <span style="color:#6ab825;font-weight:bold">private</span>:
+        <span style="color:#6ab825;font-weight:bold">struct</span> <span style="color:#447fcf;text-decoration:underline">Element</span> 
+        {
+            Vector2ui _position;
+            Value_t _value;
+            <span style="color:#6ab825;font-weight:bold">float</span> _intensity
+        }
+            
+        std::set&lt;Element, <span style="color:#999;font-style:italic">/*...*/</span>&gt; _elements;
+}
+</code></pre></div><p>We see that instead of just pixel coordinates, <code>ImageSegment</code> holds a set of <code>ÌmageSegment::Elements</code>. Each element has 3 members: the original pixel coordinate <code>_position</code>, the original value of the corresponding pixel in the image <code>_value</code>, and <code>_intensity</code> which is the mean of all planes of <code>_value</code>. We will use <code>_intensity</code> extensively in the texture descriptor chapter, but for now, it&rsquo;s enough to remember that <code>ImageSegment</code> holds only pixel coordinates while <code>ImageRegion</code> holds those coordinates as well as deep-copies of the pixels values.</p>
+<p>We construct an <code>ImageRegion</code> from an image and an <code>ImageSegment</code> like so:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#999;font-style:italic">// in main
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">auto</span> image = <span style="color:#999;font-style:italic">/*...*/</span>;   <span style="color:#999;font-style:italic">// crisp::Image&lt;T, N&gt; for any T, N
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">auto</span> segment = <span style="color:#999;font-style:italic">// some segmentation algorithm that returns crisp::ImageSegment
+</span><span style="color:#999;font-style:italic"></span>
+<span style="color:#6ab825;font-weight:bold">auto</span> region = ImageRegion();
+region.create_from(segment, image);
+
+<span style="color:#999;font-style:italic">// or equivalently:
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">auto</span> region = ImageRegion(segment, image);
+</code></pre></div><p>Once <code>create_from</code> is called, all pixel intensities are copied, so we are free to deallocate the original image or change it without the values in the image region being affected. If we were to change the pixel values in the region while the original image is still in memory, it would be unaffected.</p>
+<p><code>crisp</code> offers a shortcut to convert an entire image into one big region:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">auto</span> region = ImageRegion(image);
+
+<span style="color:#999;font-style:italic">// or
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">auto</span> region = ImageRegion();
+region.create_from(image);
+</code></pre></div><p>This comes in handy whenever we want functionality only available to <code>ImageRegion</code> but have no need to first segment the image.</p>
+<h2 id="11-an-example">1.1 An Example</h2>
+<p>To better illustrate the entire process of loading an image, segmenting it, then extracting a region, consider this image of the &ldquo;pepper brush&rdquo; as provided by <a href="https://www.gimp.org/">gimp</a> <br></p>
+<p><img src="https://github.com/Clemapfel/crisp/blob/main/docs/feature_extraction/.resources/pepper.png" alt=""></p>
+<p>Wanting to extract the region that has the pepper, we observe the background to be very dark. A simple manual thresholding operation is guaranteed to extract the correct region. We first load the image as color, then convert it to grayscale using <code>Image::get_value_plane(size_t)</code> (remember that the HSV &ldquo;value&rdquo; component is equal to the mean of all RGB color components):</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#cd2828;font-weight:bold">#include</span> <span style="color:#cd2828;font-weight:bold">&lt;system/image_io.hpp&gt;</span><span style="color:#cd2828;font-weight:bold">
+</span><span style="color:#cd2828;font-weight:bold">#include</span> <span style="color:#cd2828;font-weight:bold">&lt;image/grayscale_image.hpp&gt;</span><span style="color:#cd2828;font-weight:bold">
+</span><span style="color:#cd2828;font-weight:bold">#include</span> <span style="color:#cd2828;font-weight:bold">&lt;segmentation.hpp&gt;</span><span style="color:#cd2828;font-weight:bold">
+</span><span style="color:#cd2828;font-weight:bold"></span><span style="color:#6ab825;font-weight:bold">using</span> <span style="color:#6ab825;font-weight:bold">namespace</span> crisp;
+
+<span style="color:#999;font-style:italic">// in main.cpp
+</span><span style="color:#999;font-style:italic"></span><span style="color:#6ab825;font-weight:bold">auto</span> as_color = load_color_image(<span style="color:#999;font-style:italic">/*...*/</span> + <span style="color:#ed9d13">&#34;/crisp/docs/feature_extraction/pepper.png&#34;</span>);
+<span style="color:#6ab825;font-weight:bold">auto</span> as_grayscale = as_color.get_value_plane();
+<span style="color:#6ab825;font-weight:bold">auto</span> thresholded = Segmentation::manual_threshold(as_grayscale, <span style="color:#3677a9">0.01f</span>);
+</code></pre></div><p><img src="https://github.com/Clemapfel/crisp/blob/main/docs/feature_extraction/.resources/pepper_segment.png" alt=""></p>
+<p>We then want to decompose the binary image into connected segments. After decomposition, the segments will be ordered according to their respective left-most, top-most pixels coordinate. The pixel at (0, 0) is black and there are only two segments (the pepper in white, and the background in black) thus we expect the pepper to be the second segment extracted:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">auto</span> segments = decomponse_into_connected_segments(thresholded);
+<span style="color:#6ab825;font-weight:bold">auto</span> pepper_segment = segments.at(<span style="color:#3677a9">1</span>);
+</code></pre></div><p>We can now construct the resulting region using the pepper segment and the original <strong>color images</strong> values:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">auto</span> pepper = ImageRegion(pepper_segment, image);
+</code></pre></div><p>This is why we loaded the image as color but thresholded the grayscale image. Constructing the region with the colored pixel values means no information is lost.</p>
+<h2 id="2-region-boundary">2. Region Boundary</h2>
+<p>Mathematically, <code>crisp</code>s regions are <em>closed, simply connected regions</em>. This basically means:</p>
+<ul>
+<li>all boundary elements are part of the region</li>
+<li>all elements are 4-connected</li>
+</ul>
+<p><code>ImageRegion</code> will throw an exception if the segment handed to it is not 4-connected. We can assure it is either by using <code>decompose_into_connected_segments</code> (for more information about this, visit the <a href="https://github.com/Clemapfel/crisp/blob/main/docs/segmentation/segmentation.md">segmentation tutorial</a>) or we can use <code>decompose_into_regions(const ImageSegment&amp;, const Image_t&amp;) -&gt; std::vector&lt;ImageRegion&gt;</code> which is provided to automatically split a segment into 4-connected sub-segments and then constructs a region from each.</p>
+<p>Now that we assured that our region is indeed 4-connected, we can concern ourselves with, in terms of feature recognition, one of the most important properties of a region: it&rsquo;s boundary. In <code>crisp</code> boundaries have the following properties:<br></p>
+<p><em>(a visual, less math-y exploration of these concepts will follow)</em></p>
+<p>Let <code>B = {b_0, b_1, b_2, ..., b_m}</code> be the set of boundary points, then:</p>
+<ul>
+<li>i) for each <code>b_i</code> there exists a <code>b_i-1</code>, <code>b_i+1</code> in <code>B</code> such that <code>b_i-1</code> is 8-connected to <code>b_i</code>, <code>b_i+1</code> is 8-connected to <code>b_i</code> and <code>b_i-1</code> is not 8-connected to <code>b_i+1</code></li>
+<li>ii) <code>b_0</code> is 8-connected to <code>b_m</code></li>
+<li>iii) the set <code>B</code> is minimal in terms of cardinality, that is if we were to remove any <code>b_i</code> in <code>B</code>, property i) or ii) would be violated</li>
+</ul>
+<p>Because definitions can be hard to conceptualize, let&rsquo;s consider a purely visual example to illustrate these concepts:</p>
+<h3 id="21-8-connectivity-and-minimal-cardinality">2.1 8-Connectivity and Minimal Cardinality</h3>
+<p>Property i) and ii) mean the boundary is an unbroken chain of 8-connected pixels and that the boundary forms a path such that one can jump from <code>b_0</code> to <code>b_1</code>, <code>b_1</code> to <code>b_2</code>, etc. up to <code>b_m-1</code> to <code>b_m</code> (the last point) and then, crucially, from <code>b_m</code> back to <code>b_0</code> completing the circle.</p>
+<p>Let&rsquo;s again consider the region of our pepper:<br></p>
+<p><img src="https://github.com/Clemapfel/crisp/blob/main/docs/feature_extraction/.resources/pepper_segment.png" alt=""></p>
+<p>A simple way of tracing its boundary would be to highlight all pixels that have at least one neighbor that is not in the region (black, in our case).</p>
+<p><img src="https://github.com/Clemapfel/crisp/blob/main/docs/feature_extraction/.resources/pepper_boundary_bad.png" alt=""></p>
+<p>This is a boundary that fulfills condition i) and ii), however inspecting the boundary closely we notice many redundant points:</p>
+<p><img src="https://github.com/Clemapfel/crisp/blob/main/docs/feature_extraction/.resources/pepper_boundary_bad_zoom.png" alt=""></p>
+<p>If we were to ask a human to remove as many points as possible without compromising conditions i), ii), we would get the following boundary (where necessary pixels are highlighted in magenta, redundant pixels in cyan)</p>
+<p><img src="https://github.com/Clemapfel/crisp/blob/main/docs/feature_extraction/.resources/pepper_boundary_good_zoom.png" alt=""></p>
+<p>This is what condition iii)s minimality represents, we want all pixels to be non-redundant. This vastly increases performance, as for our pepper example we go from 3854 pixels for our trivial boundary to only 472 pixels using a minimal boundary:</p>
+<p><img src="https://github.com/Clemapfel/crisp/blob/main/docs/feature_extraction/.resources/pepper_boundary.png" alt=""></p>
+<p><code>crisp</code>s proprietary boundary tracing algorithm assures that the computed boundary is always minimal. After creating the region, we can access it at any point (with no performance overhead) using <code>get_boundary()</code>. The pixels are ordered according to condition i) where the first pixel <code>b_0</code> is the left-most, top-most pixel and any following pixels <code>b_i : i &gt; 0</code> are enumerated in <em>counter clock-wise direction</em>.</p>
+<h3 id="22-boundary-polygon">2.2 Boundary Polygon</h3>
+<p>We can even further reduce the number of elements in the boundary by treating it as a polygon that has vertices and straight, non-intersecting lines connecting exactly two of the vertices in order of enumeration. Consider this part of our pepper boundary:</p>
+<p><img src="https://github.com/Clemapfel/crisp/blob/main/docs/feature_extraction/.resources/pepper_line_zoom.png" alt=""></p>
+<p>We note multiple straight lines, each of these lines can be represented by just two pixels at the start and beginning of the line, shown in green <code>rgb(0, 1, 0)</code> here:</p>
+<p><img src="https://github.com/Clemapfel/crisp/blob/main/docs/feature_extraction/.resources/pepper_line_zoom_polygon.png" alt=""></p>
+<p>Using this approach, we reduce the number of boundary points from 472 to only 193, without loosing any information. The information is retained by the fact that the polygon vertices are ordered in counter-clockwise direction, this way we know exactly where to draw the straight line to the next point if we wanted to reconstruct the full boundary.</p>
+<p>Now that we reduced the entire information contained in the region in the shape of a pepper to just 193 pixels, we may think we are done but thanks to more math we can reduce it even further, while <em>increasing</em> the representations&rsquo; generality.</p>
+<h2 id="3-boundary-signatures">3. Boundary Signatures</h2>
+<p>A signature is a mathematical transform of the boundary points of a shape that aims to, in some way, make the description of the boundary more widely applicable. When referring to the signature in this section, we are referring to the transform of the boundary polygons vertex points, as these are the smallest set of points that still represent the region boundary with no loss of information.</p>
+<p>One of the ways to make a signature applicable to more than just one image is making it <em>independent of rotation</em>, a signature that accomplishes this describes not only our upright pepper but all possible rotation of it at the same time. Another form of generality is <em>scale invariance</em>, meaning that the signature describes our pepper at scale 1 and the same pepper scaled by any factor &gt; 0. Lastly, <em>independence of translation</em> means that it does not matter if we were to translate all points of the signature by a constant (x, y), the signature represents all of those peppers just the same. <code>crisp</code> offers a multitude of signatures that may or may not be invariant in multiple of the aspects described above.</p>
+<h2 id="31-vertex-polygon">3.1 Vertex Polygon</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>scale</td>
+<td>not invariant</td>
+</tr>
+<tr>
+<td>rotation</td>
+<td>not invariant</td>
+</tr>
+<tr>
+<td>translation</td>
+<td>not invariant</td>
+</tr>
+</tbody>
+</table>
+<p>This is the simplest signature, as already mentioned, it reduces the boundary to the vertices of it&rsquo;s polygon. It is neither scale, translationally, nor rotationally invariant, it is however the basis for all other signatures. We can access it using:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">auto</span> polygon_signature = pepper.get_boundary_polygon();
+</code></pre></div><h2 id="32-slope-chain-code-signature">3.2 Slope Chain Code Signature</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>scale</td>
+<td>invariant</td>
+</tr>
+<tr>
+<td>rotation</td>
+<td>not invariant</td>
+</tr>
+<tr>
+<td>translation</td>
+<td>invariant</td>
+</tr>
+</tbody>
+</table>
+<p>We can generate the slope-chain-signature by iterating through all boundary polygon vertices, storing the <em>angle</em> of the line that connects our current polygon vertex to the next (recall that the vertices are ordered counter-clockwise). This makes it invariant to both translation and scale, however rotation would alter all the angles values, so it is not invariant in this aspect. One way to make it rotationally invariant is to instead save the delta of successive angles. <code>crisp</code>s <code>slope_chain_code_signature()</code> does not do this automatically, it is however a trivial operation.</p>
+<p>The angles are stored in radians in the same order as their vertices.</p>
+<h2 id="33-radial-distance-signature">3.3 Radial Distance Signature</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>scale</td>
+<td>not invariant</td>
+</tr>
+<tr>
+<td>rotation</td>
+<td>invariant</td>
+</tr>
+<tr>
+<td>translation</td>
+<td>invariant</td>
+</tr>
+</tbody>
+</table>
+<p>The radial distance signature is the distance of each vertex from the region&rsquo;s centroid. The centroid of a region in <code>crisp</code> is defined as the mean of all boundary coordinates, and can be intuitively thought of as the center of mass of a hole-less region if all pixels have the same weight. Because we are measuring the absolute distance, this signature is not invariant to scale. We can generate it using <code>std::vector&lt;float&gt; ImageRegin::radial_distance_signature() const</code>.</p>
+<h2 id="34-complex-coordinate-signature">3.4 Complex Coordinate Signature</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>scale</td>
+<td>invariant</td>
+</tr>
+<tr>
+<td>rotation</td>
+<td>invariant</td>
+</tr>
+<tr>
+<td>translation</td>
+<td>invariant</td>
+</tr>
+</tbody>
+</table>
+<p>(as proposed by <a href="https://ieeexplore.ieee.org/abstract/document/4378916">El-Ghazal, Basir, Belkasim (2007)</a>)</p>
+<p>This signature transforms each point in the boundary polygon into a complex number, for a point (x, y) the signature of the point is the complex number x + i*y where i is the imaginary constant. The x-coordinate is treated as the real part, the y-coordinate is treated as the imaginary part. While this signature itself is neither invariant to scale nor rotation, we can now fourier-transform the complex numbers and store the corresponding coefficients. This achieves scale, rotational and translational invariance.</p>
+<p>We can access the raw complex coordinates using <code>ImageRegion::complex_coordinate_signature()</code>. We can then use <code>crisp::FourierTransform</code> to transform them into their fourier descriptors.</p>
+<h2 id="35-farthest-point-signature">3.5 Farthest Point Signature</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>scale</td>
+<td>not invariant</td>
+</tr>
+<tr>
+<td>rotation</td>
+<td>invariant</td>
+</tr>
+<tr>
+<td>translation</td>
+<td>invariant</td>
+</tr>
+</tbody>
+</table>
+<p>(as proposed also by <a href="https://www.sciencedirect.com/science/article/abs/pii/S0923596509000393">El-Ghazal, Basir, Belkasim (2009)</a>)</p>
+<p>This signature computes, for each boundary point, the maximum distance to any other boundary point. When used for fourier descriptors, it performs better than other boundaries mentioned here [1] and achieves translational and rotational invariance even before fourier transformation.
+We can generate it using <code>ImageRegion::farthest_point_signature</code>.</p>
+<p>[1] (Y. Hu, Z. Li, (2013): <a href="http://www.jsoftware.us/vol8/jsw0811-31.pdf">available here</a></p>
+<h2 id="4-whole-region-descriptors">4. Whole Region Descriptors</h2>
+<p>Signatures are a transform of a region&rsquo;s boundary points (the vertices of its polygon, to be precise). This is useful in unique representing a regions&rsquo; boundary, but it doesn&rsquo;t describe the shape of it in any way. To compare two boundaries, we would have to come up with a distance measure that compares the signatures, which can be quite hard. Instead, we can rely on the field of mathematical topology to give us many, much simpler to compute properties of a boundary. While only one of these will not unique identify a region&rsquo;s shape, using multiple descriptors along with a signature <a href="https://peerj.com/articles/563/">can lead to great results</a>.</p>
+<h2 id="41-area--perimeter-compactness">4.1 Area &amp; Perimeter, Compactness</h2>
+<p>One of the easiest descriptors are <em>area</em>, the number of pixels in a region, and <em>perimeter</em>, the length of the region&rsquo;s boundary. Perimeter only takes into account the outermost boundary, increasing the number of holes in a region will decrease its area but leave its perimeter unchanged.</p>
+<p>Area and perimeter are usually not very useful unless they are normalized, for example by quantifying the area&rsquo;s <em>compactness</em>, which is equal to the square of the perimeter divided by the area. A region that has no holes will have maximum compactness, while a region with the same boundary, but many or very big holes has a lower compactness. We can access area, perimeter and compactness using:</p>
+<pre><code>float get_perimeter() const;
+float get_area() const;
+float get_compactness() const;
+</code></pre><p>The values for compactness are usually in [0, 2], for edge cases the value may be outside this interval, however.</p>
+<h2 id="42-centroid">4.2 Centroid</h2>
+<p>A region&rsquo;s <em>centroid</em>, in <code>crisp</code>, is defined as the mean of the coordinate values of its boundary points (note that all boundary points are weighted here, not just the boundary polygons vertices). In the literature, the centroid is sometimes defined as the average of <em>all</em> points in a region, so it is important to remember that <code>crisp</code> only uses the boundary: Adding holes to a region while leaving its boundary unchanged does not alter the position of the region&rsquo;s centroid.</p>
+<p>We can access a region&rsquo;s centroid at any time using <code>get_centroid()</code>.</p>
+<p><img src="https://github.com/Clemapfel/crisp/blob/main/docs/feature_extraction/.resources/pepper_centroid.png" alt=""></p>
+<p>Where the centroid is highlighted using a red rgb(1, 0, 0) cross in the above picture.</p>
+<h2 id="43-aabb">4.3 AABB</h2>
+<p>The <em>axis aligned bounding box</em> (AABB) of a region is the smallest rectangle whose sides align with the x- and y-axis that completely encloses the region. We can access it like so:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">std::vector&lt;Vector2ui, <span style="color:#3677a9">4</span>&gt; aabb = pepper.get_axis_aligned_bounding_box(); 
+</code></pre></div><p>Where the resulting vertices of the box are in the following order: top-left, top-right, bottom-right, bottom-left.</p>
+<p>The value of the vertices of the rectangle are relative to the top-left corner of the image the region is from, translating them to the origin is a trivial operation.</p>
+<p><img src="https://github.com/Clemapfel/crisp/blob/main/docs/feature_extraction/.resources/pepper_aabb.png" alt=""></p>
+<p>Where the AABB is shown in white. Note that the boundary intersects with the AABB, this is because regions in <code>crisp</code> are <em>closed</em> regions.</p>
+<h2 id="44-major--minor-axis">4.4 Major &amp; Minor Axis</h2>
+<p>The major and minor axis of a region are formally defined as the major- and minor axis of the ellipses described by the eigenvectors multiplied with their respective eigenvalues of the positional covariance matrix of the boundary of the region.
+<br> It&rsquo;s not important to understand what this means, we can think of the major and minor axis as the &ldquo;orientation&rdquo; of the data spread of a region shape, where the major axis is along the highest variance (in terms of spacial position), the minor axis is perpendicular to it and both axis&rsquo; intersect with the centroid. We access the minor and major access using:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">const</span> std::pair&lt;Vector2f, Vector2f&gt;&amp; get_major_axis() <span style="color:#6ab825;font-weight:bold">const</span>;
+
+<span style="color:#6ab825;font-weight:bold">const</span> std::pair&lt;Vector2f, Vector2f&gt;&amp; get_minor_axis() <span style="color:#6ab825;font-weight:bold">const</span>;
+</code></pre></div><p>Each of the axis is given as two point. Visualizing the axes properly is difficult, as they are represented with sub-pixel precision. By scaling the image of the pepper, we can get an idea of what they look like:</p>
+<p><img src="https://github.com/Clemapfel/crisp/blob/main/docs/feature_extraction/.resources/pepper_eigenvectors_modified.png" alt=""></p>
+<p>Where magenta is the major, green the minor axis and the ellipses modeled by them shown in yellow. We can translate the ellipses so it&rsquo;s axes align with the coordinate systems axes. The ratio of the resulting axes gives us another scale-invariant, rotationally-invariant and translationally-invariant region descriptor.</p>
+<p>The major- and minor axis are useful for many other things, for example aligning regions to each other or for registration.</p>
+<h2 id="45-eccentricity">4.5 Eccentricity</h2>
+<p>Using the minor and major axis we can compute the region&rsquo;s <em>eccentricity</em>, which quantifies how &ldquo;conical&rdquo; the region is. If the eccentricity is 0 the shape modeled by the major and minor axis is a perfect circle, the closer to 1 the eccentricity is, the more elliptical the region.</p>
+<p>We can access the eccentricity using <code>ImageRegion::get_eccentricity()</code>.</p>
+<h2 id="46-circularity">4.6 Circularity</h2>
+<p>While eccentricity measures how closely the shape of a region approximates a non-circular ellipse, <em>circularity</em> quantifies how closely the shape approximates a perfect circle. Regions, which tend to have smooth features and not many sharp edges, tend to have high circularity towards 1, while angular shapes or shapes with a high eccentricity tend to have a circularity closer to 0.</p>
+<p>We can access circularity using <code>ImageRegion::get_circularity()</code>.</p>
+<h2 id="47-holes">4.7 Holes</h2>
+<p>While already mentioned, it may be instructional to define what a hole is formally. A hole is an area of pixels who are <em>not</em> part of the region, whose boundary is entirely enclosed by the region. Intuitively this means, if you image the region as land and everything else as water, a hole would be a lake inside the region with no connection to the &ldquo;ocean&rdquo; that is surrounding the region.</p>
+<p>When boundary tracing, <code>crisp</code> implicitly computes the boundaries of each hole and, thus, also the number of holes. We can access either with no overhead using:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">size_t <span style="color:#447fcf">get_n_holes</span>() <span style="color:#6ab825;font-weight:bold">const</span>;
+<span style="color:#6ab825;font-weight:bold">const</span> std::vector&lt;std::vector&lt;Vector2ui&gt;&gt; get_hole_boundaries() <span style="color:#6ab825;font-weight:bold">const</span>;
+</code></pre></div><p>Where the hole boundaries are ordered corresponding to their respective top-most, left-most pixel coordinate.</p>
+<h2 id="48-moment-invariants">4.8 Moment Invariants</h2>
+<p>We&rsquo;ve seen earlier that somehow representing a region&rsquo;s unique shape in a way that is invariant to scale, translation and rotation is highly valuable. A very powerful way to do this is using the <em>n-ths moment invariant</em>. While some of them have a conceptual meaning, for beginners it is best to just think of them as properties that may not be useful to humans but do represent the shape of a region uniquely. <code>crisp</code> offers the first 7 moment invariants, also known as Hu Moment Invariant (Hu, 1962), accessed using <code>ImageRegion::get_nths_moment_invariant(size_t n)</code> where n in {1, 2, 3, &hellip;, 7}.</p>
+<p>The following table summarizes the response of a moment invariant to translation, scale, rotation and mirroring. &ldquo;Unchanged&rdquo; means the value of the moment does not change when recomputed after the operation.</p>
+<table>
+<thead>
+<tr>
+<th>N</th>
+<th>translation</th>
+<th>scale</th>
+<th>rotation</th>
+<th>mirroring</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>unchanged</td>
+<td>unchanged</td>
+<td>unchanged</td>
+<td>unchanged</td>
+</tr>
+<tr>
+<td>2</td>
+<td>unchanged</td>
+<td>unchanged</td>
+<td>unchanged</td>
+<td>unchanged</td>
+</tr>
+<tr>
+<td>3</td>
+<td>unchanged</td>
+<td>unchanged</td>
+<td>unchanged</td>
+<td>unchanged</td>
+</tr>
+<tr>
+<td>4</td>
+<td>unchanged</td>
+<td>unchanged</td>
+<td>unchanged</td>
+<td>unchanged</td>
+</tr>
+<tr>
+<td>5</td>
+<td>unchanged</td>
+<td><strong>does change</strong></td>
+<td>unchanged</td>
+<td>unchanged</td>
+</tr>
+<tr>
+<td>6</td>
+<td>unchanged</td>
+<td><strong>does change</strong></td>
+<td>unchanged</td>
+<td><strong>does change</strong></td>
+</tr>
+<tr>
+<td>7</td>
+<td>unchanged</td>
+<td><strong>does change</strong></td>
+<td><strong>slight change</strong></td>
+<td><strong>changes sign</strong></td>
+</tr>
+</tbody>
+</table>
+<p>We note that all first 4 moment invariants are completely independent of translation, scale, rotation and mirroring of the region and are thus highly valuable in representing a region.</p>
+<h2 id="5-texture-descriptors">5. Texture Descriptors</h2>
+<p>So far, our descriptors dealt with the region&rsquo;s boundary, shape or the values taken directly from the original image. In this section, we will instead deal with the region&rsquo;s <em>texture</em>. This construct has not agreed on definition, in <code>crisp</code> <em>texture</em> refers to the distribution of intensity values in the region. Where the intensity of a pixel is the mean over all planes of that pixel (stored as <code>_intensitiy</code> in <code>ImageRegion::Element</code>, if you recall).
+An easier way to express quantifying texture in <code>crisp</code> is, that we&rsquo;re converting our region to grayscale, then construct a histogram using those grayscale value and use statistical techniques to describe the distribution modeled by the histogram.</p>
+<h3 id="51-intensity-histogram">5.1 Intensity Histogram</h3>
+<p>To get a rough idea of what the distribution of a region&rsquo;s intensity looks like, <code>ImageRegion</code> offers <code>get_intensity_histogram()</code>. In this histogram, the intensity values are quantized into 256 intensities. This is not the case internally, however, the loss of detail in the histogram is not representative of the values computed for texture descriptors.</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">auto</span> hist = pepper.get_intensity_histogram();
+<span style="color:#6ab825;font-weight:bold">auto</span> hist_img = hist.as_image();
+</code></pre></div><p><img src="https://github.com/Clemapfel/crisp/blob/main/docs/feature_extraction/.resources/pepper_hist.png" alt=""><br></p>
+<p>We note that the histogram has many blank spots, which means that not all intensities were represented. The histogram exhibits multiple large spikes around the 0.5 region, these correspond to many of the constant-colored regions of the pepper. Lastly, we note that a lot of intensities were seemingly only represented once as this would account for the long tail of the distribution, the left tail extends all the way to 0 while the right tail stops at about 0.6.</p>
+<h3 id="52-maximum-response">5.2 Maximum Response</h3>
+<p>The maximum response is the probability of the intensity with the highest number of observations occurring. The closer to 1 this value is, the more likely is it that the region has only very few shades in intensity.</p>
+<p>We access it using <code>get_maximum_intensity_probability()</code> which for the pepper region returns <code>0.57</code>. This is relatively high, which makes sense, because most of the pepper is the same shade of green. The high probability is represented by the huge spike in the histogram.</p>
+<h3 id="53-mean-variance">5.3 Mean, Variance</h3>
+<p>Two of the most basic descriptors of a data set (a set of intensities in our case) are <em>mean</em> and <em>variance</em>. We can access them using:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">auto</span> mean = pepper.get_mean();
+<span style="color:#6ab825;font-weight:bold">auto</span> stddev = sqrt(pepper.get_variance());
+</code></pre></div><p>Our pepper region&rsquo;s texture has a mean of 0.45 (which corresponds to the red line in the histogram) and a variance of 0.015, which is very low. This is expected as, again, most of the pepper is shades of green that do not vary greatly when converted to grayscale.</p>
+<h3 id="54-n-ths-pearson-standardized-moment-around-the-mean">5.4 n-ths Pearson Standardized Moment around the Mean</h3>
+<p>In statistics, a distribution of random variables can be quantified using <a href="https://en.wikipedia.org/wiki/Standardized_moment">statistical moments</a>. Each moment has an order called <code>n</code>. The first four moments have a human interpretable meaning:</p>
+<ul>
+<li>the 0ths standardized moment is always 1</li>
+<li>the 1st standardized moment is the mean difference between the mean and itself, which is always 0</li>
+<li>the 2nd standardized moment is the mean ratio of the variance to itself, which is always 1</li>
+<li>the 3rd standardized moment is called <em>skewness</em>, which is a measure of how much a distribution leans to one side</li>
+<li>the 4th standardized moment is called <em>kurtosis</em>, which is a measure of how long, which tail of the distribution is.</li>
+</ul>
+<p>Higher order moments may not have immediate use in human interpretation, but can be very useful for machine-learning application. All moments for n &lt; 7 are used commonly. We can access the n-ths moment using <code>get_nths_moment(size_t n)</code>.</p>
+<p>The 3rd and 4th moment can furthermore be accessed directly using <code>get_skewness()</code> and <code>get_kurtosis()</code>. To put these values into context, let&rsquo;s again inspect our intensity histogram:</p>
+<p><img src="https://github.com/Clemapfel/crisp/blob/main/docs/feature_extraction/.resources/pepper_hist.png" alt=""></p>
+<p>Because of the large number of singleton intensity occurrences towards 0, the distribution overall leans to the left. This is reflected in the skewness which is <code>-2.20965</code>. Negative values generally mean the distribution leans left, right for positive values.
+The kurtosis of the pepper&rsquo;s texture is <code>8.74199</code> which is very high. This again was expected because both tails are very long and thin, resulting from the high number of singletons.</p>
+<h3 id="55-average-entropy">5.5 Average Entropy</h3>
+<p>The average entropy is a measure of how ordered the set of intensities is. We can compute its value using <code>get_average_entropy()</code> which returns <code>0.769</code> for the pepper region. <code>crisp</code> normalizes the values into [0, 1] so <code>~0.77</code> is relatively high. This is expected, the pepper is mostly green and has large regions of constant intensity, so we would expect it to be highly ordered.</p>
+<h2 id="56-co-occurrence-matrix">5.6 Co-Occurrence Matrix</h2>
+<p>To quantify texture in a specified direction, we can construct what is called the <em>co-occurrence matrix</em>. The co-occurrence matrix is a matrix of size 256x256. It counts for each intensity pair <code>i_a</code>, <code>i_b</code> the number of times two pixels <code>a</code>, <code>b</code> that are <em>next to each other in a specified direction</em> have the corresponding intensities <code>i_a</code>, <code>i_b</code>.
+A short example: if the co-occurrence matrix for the &ldquo;right&rdquo; direction has a value of 6 in the row 120 and column 98 then in the image there are 6 pairs of pixels <code>a</code>, <code>b</code> such that a has intensity 120 and <code>b</code> who is <strong>directly right</strong> of <code>a</code> has intensity 98 Recall that the intensities are quantized and projected from [0, 1] (float) to [0, 256] (int) to keep the size of the co-occurrence matrix manageable.</p>
+<p>When constructing the co-occurrence matrix, we need to first supply a direction. Let <code>a = (x, y)</code> and <code>b = (x + i, y + j)</code> then the values of the <code>crisp::CoOccurrenceDirection</code> enum have the following meaning:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">Direction           a           b
+-------------------------------------
+PLUS_MINUS_ZERO    (x,y)        (x,   y-<span style="color:#3677a9">1</span>)
+PLUS_45            (x,y)        (x+<span style="color:#3677a9">1</span>, y-<span style="color:#3677a9">1</span>)
+PLUS_90            (x,y)        (x+<span style="color:#3677a9">1</span>, y)
+PLUS_125           (x,y)        (x+<span style="color:#3677a9">1</span>, y+<span style="color:#3677a9">1</span>)
+PLUS_MINUS_180     (x,y)        (x,   y+<span style="color:#3677a9">1</span>)
+MINUS_125          (x,y)        (x-<span style="color:#3677a9">1</span>, y+<span style="color:#3677a9">1</span>)
+MINUS_90           (x,y)        (x-<span style="color:#3677a9">1</span>, y)
+MINUS_45           (x,y)        (x-<span style="color:#3677a9">1</span>, y-<span style="color:#3677a9">1</span>)
+</code></pre></div><p>In <code>crisp</code> we can render the matrix like so:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#6ab825;font-weight:bold">auto</span> co_occurrence_matrix = pepper.get_co_occurrence_matrix(CoOccurrenceDirection::PLUS_90);
+
+<span style="color:#6ab825;font-weight:bold">auto</span> as_image = GrayScaleImage(co_occurrence_matrix);
+<span style="color:#999;font-style:italic">// bind or save to disk
+</span></code></pre></div><p><img src="https://github.com/Clemapfel/crisp/blob/main/docs/feature_extraction/.resources/pepper_cooccurrence_matrix.png" alt=""><br></p>
+<p>The above image was log-scaled for clarity. Firstly, we note that most of the cells are left black. This points to the pepper&rsquo;s texture only having a relative small amount of pair-wise different intensity pairs, which, looking at the original image, is indeed the case. Secondly, we note that most of the high-occurrence pairs (those with a lighter pixel color in the above image) are clustered around the matrix&rsquo; trace. This is evidence of high uniformity, as an occurrence along the trace means, that the intensity pair <code>{i_a, i_b}</code> that occurred had identical values <code>i_a == i_b</code>. Recall that these observations only make sense in respect to the direction of the co-occurrence matrix, which in our case is +90° (from left to right).</p>
+<p>We can numerically quantify the distribution of intensity value pair occurrences using the following descriptors:</p>
+<h2 id="57-intensity-correlation">5.7 Intensity Correlation</h2>
+<p><em>Intensity Correlation</em> measures how correlated the intensities in each intensity value pair are. Similar to the <a href="https://en.wikipedia.org/wiki/Pearson_correlation_coefficient">pearson correlation coefficient</a> it has a value in [-1, 1] where -1 means a strong negative correlation, +1 means a strong positive correlation (either of which usually mean there is a regularity to the pattern) and 0 means no correlation. A pattern that has 0 correlation could be random noise or of constant intensity.</p>
+<p>We can compute the mean intensity correlation using <code>get_intensity_correlation(CoOccurrenceDirection)</code>. In our example for the left-to-right (+90°) direction, this returns <code>0.4868</code>. This means the texture exhibits above average positive correlation in the left-to-right direction. Looking at the image of the pepper closely, we, note that the lighter spots coming from lighting are more present on the right side while the left side is more in the shadow. This explains the positive (increasing) intensity correlation when looking at the texture from left to right.</p>
+<h2 id="58-homogeneity">5.8 Homogeneity</h2>
+<p>In the co-occurrence matrix, the diagonal represents occurrences of intensity pair <code>i_a</code>, <code>i_b</code> where <code>i_a = i_b</code>, occurrences where two pixels in the specified direction have the same intensity. Homogeneity quantifies, how many of the intensity pairs are located near this diagonal. The higher the homogeneity, the more common pixel neighbors with the same or similar intensity are.</p>
+<p>We can access the value using <code>get_homogeneity(CoOccurrenceDirection)</code>, it returns a float in [0,1]. The pepper region exhibits a homogeneity of <code>0.625</code>. This may be slightly lower than expected considering the pepper is all green, however remember that we are quantifying texture, not color. The intensity (lightness) of the shades of green do vary quite a bit, even though the hue does not. Nonetheless, <code>0.625</code> would be considered far above average, so we would call the pepper a fairly homogenically textured region.</p>
+<h2 id="59-entropy">5.9 Entropy</h2>
+<p>Similar to the average entropy, we can also compute the entropy of the co-occurrence matrix. This can be thought of as a descriptor of how ordered the occurrence-pair distribution in that direction is.
+Using <code>get_entropy(CoOccurrenceDirection)</code> we compute a value of <code>0.36</code> (again normalized into [0, 1]).</p>
+<h2 id="510-contrast">5.10 Contrast</h2>
+<p>Contrast measures the difference in value between co-occurring pixels. A white pixel next to a black pixel (or vice-versa) would have maximum contrast, while two pixels of identical color would have 0 contrast. We can compute the mean contrast in the specified direction using
+<code>get_contrast(CoOccurrenceDirection)</code>, as already mentioned, its values are in [0, 1].</p>
+<p>Our pepper has a contrast of <code>0.0002</code> which is extremely low, again this is expected, the shades of green transition into each other smoothly, as there are no big jumps in intensity. Large parts of the pepper have constant regions where neighboring pixels have the same intensity.</p>
+
+      </span>
+      <span class="muted" style="float:right; position:relative; top:5em;">
+        <a href="#Title" style="color:#00f7c6;">&#11014; jump to beginning</a>
+      </span>
+      <br>
+<hr style="border:1px solid #999999"> </hr>
+<h2> Comments <span class="muted">(via GitHub)</span></h2>
+
+
+
+<div id="Comments">
+<script src="https://utteranc.es/client.js"
+        repo="Clemapfel/rat_game_website"
+        issue-term="og:title"
+        label="[comment]"
+        theme="github-dark"
+        crossorigin="anonymous"
+        async>
+</script>
+</div>
+<hr style="border:1px solid #999999"> </hr>
+
+    </div>
+
+  </article>
+</main>
+    <footer>
+  <div>
+<center>
+<p style="font-size:11px" class="muted">
+&copy 2021 C. Cords | all images, code and writing are original and subject to copyright, unless otherwise specified.<br>
+Hosted by <a href="https://in-berlin.de/"> Individual Network Berlin e.V</a>, styled with <a href="https://after-dark.habd.as/"> After Dark </a>
+</p>
+</center>
+</div>
+
+</footer>
+    
+    
+    
+      
+    
+  </body>
+</html>

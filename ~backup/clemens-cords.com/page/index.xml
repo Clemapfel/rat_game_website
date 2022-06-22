@@ -1,0 +1,98 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <docs>https://blogs.law.harvard.edu/tech/rss</docs>
+    <title >Pages on Clemens Cords&#39; Homepage</title>
+    <link>http://clemens-cords.com/page/</link>
+    <description>Recent content in Pages on Clemens Cords&#39; Homepage</description>
+    <image>
+      <title>Pages on Clemens Cords&#39; Homepage</title>
+      <link>http://clemens-cords.com/page/</link>
+      <url>http://clemens-cords.com/rat_icon.png</url>
+    </image>
+    <ttl>1440</ttl>
+    <generator>After Dark 9.2.3 (Hugo 0.68.3)</generator>
+    <language>en-US</language>
+    <lastBuildDate>Sun, 06 Mar 2022 19:49:27 UT</lastBuildDate>
+    <atom:link href="http://clemens-cords.com/page/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>About</title>
+      <link>http://clemens-cords.com/about/</link>
+      <dc:creator>Clemens Cords</dc:creator>
+      <guid>http://clemens-cords.com/about/</guid>
+      <description>About This page describes me, my work and any information valuable to potential employers / partners. You can navigate to the appropriate section by clicking the links in the table of contents below.
+A shorter, 1-page CV well suited for job applications can be found here
+ Table of Contents  General Information
+1.1 Nationality, Location
+1.2 Natural Languages
+ Curriculum Vitae
+ Fields of Expertise
+3.1 Statistics
+3.2 Mathematics</description>
+      <content:encoded><![CDATA[About This page describes me, my work and any information valuable to potential employers / partners. You can navigate to the appropriate section by clicking the links in the table of contents below.
+A shorter, 1-page CV well suited for job applications can be found here
+ Table of Contents  General Information
+1.1 Nationality, Location
+1.2 Natural Languages
+ Curriculum Vitae
+ Fields of Expertise
+3.1 Statistics
+3.2 Mathematics
+3.3 Bioinformatics
+3.4 Computer Science
+ Programming Languages
+4.1 C&#43;&#43;
+4.2 R
+4.3 GLSL
+4.4 Lua
+4.5 Python
+4.5 Other
+ How to Contact Me
+   General Information  Nationality: German, born in Berlin Location: Berlin, Germany Natural Languages:  German, fluent at academic level English, fluent at academic level    Curriculum Vitae  2013: Graduated from Lilienthal High school Berlin 2013 - 2014: Studied Math at TU Berlin 2015 - 2019: Studied Bioinformatics at FU Berlin 2017 - 2018: Statistics Tutoring and TA at Charité / FU Berlin 2019: Internship at seqan3, writing automated tests, performance optimization 2020: Graduated with a Bachelor of Bioinformatics 2020 - Present: Lockdown-Induced Independent Study of Mathematical Morphology, Image Processing, Deep Learning 2020 - 2021: Wrote crisp, a well-documented image processing library implementing spatial filters, spectral techniques, neural networks, etc. from scratch to show mastery of above-mentioned topics 2021 - Present: Wrote jluna, a jluna-C&#43;&#43; wrapper with focus on modernity and elegant access to meta features   Fields of Expertise Statistics  Statistical Classification Clinical Study Design &amp;amp; Evaluation Data Visualization Automated Analytical Report Generation  Mathematics  Algorithm Design Mathematical Morphology &amp;amp; Topology Numerical Optimization Deep Learning Visual Computing related Linear Algebra  Computer Science  Supervised Learning and Narrow AI Computer Vision Parallel Programming &amp;amp; Distributed Systems Performance Optimization Real-Time Rendering High-Throughput Text Indexing / Processing Automated Testing/Performance Evaluation User Interface/Experience Design Documentation  Bioinformatics  Genomic Text Alignment and Processing High-Throughput Image Analysis Medical Imaging   Programming Languages 5/5 [▮▮▮▮▮]  C&#43;&#43; 4 years of experience, including full-time usage in self-employment. Full mastery of all language features including meta-template programming, and C&#43;&#43;20 Ranges/Concepts.
+High standard of style and documentation, strong background in automated testing and performance evaluation. Intimately familiar with performance optimization, parallelization, compile-time execution.
+Strong familiarity with the standard library, boost, Eigen, SFML, seqan3, sol3, OpenGL, Google Test, Google Benchmark, Abseil and others.
+4/5 [▮▮▮▮▯]  Julia While somewhat new to my toolbag, julia has become my go-to language if meta, LISP-like functionality is needed. I wrote [jluna](https://github.com/Clemapfel/crisp), a fully C&#43;&#43;  Julia wrapper not only to demonstrate my mastery of C&#43;&#43; but my familiarity of julia and my desire to make it slot into any of my future C&#43;&#43; projects effortlessly. For `jluna` I had to revese engineer many of the undocumented features of the julia C-API which gave me deeper insight into julias inner workings. 4/5 [▮▮▮▮▯]  GLSL Strong background in real-time rendering for scientific or artistic purposes, used extensively for gpu-side computation and hardware acceleration in [crisp](https://github.com/Clemapfel/crisp). Familiarity with OpenGL 1.0 to 3.2 and 3.3 or newer. 4/5 [▮▮▮▮▯]  Lua Extensive knowledge of all major language features including co-routines, debug library and c-interfaces. Extensively used in [crisp](https://github.com/Clemapfel/crisp) for code generation and file interface. 4/5 [▮▮▮▮▯]  R Data Science and Visualization language of choice. Strong background in statistical classification, data pipelines and medical data analysis. Taught R as a tutor at university. Highly familiar with ggplot, tidyr, dplyr and tidyverse in general.
+3/5 [▮▮▮▯▯]  Python  Strong foundation in use for data- and text processing, back-end and data-bank interfacing usage. Taught python syntax and general usage as TA at university.  Other Languages While usually not directly applicable to my current position, I also have enough experience in the following languages to consider myself able to work with them in a professional context
+  Language Proficiency   Swift 3/5 [▮▮▮▯▯]   Java
+JS 2/5 [▮▮▯▯▯]    Matlab/Octave
+Go
+Ruby
+Perl
+Haskell
+ 1/5 [▮▯▯▯▯]   Latex 3/5 [▮▮▮▯▯]   HTML/CSS 2/5 [▮▮▯▯▯]    If you came across this page through my application or by finding it randomly, thank you for reading! Feel free to reach out to me via mail@clemens-cords.com or any of the outlets listed on the contact page.
+C. Cords
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Contact</title>
+      <link>http://clemens-cords.com/contact/</link>
+      <dc:creator>Clemens Cords</dc:creator>
+      <guid>http://clemens-cords.com/contact/</guid>
+      <description>Professional Mail: mail@clemens-cords.com Phone: &#43;49 30 239 348 71 Github: https://github.com/Clemapfel Gitter: @Clemapfel Personal Discord: Clem#3196 Twitter: @not_birb </description>
+      <content:encoded><![CDATA[Professional Mail: mail@clemens-cords.com Phone: &#43;49 30 239 348 71 Github: https://github.com/Clemapfel Gitter: @Clemapfel Personal Discord: Clem#3196 Twitter: @not_birb ]]></content:encoded>
+    </item>
+    <item>
+      <title>Pink Mint Wave</title>
+      <link>http://clemens-cords.com/pink_mint_wave/</link>
+      <dc:creator>Clemens Cords</dc:creator>
+      <guid>http://clemens-cords.com/pink_mint_wave/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>Swingy Lines</title>
+      <link>http://clemens-cords.com/swingy_lines/</link>
+      <dc:creator>Clemens Cords</dc:creator>
+      <guid>http://clemens-cords.com/swingy_lines/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>The String</title>
+      <link>http://clemens-cords.com/neuron_string/</link>
+      <dc:creator>Clemens Cords</dc:creator>
+      <guid>http://clemens-cords.com/neuron_string/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,50 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <docs>https://blogs.law.harvard.edu/tech/rss</docs>
+    <title >Categories on Clemens Cords&#39; Homepage</title>
+    <link>http://clemens-cords.com/categories/</link>
+    <description>Recent content in Categories on Clemens Cords&#39; Homepage</description>
+    <image>
+      <title>Categories on Clemens Cords&#39; Homepage</title>
+      <link>http://clemens-cords.com/categories/</link>
+      <url>http://clemens-cords.com/rat_icon.png</url>
+    </image>
+    <ttl>1440</ttl>
+    <generator>After Dark 9.2.3 (Hugo 0.68.3)</generator>
+    <language>en-US</language>
+    <lastBuildDate>Sun, 06 Mar 2022 19:49:27 UT</lastBuildDate>
+    <atom:link href="http://clemens-cords.com/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>crisp</title>
+      <link>http://clemens-cords.com/categories/crisp/</link>
+      <dc:creator>Clemens Cords</dc:creator>
+      <guid>http://clemens-cords.com/categories/crisp/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>deep learning</title>
+      <link>http://clemens-cords.com/categories/deep-learning/</link>
+      <dc:creator>Clemens Cords</dc:creator>
+      <guid>http://clemens-cords.com/categories/deep-learning/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>programming</title>
+      <link>http://clemens-cords.com/categories/programming/</link>
+      <dc:creator>Clemens Cords</dc:creator>
+      <guid>http://clemens-cords.com/categories/programming/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>game design</title>
+      <link>http://clemens-cords.com/categories/game-design/</link>
+      <dc:creator>Clemens Cords</dc:creator>
+      <guid>http://clemens-cords.com/categories/game-design/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+  </channel>
+</rss>
