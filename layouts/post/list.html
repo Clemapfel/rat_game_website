@@ -9,18 +9,23 @@
 {{ end }}
 
 {{ define "main" }}
+
+{{ partial "shader_thumbnail_style.html" }}
+
 <h1>Gallery</h1>
-A collection of shaders and generative art I made. Code for the
-shaders is available <a href="">here</a>.
+A collection of shaders and generative art I made (using math and <a href="https://www.khronos.org/opengl/wiki/OpenGL_Shading_Language">GLSL</a>). Click on the images below to go to a full-screen, animated
+page. The rng is re-seeded on site-refresh, usually making the pattern different each time.
+<br><br>
+<b>Warning</b>: While intended to be viewable by all, audiences with photosensitivity should proceed with caution.
 
-<div>
-  <h2>Swingy Lines</h2>
-  <a href="post/swingy_lines">
-  <code>
-  std::cout << "test" << std::endl;
-  </code>
-  </a>
-</div>
+<br><br>
+Code for all creations shown is available under CC BY-NC License <a href="https://github.com/Clemapfel/rat_game_website/tree/main/static/render">on my GitHub</a>.
 
+<hr>
+{{ partial "shader_thumbnail.html" (dict "id" "pink_mint_wave" "title" "Pink Mint Wave") }}
+{{ partial "shader_thumbnail.html" (dict "id" "swingy_lines" "title" "Swingy Lines") }}
+{{ end }}
 
+{{ define "footer" }}
+  {{ partial "footer.html" . }}
 {{ end }}

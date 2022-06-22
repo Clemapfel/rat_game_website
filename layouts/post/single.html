@@ -9,7 +9,6 @@
             height: 100vh;
             width: 100vw;
             cursor: pointer;
-
         }
 
         .button {
@@ -19,7 +18,6 @@
             left:0;
 
             border: none;
-            color: white;
             padding: 100% 100%;
             display: inline-block;
             font-size: 16px;
@@ -32,7 +30,7 @@
             integrity="sha512-zhHQR0/H5SEBL3Wn6yYSaTTZej12z0hVZKOv3TwCUXT1z5qeqGcXJLLrbERYRScEDDpYIJhPC1fk31gqR783iQ=="
             crossorigin="anonymous" defer>
     </script>
-    <script src="render/{{ .Title }}.js" defer></script>
+    <script src="/render/{{ .Title }}.js" defer></script>
     <a href="/post" title="" class="button"></a>
     <canvas id="glcanvas"></canvas>
 </header>
