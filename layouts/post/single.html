@@ -1,0 +1,38 @@
+<header>
+    <style>
+        canvas {
+            position:fixed;
+            top:0;
+            left:0;
+            z-index:-1;
+
+            height: 100vh;
+            width: 100vw;
+            cursor: pointer;
+
+        }
+
+        .button {
+            background-color: transparent;
+            position:fixed;
+            top:0;
+            left:0;
+
+            border: none;
+            color: white;
+            padding: 100% 100%;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+
+    <link rel="stylesheet" href="./webgl.css" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"
+            integrity="sha512-zhHQR0/H5SEBL3Wn6yYSaTTZej12z0hVZKOv3TwCUXT1z5qeqGcXJLLrbERYRScEDDpYIJhPC1fk31gqR783iQ=="
+            crossorigin="anonymous" defer>
+    </script>
+    <script src="../../render_{{ .Title }}.js" defer></script>
+    <a href="/post" title="" class="button"></a>
+    <canvas id="glcanvas"></canvas>
+</header>

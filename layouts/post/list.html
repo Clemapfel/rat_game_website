@@ -1,0 +1,26 @@
+{{ define "header" }}
+  {{ partial "style.html" . }}
+  {{ partial "gl_canvas.html" (dict "script_id" "render_pink_mint_wave.js") }}
+  {{ partial "link_bar.html" . }}
+{{ end }}
+
+{{ define "head" }}
+  {{ partial "meta.html" . }}
+{{ end }}
+
+{{ define "main" }}
+<h1>Gallery</h1>
+A collection of shaders and generative art I made. Code for the
+shaders is available <a href=""here
+
+<div>
+  <h2>Swingy Lines</h2>
+  <a href="post/swingy_lines">
+  <code>
+  std::cout << "test" << std::endl;
+  </code>
+  </a>
+</div>
+
+
+{{ end }}
