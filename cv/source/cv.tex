@@ -1,0 +1,128 @@
+\documentclass[20pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[sfdefault]{roboto}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{afterpage}
+\usepackage{xcolor}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{tabto}
+\usepackage{setspace}
+\usepackage{blindtext}
+\usepackage{hyperref}
+\usepackage{pifont}
+
+% margins disabled, manual alignment
+\usepackage[top=0cm, bottom=0cm, outer=0cm, inner=0cm, left=0cm, right=0cm]{geometry}
+\usepackage{amssymb}
+
+% colors
+\definecolor{swingy_pink}{rgb}{0.914, 0.176, 0.49}
+\definecolor{mint}{rgb}{0.0, 0.842, 0.675}
+
+% main
+\begin{document}
+
+    % side bar
+    \begin{tikzpicture}[remember picture, overlay]
+        \node[anchor=north west] at (current page.north west)
+        {
+            \includegraphics[trim=2pt 0 0 2pt, height=\pageheight, width=12em]{cv_side_bar.png}
+        };
+    \end{tikzpicture}
+
+    % profile pic
+    \begin{tikzpicture}[remember picture, overlay]
+        \node[anchor=north west] at (current page.north west)
+            {
+            \includegraphics[trim=-2em 0 0 -2em, scale=0.5]{profile_pic_dummy.png}
+        };
+    \end{tikzpicture}
+
+    % name
+    \begin{textblock*}{\textwidth}(18.5em, 1.25em)
+        \flushleft
+        \fontsize{35}{35}\selectfont{\color{darkgray}Clemens} \textbf{Cords}
+    \end{textblock*}
+
+    % job title
+    \begin{textblock*}{\textwidth}(19em, 4.75em)
+        \flushleft
+        \fontsize{13}{13}\selectfont Software Engineer: Visual Computing {\color{gray} (C++ / Julia)}
+    \end{textblock*}
+
+    % left half of contact
+    \begin{textblock*}{\textwidth}(19em, 8em)
+        \flushleft
+        \onehalfspacing
+        \fontsize{12}{12}\selectfont{
+        \textbf{Mail}:\newline
+        \textbf{Phone}:\newline
+        \textbf{GitHub}:\newline
+        \textbf{Website}:\newline
+        }
+    \end{textblock*}
+
+    % right half of contact, separate block to simulate tab-alignment
+    \begin{textblock*}{\textwidth}(24.5em, 8em)
+        \flushleft
+        \onehalfspacing
+        \fontsize{12}{12}\selectfont
+        {
+            \href{mailto:mail@clemens-cords.com}{mail@clemens-cords.com} \newline
+            +49 30 239 348 71 \newline
+            \href{https://github.com/clemapfel}{github.com/clemapfel} \newline
+            \href{https://clemens-cords.com}{clemens-cords.com}
+        }
+    \end{textblock*}
+
+    % main
+    \begin{textblock*}{45em}(13.5em, 17em)
+
+        {\section*{\fontsize{15}{15}\selectfont Work Experience and Education}}
+
+        \flushleft
+        \newcommand\ytl[2]{
+            % source: https://tex.stackexchange.com/questions/196794/how-can-you-create-a-vertical-timeline
+            \parbox[b]{8em}{\hfill{\color{gray}\bfseries\sffamily #1}~$\cdots\cdots$~}\makebox[0pt][c]{$\bullet$}\vrule\quad \parbox[c]{35em}{\vspace{7pt}\color{black}\raggedright\sffamily #2.\\[7pt]}\\[-3pt]
+        }
+
+        {
+        % timeline
+        \color{swingy_pink}
+        \rule{\linewidth}{1.5pt}
+        \ytl{2022}{Commissioned to write telescope, a 2d engine for interactive multimedia application}
+        \ytl{2022}{Wrote jluna, a Julia <-> C++ wrapper with focus on modernity and elegant access to meta features}
+        \ytl{2020-2021}{Wrote crisp, image processing library, implement including gpu-side computation, deep-learning aided feature classification, and more from scratch}
+        \ytl{2020-2021}{Independent Study of Mathematical Morphology, Image Processing, Deep Learning}
+        \ytl{2020}{Graduated FU Berlin with Degree in Bioinformatics}
+        \ytl{2017-2019}{Statistics Tutor and TA at Charité / FU Berlin}
+        \ytl{2015-2019}{Studied Bioinformatics at FU Berlin}
+        \ytl{2013-2014}{Studied pure Math at TU Berlin}
+        \ytl{2013}{Graduated from Lilienthal High School, Berlin}
+        \rule{\linewidth}{1.5pt}
+        }
+
+        {\section*{\fontsize{15}{15}\selectfont Skillset}}
+
+        % skill level bars, usage: \skill*{C++} (no newline)
+        \newcommand\skillone[1]{{\noindent \fontsize{14}{14}\selectfont\textbf{#1}}{\hfill\fontsize{13}{13}\selectfont 1/5 \color{swingy_pink}[\color{mint}$\,\blacksquare\,\square\,\square\,\square\,\square$ \color{swingy_pink}]}\newline}
+        \newcommand\skilltwo[1]{{\noindent \fontsize{14}{14}\selectfont\textbf{#1}}{\hfill\fontsize{13}{13}\selectfont 2/5 \color{swingy_pink}[\color{mint}$\,\blacksquare\,\blacksquare\,\square\,\square\,\square$ \color{swingy_pink}]}\newline}
+        \newcommand\skillthree[1]{{\noindent \fontsize{14}{14}\selectfont\textbf{#1}}{\hfill\fontsize{13}{13}\selectfont 3/5 \color{swingy_pink}[\color{mint}$\,\blacksquare\,\blacksquare\,\blacksquare\,\square\,\square$ \color{swingy_pink}]}\newline}
+        \newcommand\skillfour[1]{{\noindent \fontsize{14}{14}\selectfont\textbf{#1}}{\hfill\fontsize{13}{13}\selectfont 4/5 \color{swingy_pink}[\color{mint}$\,\blacksquare\,\blacksquare\,\blacksquare\,\blacksquare\,\square$ \color{swingy_pink}]}\newline}
+        \newcommand\skillfive[1]{{\noindent \fontsize{14}{14}\selectfont\textbf{#1}}{\hfill\fontsize{13}{13}\selectfont 5/5 \color{swingy_pink}[\color{mint}$\,\blacksquare\,\blacksquare\,\blacksquare\,\blacksquare\,\blacksquare$ \color{swingy_pink}]}\newline}
+
+
+
+        \vspace{1.5em}
+        {\color{swingy_pink}\rule{\linewidth}{1.5pt}}
+        For more a look at past projects illustrating the quality of my work, please
+        visit my \href{https://clemens-cords.com/portfolio}{online portfolio}.
+    \end{textblock*}
+
+    % footer
+    \begin{textblock*}{\textwidth}(48em, 77em)
+        \fontsize{10}{10}\selectfont \color{gray} Last Updated: 05/2022
+    \end{textblock*}
+
+\end{document}

@@ -118,7 +118,7 @@ void main()
 {
     vec2 pos = _vertex_pos;    
     pos.x *= _screen_resolution.x / _screen_resolution.y;
-    
+        
     float time = _time / 10.0;
         
     pos.x -= time;

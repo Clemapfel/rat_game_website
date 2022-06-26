@@ -99,6 +99,7 @@ Familiar with:
 <a href="https://github.com/KhronosGroup/Vulkan-Hpp" target="_blank">Vulkan</a>,
 <a href="https://www.khronos.org/opengl/wiki/Main_Page" target="_blank">OpenGL</a>,
 <a href="https://opencv.org" target="_blank">OpenCV</a>,
+<a href="https://www.fftw.org" target="_blank">fftw</a>,
 <a href="https://doxygen.nl" target="_blank">Doxygen</a>,
 <a href="https://eigen.tuxfamily.org/index.php?title=Main_Page" target="_blank">Eigen</a>,
 <a href="https://abseil.io" target="_blank">Abseil</a>,
@@ -168,7 +169,7 @@ I was able to choose the language I will be working in freely.
 | <h2>**Language**</h2>                          | <h2>**Proficiency**</h2>                        |
 |------------------------------------------------|-------------------------------------------------|
 | C                                              | 4/5 [<span style="color:#F33C72;">▯▮▮▮▮</span>] |
-| Swift                                | 3/5 [<span style="color:#F33C72;">▯▯▮▮▮</span>] |
+| Swift                                          | 3/5 [<span style="color:#F33C72;">▯▯▮▮▮</span>] |
 | Matlab/Octave<br>GO<br>Perl<br>Ruby<br>Haskell | 1/5 [<span style="color:#F33C72;">▯▯▯▯▮</span>] |
 | Latex                                          | 3/5 [<span style="color:#F33C72;">▯▯▮▮▮</span>] |
 | HTML<br>CSS<br>JS                              | 3/5 [<span style="color:#F33C72;">▯▯▮▮▮</span>] |
