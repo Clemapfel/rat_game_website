@@ -34,25 +34,28 @@
     % profile pic
     \begin{tikzpicture}[remember picture, overlay]
         \node[anchor=north west] at (current page.north west)
-            {
+        {
             \includegraphics[trim=-2em 0 0 -2em, scale=0.5]{profile_pic_dummy.png}
         };
     \end{tikzpicture}
 
     % name
-    \begin{textblock*}{\textwidth}(18.5em, 1.25em)
+    \begin{textblock*}{\textwidth}(16.5em, 1.25em)
         \flushleft
         \fontsize{35}{35}\selectfont{\color{darkgray}Clemens} \textbf{Cords}
     \end{textblock*}
 
     % job title
-    \begin{textblock*}{\textwidth}(19em, 4.75em)
+    \begin{textblock*}{\textwidth}(17em, 4.75em)
         \flushleft
         \fontsize{13}{13}\selectfont Software Engineer: Visual Computing {\color{gray} (C++ / Julia)}
     \end{textblock*}
 
+    \newcommand\headercoordx{19em}
+    \newcommand\contactcoordy{7.5em}
+
     % left half of contact
-    \begin{textblock*}{\textwidth}(19em, 8em)
+    \begin{textblock*}{\textwidth}(\headercoordx, \contactcoordy)
         \flushleft
         \onehalfspacing
         \fontsize{12}{12}\selectfont{
@@ -60,11 +63,12 @@
         \textbf{Phone}:\newline
         \textbf{GitHub}:\newline
         \textbf{Website}:\newline
+        \textbf{Location}:\newline
         }
     \end{textblock*}
 
     % right half of contact, separate block to simulate tab-alignment
-    \begin{textblock*}{\textwidth}(24.5em, 8em)
+    \begin{textblock*}{\textwidth}(24.5em, \contactcoordy)
         \flushleft
         \onehalfspacing
         \fontsize{12}{12}\selectfont
@@ -72,7 +76,8 @@
             \href{mailto:mail@clemens-cords.com}{mail@clemens-cords.com} \newline
             +49 30 239 348 71 \newline
             \href{https://github.com/clemapfel}{github.com/clemapfel} \newline
-            \href{https://clemens-cords.com}{clemens-cords.com}
+            \href{https://clemens-cords.com}{clemens-cords.com}\newline
+            12203 Berlin, Germany
         }
     \end{textblock*}
 
@@ -83,17 +88,18 @@
 
         \flushleft
         \newcommand\ytl[2]{
+            \fontsize{11}{11}\selectfont
             % source: https://tex.stackexchange.com/questions/196794/how-can-you-create-a-vertical-timeline
-            \parbox[b]{8em}{\hfill{\color{gray}\bfseries\sffamily #1}~$\cdots\cdots$~}\makebox[0pt][c]{$\bullet$}\vrule\quad \parbox[c]{35em}{\vspace{7pt}\color{black}\raggedright\sffamily #2.\\[7pt]}\\[-3pt]
+            \parbox[b]{8em}{\hfill{\color{gray}\bfseries\sffamily #1}~$\cdots\cdots$~}\makebox[0pt][c]{$\bullet$}\vrule\quad \parbox[c]{30em}{\vspace{7pt}\color{black}\raggedright\sffamily #2.\\[7pt]}\\[-3pt]
         }
 
         {
         % timeline
         \color{swingy_pink}
         \rule{\linewidth}{1.5pt}
-        \ytl{2022}{Commissioned to write telescope, a 2d engine for interactive multimedia application}
-        \ytl{2022}{Wrote jluna, a Julia <-> C++ wrapper with focus on modernity and elegant access to meta features}
-        \ytl{2020-2021}{Wrote crisp, image processing library, implement including gpu-side computation, deep-learning aided feature classification, and more from scratch}
+        \ytl{2022}{Commissioned to write \href{https://github.com/clemapfel/Telescope}{telescope}, a 2d engine for interactive multimedia application}
+        \ytl{2022}{Wrote \href{https://github.com/clemapfel/jluna}{jluna}, a Julia <-> C++ wrapper with focus on modernity and elegant access to meta features}
+        \ytl{2020-2021}{Wrote \href{https://github.com/clemapfel/jluna}{crisp}, image processing library, implement including gpu-side computation, deep-learning aided feature classification, and more from scratch}
         \ytl{2020-2021}{Independent Study of Mathematical Morphology, Image Processing, Deep Learning}
         \ytl{2020}{Graduated FU Berlin with Degree in Bioinformatics}
         \ytl{2017-2019}{Statistics Tutor and TA at Charité / FU Berlin}
@@ -102,7 +108,8 @@
         \ytl{2013}{Graduated from Lilienthal High School, Berlin}
         \rule{\linewidth}{1.5pt}
         }
-
+    \end{textblock*}
+    \begin{textblock*}{45em}(13.5em, 47em)
         {\section*{\fontsize{15}{15}\selectfont Skillset}}
 
         % skill level bars, usage: \skill*{C++} (no newline)
@@ -112,12 +119,29 @@
         \newcommand\skillfour[1]{{\noindent \fontsize{14}{14}\selectfont\textbf{#1}}{\hfill\fontsize{13}{13}\selectfont 4/5 \color{swingy_pink}[\color{mint}$\,\blacksquare\,\blacksquare\,\blacksquare\,\blacksquare\,\square$ \color{swingy_pink}]}\newline}
         \newcommand\skillfive[1]{{\noindent \fontsize{14}{14}\selectfont\textbf{#1}}{\hfill\fontsize{13}{13}\selectfont 5/5 \color{swingy_pink}[\color{mint}$\,\blacksquare\,\blacksquare\,\blacksquare\,\blacksquare\,\blacksquare$ \color{swingy_pink}]}\newline}
 
+        \flushleft
+        \fontsize{11}{11}\selectfont
 
+        \skillfive{C++ / C}
 
-        \vspace{1.5em}
+        6 years of fulltime usage, highly familiar with best-practice, high-level techniques such as
+        template meta programming, C++20 features including concepts and ranges.
+        \newline\linebreak
+        \skillfive{Julia}
+
+        2 years of fulltime usage, including reverse-engineering the Julia C-API for jluna. Strong foundation
+        in macro-aided compile time execution, performance optimization, code generation
+        \newline\linebreak
+        \skillthree{GLSL}
+
+        2 years of usage, familiar with GPU pipelines, GPU-side computing and performance optimization.
+        \newline\linebreak
+        \skillthree{Python}
+        \skillthree{Lua}
+        \skilltwo{Latex / HTML / CSS / markdown / rst}
+        \vspace{5em}
         {\color{swingy_pink}\rule{\linewidth}{1.5pt}}
-        For more a look at past projects illustrating the quality of my work, please
-        visit my \href{https://clemens-cords.com/portfolio}{online portfolio}.
+
     \end{textblock*}
 
     % footer
