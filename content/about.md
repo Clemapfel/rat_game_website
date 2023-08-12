@@ -1,6 +1,4 @@
-# About
-
-A description of my education, past work and professional skills set. A shorter 1-page CV as PDF is available [here](./cv.pdf).
+ # About
 
 ---
 
@@ -47,7 +45,8 @@ A description of my education, past work and professional skills set. A shorter 
 + **2020** - **2021**: Wrote [crisp](./portfolio#crisp-real-time-interactive-signal-processing-library-), image processing library, implement including gpu-side computation, deep-learning aided feature classification, and more from scratch
 + **12/2021** - **04/2022**: Wrote [jluna](./portfolio#jluna-a-julia-wrapper-for-c), a Julia <-> C++ wrapper with focus on modernity and elegant access to meta features
 + **04/2022** - **05/2022**: Commissioned to write [telescope](./portfolio#telescope-a-2d-game-engine), a 2d engine for interactive multimedia application
-
++ **05/2022** - **12/2022**: Work on an unreleased frame-by-frame animation app
++ **01/2022** - **08/2023**: Repurposed unreleased work for [mousetrap](https://github.com/clemapfel/mousetrap.jl), a Julia GUI engine
 ---
 
 ## Fields of Expertise
@@ -75,8 +74,8 @@ A description of my education, past work and professional skills set. A shorter 
 + Real-Time Rendering
 + High-Throughput Text Indexing / Processing
 + Automated Testing/Performance Evaluation
-+ User Interface/Experience Design
-+ Documentation
++ User Interface Design
++ Documentation & Technical Writing
 
 ---
 
@@ -84,7 +83,7 @@ A description of my education, past work and professional skills set. A shorter 
 
 <h3 style="float:right; position:relative; top:-1.5em">5/5 [<span style="color:#F33C72;">▮▮▮▮▮</span>]</h3>
 <h3 id="cpp">C++</h3>
-6 years of experience of daily usage in both a full-time position or unpaid endeavor.<br><br>
+7 years of experience of daily usage in both a full-time position or unpaid endeavor.<br><br>
 Full mastery of all language features, including meta-template programming, and C++20 Ranges/Concepts, SFINAE techniques.
 High standard in code style, stability assured by automated testing, and documentation. Intimately familiar with performance
 optimization, parallelization, compile-time execution.<br>
@@ -92,11 +91,11 @@ optimization, parallelization, compile-time execution.<br>
 Familiar with:
 <a href="https://en.cppreference.com/w/cpp/20" target="_blank">std</a>,
 <a href="https://www.boost.org" target="_blank">boost</a>,
+<a href="https://docs.gtk.org/gtk4/" target="_blanke">gtk</a>,
 <a href="https://github.com/google/googletest" target="_blank">Google Test</a>,
 <a href="https://github.com/google/benchmark" target="_blank">Google Benchmark</a>,
 <a href="https://www.libsdl.org/" target="_blank">SDL2</a>,
 <a href="https://www.sfml-dev.org/index.php" target="_blank">SFML</a>,
-<a href="https://github.com/KhronosGroup/Vulkan-Hpp" target="_blank">Vulkan</a>,
 <a href="https://www.khronos.org/opengl/wiki/Main_Page" target="_blank">OpenGL</a>,
 <a href="https://opencv.org" target="_blank">OpenCV</a>,
 <a href="https://www.fftw.org" target="_blank">fftw</a>,
@@ -109,21 +108,15 @@ Familiar with:
 <h3 style="float:right; position:relative; top:-1.5em">5/5 [<span style="color:#F33C72;">▮▮▮▮▮</span>]</h3>
 <h3 id="julia">Julia</h3>
 
-2 years of experience.
+3 years of experience.
 
 Extensive reverse engineering of hidden, internal implementation details during production of [jluna](./portfolio#jluna-a-julia-wrapper-for-c) resulting in
 high familiarity with meta-language features such as code generation, macro-aided compile-time execution, performance optimization, standard library modules including ``Threads`` and ``Distributed``.
 
-Familiar with:
-<a href="https://pkgdocs.julialang.org/v1/" target="_blank">Pkg</a>,
-<a href="https://juliadynamics.github.io/Agents.jl/stable/" target="_blank">Agents.jl</a>,
-<a href="https://github.com/JuliaGPU/CUDA.jl" target="_blank">CUDA.jl</a>,
-<a href="https://docs.julialang.org/en/v1/stdlib/Test/" target="_blank">Test</a>, and other.
-
 <h3 style="float:right; position:relative; top:-1.5em">3/5 [<span style="color:#F33C72;">▯▯▮▮▮</span>]</h3>
 <h3 id="glsl">GLSL</h3>
 
-1 year of experience.
+2 year of experience.
 
 Full understanding of shader and graphics pipeline architecture, performance optimization for graphics card hardware.
 
@@ -148,7 +141,7 @@ Familiar with:
 <h3 style="float:right; position:relative; top:-1.5em">3/5 [<span style="color:#F33C72;">▯▯▮▮▮</span>]</h3>
 <h3 id="lua">Lua</h3>
 
-1 year of experience.
+2 year of experience.
 
 Data representation and light-weight scripting language of choice. Especially
 familiar in a multi-language context where another language is the host language.
@@ -166,10 +159,11 @@ I was able to choose the language I will be working in freely.
 
 ## Other Languages
 
-| <h2>**Language**</h2>                          | <h2>**Proficiency**</h2>                        |
-|------------------------------------------------|-------------------------------------------------|
-| C                                              | 4/5 [<span style="color:#F33C72;">▯▮▮▮▮</span>] |
-| Swift                                          | 3/5 [<span style="color:#F33C72;">▯▯▮▮▮</span>] |
+| <h2>**Language**</h2> | <h2>**Proficiency**</h2>                       |
+|-----------------------|------------------------------------------------|
+| C                     | 4/5 [<span style="color:#F33C72;">▯▮▮▮▮</span>] |
+| Swift                 | 3/5 [<span style="color:#F33C72;">▯▯▮▮▮</span>] |
+| Vala                  | 2/5 [<span style="color:#F33C72;">▯▯▯▮▮</span>] |
 | Matlab/Octave<br>GO<br>Perl<br>Ruby<br>Haskell | 1/5 [<span style="color:#F33C72;">▯▯▯▯▮</span>] |
 | Latex                                          | 3/5 [<span style="color:#F33C72;">▯▯▮▮▮</span>] |
 | HTML<br>CSS<br>JS                              | 3/5 [<span style="color:#F33C72;">▯▯▮▮▮</span>] |
